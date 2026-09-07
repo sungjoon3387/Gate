@@ -245,22 +245,30 @@ function render(D){
   const open = sectorW < ceil;
 
   // ---- Today ----
-  const fillW=Math.min(sectorW/50*100,100);
+  // 환율 국면: 20일선 대비 위치로 국내/해외 어느 쪽이 유리한지
+  const fxq = Q["KRW=X"];
+  let fxGap=null, fxSide=null;
+  if(fxq && fxq.ma20){
+    fxGap = (fxq.price/fxq.ma20-1)*100;
+    fxSide = fxGap >= 2 ? "kr" : fxGap <= -2 ? "us" : "mid";
+  }
+
+  const fillW=Math.min(sectorW/60*100,100);
   let html = `<div class="gate">
-    <div class="gate-state"><span class="dot" style="background:${open?'var(--open)':'var(--shut)'}"></span>
-      ${open?"매수 가능":"매수 정지"}</div>
-    <div class="gate-why">${open
-      ? `전력기기 ${sectorW.toFixed(1)}% · 상한 ${ceil}%까지 ${won(total*ceil/100-sectorV)} 여유`
-      : `전력기기 ${sectorW.toFixed(1)}%로 상한 초과. 신규 매수만 정지하고 매도는 하지 않습니다. 다음 적립은 QQQ로.`}</div>
+    <div class="gate-state"><span class="dot" style="background:${sectorW>ceil?'var(--warn)':'var(--open)'}"></span>
+      전력기기 ${sectorW.toFixed(1)}%</div>
+    <div class="gate-why">${sectorW>ceil
+      ? `기준선 ${ceil}%를 ${(sectorW-ceil).toFixed(1)}%p 넘었습니다. 막지는 않습니다 — 숫자만 알고 계시라고 표시합니다.`
+      : `기준선 ${ceil}%까지 ${won(total*ceil/100-sectorV)} 여유`}</div>
     <div class="track">
       <div class="track-rail"></div>
-      <div class="track-fill" style="width:${fillW}%;background:${open?'var(--open)':'var(--shut)'}"></div>
-      <div class="track-limit" style="left:${ceil/50*100}%"></div>
+      <div class="track-fill" style="width:${fillW}%;background:${sectorW>ceil?'var(--warn)':'var(--open)'}"></div>
+      <div class="track-limit" style="left:${ceil/60*100}%"></div>
     </div>
     <div class="track-labels">
       <span style="left:0;transform:none">0%</span>
-      <span style="left:${ceil/50*100}%;color:var(--warn)">상한 ${ceil}%</span>
-      <span style="left:100%;transform:translateX(-100%)">50%</span>
+      <span style="left:${ceil/60*100}%;color:var(--warn)">기준 ${ceil}%</span>
+      <span style="left:100%;transform:translateX(-100%)">60%</span>
     </div>
   </div>`;
 
@@ -277,64 +285,69 @@ function render(D){
     const q=Q[p.sym]; if(!q) return;
     const one = q.ccy==="USD"&&fx ? q.price*fx : q.price;
 
-    // 상한 안에서 살 수 있는 최대 주식 수
-    let fit=0;
-    while(fit<short && (sectorV+one*(fit+1))/(total+one*(fit+1))*100 <= ceil) fit++;
-    const n = fit;
+    const n = short;
     const cost = one*n;
-    const after = n? (sectorV+cost)/(total+cost)*100 : sectorW;
+    const after = (sectorV+cost)/(total+cost)*100;
 
     const why=[];
     why.push(`현재 ${p.shares}주 / 목표 ${p.target_shares}주 — ${short}주 부족`);
     why.push(`1주 ${won(one)} · ${n}주 ${won(cost)}`);
-    why.push(`매수 후 전력기기 ${after.toFixed(1)}% (상한 ${ceil}%)`);
+    why.push(`매수 후 전력기기 ${after.toFixed(1)}%${after>ceil?` — 기준선 ${ceil}% 초과`:""}`);
     if(q.rsi14!=null) why.push(`RSI ${q.rsi14} · 52주 고점 대비 ${pctS(q.drawdown_pct)} · 200일선 ${pctS(q.ma200_gap_pct)}`);
-    if(n<short) why.push(`상한 때문에 ${n}주까지만 가능합니다. 코어가 커지면 나머지 ${short-n}주 여유가 생깁니다`);
+    if(fxSide==="kr" && q.ccy==="USD")
+      why.push(`달러원이 20일선 대비 ${pctS(fxGap)} — 지금 달러를 사는 건 불리한 국면입니다`);
+    if(fxSide==="us" && q.ccy==="USD")
+      why.push(`달러원이 20일선 대비 ${pctS(fxGap)} — 달러 매수에 유리한 국면입니다`);
 
-    acts_out.push({cls: n>0?"buy":"info",
-      head: n>0 ? `편입 · ${NAMES[p.sym]} ${n}주` : `편입 대기 · ${NAMES[p.sym]}`,
-      why,
+    acts_out.push({cls:"buy", head:`편입 · ${NAMES[p.sym]} ${n}주`, why,
       note:"신규 편입은 계단과 무관합니다. 눌림을 기다리는 게 아니라 자리를 만드는 매수입니다."});
   });
 
   // ① 매수 후보
-  if(open && usable.length){
+  if(usable.length){
     const multi = usable.length>=2;
     usable.forEach((a,i)=>{
       const q=a.q;
       const one = q.ccy==="USD"&&fx ? q.price*fx : q.price;
       const fresh = Math.max(0, one-(H.cash_krw||0));
       const after = (sectorV+one)/(total+fresh)*100;
-      const blocked = after>ceil;
+      const over = after>ceil;
       const why=[];
       why.push(`52주 고점 ${q.high52.toLocaleString("ko-KR")} 대비 ${pctS(q.drawdown_pct)} — ${a.level}% 계단 통과`);
       if(q.rsi14!=null) why.push(`RSI ${q.rsi14} ${q.rsi14<40?"(과매도권)":q.rsi14>60?"(과열권)":"(중립)"}`);
       if(q.ma200_gap_pct!=null) why.push(`200일선 대비 ${pctS(q.ma200_gap_pct)}`);
-      why.push(`1주 ${won(one)} · 매수 후 전력기기 ${after.toFixed(1)}%${blocked?" — 상한 초과라 이번엔 불가":""}`);
+      why.push(`1주 ${won(one)} · 매수 후 전력기기 ${after.toFixed(1)}%${over?` — 기준선 ${ceil}% 초과`:""}`);
+      if(fxSide==="kr" && q.ccy==="USD")
+        why.push(`달러원 20일선 대비 ${pctS(fxGap)} — 달러 매수가 불리한 국면. 같은 논거면 HD현대일렉트릭 쪽이 유리합니다`);
+      if(fxSide==="us" && q.ccy==="USD")
+        why.push(`달러원 20일선 대비 ${pctS(fxGap)} — 달러 매수에 유리한 국면`);
       if(a.fired) why.push(`계단 발화일 ${a.fired.date}, 이후 매수 기록 없음`);
-      acts_out.push({cls:blocked?"info":"buy",
-        head:`${blocked?"보류":"매수 검토"} · ${NAMES[a.sym]} ${blocked?"":"1주"}`,
-        why, note: multi&&i===0
-          ? "세 종목이 같은 논거에 걸려 있습니다. 동시에 사면 상한을 한 번에 뚫으니 이번 주는 하나만."
+      acts_out.push({cls:"buy", head:`매수 검토 · ${NAMES[a.sym]} 1주`, why,
+        note: multi&&i===0
+          ? "세 종목이 같은 논거에 걸려 있습니다. 한 번에 다 사면 섹터 하나에 몰리니 순서를 정하세요."
           : null});
     });
   }
 
-  // ② 게이트 닫힘 — 적립 방향
-  if(!open){
-    acts_out.push({cls:"trim", head:"신규 매수 정지 · 적립은 QQQ로",
-      why:[`전력기기 ${sectorW.toFixed(1)}%로 상한 ${ceil}% 초과`,
-           `규칙상 매도는 하지 않습니다. 다음 적립을 QQQ로 보내 비중을 희석합니다`,
-           `${won(sectorV-total*ceil/100)}만큼 초과 — 코어가 그만큼 커지면 자동 해소`],
-      note:null});
+  // ② 환율 국면
+  if(fxSide && fxSide!=="mid"){
+    const q=fxq;
+    acts_out.push({cls:"info",
+      head: fxSide==="kr" ? "환율 국면 · 국내 쪽이 유리" : "환율 국면 · 해외 쪽이 유리",
+      why:[`달러원 ${q.price.toLocaleString("ko-KR")}원 — 20일선 대비 ${pctS(fxGap)}`,
+           `52주 범위 ${q.low52.toLocaleString("ko-KR")} ~ ${q.high52.toLocaleString("ko-KR")}`,
+           fxSide==="kr"
+             ? "같은 전력기기 논거라면 이번 매수는 HD현대일렉트릭(원화)으로 들어가는 편이 환 부담이 적습니다"
+             : "달러 자산을 늘리기에 상대적으로 나은 구간입니다. GE 버노바·Eaton·QQQ 쪽"],
+      note:"환율은 종목 선택이 아니라 같은 논거에 어느 통화로 들어갈지를 정합니다."});
   }
 
   // ③ 크게 초과 — 축소 검토
   if(sectorW > ceil+10){
-    acts_out.push({cls:"trim", head:"축소 검토 구간",
-      why:[`전력기기 ${sectorW.toFixed(1)}% — 상한보다 10%p 넘게 초과`,
-           `적립만으로 되돌리기엔 시간이 오래 걸리는 수준입니다`],
-      note:"파는 판단은 규칙이 아니라 직접 하십니다. 이 항목은 상태 표시입니다."});
+    acts_out.push({cls:"trim", head:"집중도 알림",
+      why:[`전력기기 ${sectorW.toFixed(1)}% — 기준선보다 10%p 넘게 위`,
+           `이 섹터는 급여·성과급·우리사주와 같은 AI 캐펙스 사이클에 걸려 있습니다`],
+      note:"막지 않습니다. 숫자만 알려드립니다."});
   }
 
   // ④ 논거 만료
@@ -364,7 +377,7 @@ function render(D){
     }).filter(Boolean);
     acts_out.push({cls:"info", head:"오늘 조치 없음",
       why: near.length?near:["계단에 닿은 종목이 없습니다"],
-      note:"조용한 날이 많은 게 정상입니다. 게이트가 판단하고 성준님은 확인만 하시면 됩니다."});
+      note:"조용한 날이 많은 게 정상입니다."});
   }
 
   html += `<h2>오늘의 판단</h2><div class="act-list">` + acts_out.map(a=>
