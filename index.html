@@ -96,6 +96,21 @@ h2:first-child{margin-top:0}
 
 /* ---- sparkline ---- */
 svg.spark{display:block;width:100%;height:34px;margin-top:10px;overflow:visible}
+svg.bars-c{display:block;width:100%;height:52px;margin-top:12px}
+.bars-ax{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);margin-top:4px}
+
+/* ---- 오늘의 판단 ---- */
+.act-list{margin-bottom:6px}
+.act-item{background:var(--surface);border:1px solid var(--line);border-left-width:3px;
+  border-radius:10px;padding:13px 15px;margin-bottom:9px}
+.act-item.buy{border-left-color:var(--open)}
+.act-item.trim{border-left-color:var(--warn)}
+.act-item.info{border-left-color:var(--shut)}
+.act-head{font-weight:700;font-size:15.5px;margin-bottom:6px}
+.act-why{list-style:none;font-size:13px;color:var(--muted);line-height:1.75}
+.act-why li{display:flex;gap:8px}
+.act-why li::before{content:"·";color:var(--dim);flex:none}
+.act-note{font-size:12.5px;color:var(--dim);margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
 
 .note{font-size:12.5px;color:var(--dim);margin-top:14px;line-height:1.6}
 .err{color:var(--warn);font-size:12.5px;margin-top:10px}
@@ -129,6 +144,7 @@ const $ = (s,r=document)=>r.querySelector(s);
 const H = window.HOLDINGS || {positions:[],thesis:{},trades:[]};
 const SECTOR = ["267260.KS","GEV","ETN"];
 const CORE   = ["QQQ"];
+const TR_LEVELS = [-15,-25,-35];
 const NAMES  = {"QQQ":"QQQ","267260.KS":"HD현대일렉트릭","GEV":"GE 버노바","ETN":"Eaton"};
 
 const won  = n => n==null?"—":Math.round(n).toLocaleString("ko-KR")+"원";
@@ -143,6 +159,24 @@ document.querySelectorAll('nav button').forEach(b=>{
     window.scrollTo(0,0);
   };
 });
+
+function bars(vals,n){
+  n=n||30;
+  const v=vals.slice(-n); if(v.length<2) return "";
+  const lo=Math.min(...v), hi=Math.max(...v), rng=(hi-lo)||Math.abs(hi*0.02)||1;
+  const base=lo-rng*0.25, top=hi+rng*0.15, span=top-base;
+  const W=100/v.length, g=W*0.22;
+  const b=v.map((x,i)=>{
+    const h=Math.max((x-base)/span*46,1.2);
+    const up=i===0?true:x>=v[i-1];
+    return `<rect x="${(i*W+g/2).toFixed(2)}" y="${(48-h).toFixed(2)}"
+      width="${(W-g).toFixed(2)}" height="${h.toFixed(2)}"
+      fill="${up?'var(--up)':'var(--down)'}" opacity="${i===v.length-1?1:.62}"/>`;
+  }).join("");
+  return `<svg class="bars-c" viewBox="0 0 100 48" preserveAspectRatio="none" aria-hidden="true">${b}</svg>
+    <div class="bars-ax"><span>${v.length}거래일</span><span>저 ${lo.toLocaleString("ko-KR")}</span>
+    <span>고 ${hi.toLocaleString("ko-KR")}</span></div>`;
+}
 
 function spark(vals,color){
   if(!vals||vals.length<2) return "";
@@ -164,6 +198,7 @@ fetch("data.json?v="+Date.now()).then(r=>r.json()).then(render).catch(e=>{
 });
 
 function render(D){
+  const now = new Date();
   const Q = D.quotes || {};
   const fx = Q["KRW=X"] ? Q["KRW=X"].price : null;
 
@@ -231,33 +266,84 @@ function render(D){
 
   // 논거 만료 확인
   const stale = SECTOR.filter(s=>daysSince((H.thesis[s]||{}).updated)>90);
-
-  if(stale.length){
-    html += `<div class="card lock"><h3>논거 갱신이 밀렸습니다</h3>
-      <p>${stale.map(s=>NAMES[s]).join(", ")} — 90일이 지났습니다.
-      갱신 전까지 이 종목의 매수 신호는 잠깁니다. holdings.js의 thesis를 고쳐주세요.</p></div>`;
-  }
-
   const usable = sectorActs.filter(a=>!stale.includes(a.sym));
+  const acts_out = [];
 
-  if(!open){
-    html += `<div class="calm"><b>오늘 조치 없음</b>상한을 넘은 상태라 신규 매수 신호를 띄우지 않습니다.</div>`;
-  } else if(usable.length>=2){
-    // 섹터 동시신호 — 하나로 묶음
-    html += `<div class="card act"><h3>섹터 조정 진행 중 · 한 종목만</h3>
-      <p>${usable.map(a=>`${NAMES[a.sym]} ${a.level}%`).join(" · ")} 동시 도달.
-      같은 논거에 걸린 종목들이라 한 번에 사면 상한을 한 번에 뚫습니다. 이번 주는 하나만.</p>
-      ${usable.map(a=>tranchePreview(a,fx,total,sectorV,ceil)).join("")}</div>`;
-  } else if(usable.length===1){
-    const a=usable[0];
-    html += `<div class="card act"><h3>${NAMES[a.sym]} · 52주 고점 대비 ${a.level}% 도달</h3>
-      ${tranchePreview(a,fx,total,sectorV,ceil)}
-      <p>RSI ${a.q.rsi14} · 200일선 ${pctS(a.q.ma200_gap_pct)}</p></div>`;
-  } else if(!stale.length){
-    html += `<div class="calm"><b>오늘 조치 없음</b>계단에 닿은 종목이 없습니다.</div>`;
+  // ① 매수 후보
+  if(open && usable.length){
+    const multi = usable.length>=2;
+    usable.forEach((a,i)=>{
+      const q=a.q;
+      const one = q.ccy==="USD"&&fx ? q.price*fx : q.price;
+      const fresh = Math.max(0, one-(H.cash_krw||0));
+      const after = (sectorV+one)/(total+fresh)*100;
+      const blocked = after>ceil;
+      const why=[];
+      why.push(`52주 고점 ${q.high52.toLocaleString("ko-KR")} 대비 ${pctS(q.drawdown_pct)} — ${a.level}% 계단 통과`);
+      if(q.rsi14!=null) why.push(`RSI ${q.rsi14} ${q.rsi14<40?"(과매도권)":q.rsi14>60?"(과열권)":"(중립)"}`);
+      if(q.ma200_gap_pct!=null) why.push(`200일선 대비 ${pctS(q.ma200_gap_pct)}`);
+      why.push(`1주 ${won(one)} · 매수 후 전력기기 ${after.toFixed(1)}%${blocked?" — 상한 초과라 이번엔 불가":""}`);
+      if(a.fired) why.push(`계단 발화일 ${a.fired.date}, 이후 매수 기록 없음`);
+      acts_out.push({cls:blocked?"info":"buy",
+        head:`${blocked?"보류":"매수 검토"} · ${NAMES[a.sym]} ${blocked?"":"1주"}`,
+        why, note: multi&&i===0
+          ? "세 종목이 같은 논거에 걸려 있습니다. 동시에 사면 상한을 한 번에 뚫으니 이번 주는 하나만."
+          : null});
+    });
   }
 
+  // ② 게이트 닫힘 — 적립 방향
+  if(!open){
+    acts_out.push({cls:"trim", head:"신규 매수 정지 · 적립은 QQQ로",
+      why:[`전력기기 ${sectorW.toFixed(1)}%로 상한 ${ceil}% 초과`,
+           `규칙상 매도는 하지 않습니다. 다음 적립을 QQQ로 보내 비중을 희석합니다`,
+           `${won(sectorV-total*ceil/100)}만큼 초과 — 코어가 그만큼 커지면 자동 해소`],
+      note:null});
+  }
+
+  // ③ 크게 초과 — 축소 검토
+  if(sectorW > ceil+10){
+    acts_out.push({cls:"trim", head:"축소 검토 구간",
+      why:[`전력기기 ${sectorW.toFixed(1)}% — 상한보다 10%p 넘게 초과`,
+           `적립만으로 되돌리기엔 시간이 오래 걸리는 수준입니다`],
+      note:"파는 판단은 규칙이 아니라 직접 하십니다. 이 항목은 상태 표시입니다."});
+  }
+
+  // ④ 논거 만료
+  if(stale.length){
+    acts_out.push({cls:"trim", head:"논거 갱신 필요",
+      why:stale.map(x=>`${NAMES[x]} — 마지막 갱신 ${(H.thesis[x]||{}).updated||"없음"}, 90일 경과`)
+        .concat(["갱신 전까지 해당 종목 매수 신호는 잠깁니다"]),
+      note:"holdings.js의 thesis에 '왜 아직 보유하는가'를 한 줄로."});
+  }
+
+  // ⑤ 연금 한도 (4분기)
   const pen=H.pension||{limit_krw:9000000,paid_krw:0};
+  const left=pen.limit_krw-(pen.paid_krw||0);
+  if(left>0 && now.getMonth()>=9){
+    acts_out.push({cls:"info", head:"연금계좌 한도 미소진",
+      why:[`올해 남은 한도 ${won(left)} — 12월 31일 납입분까지 인정`,
+           `공제율 16.5% 구간이면 ${won(left*0.165)}, 13.2%면 ${won(left*0.132)} 환급`],
+      note:"55세까지 묶이는 자금입니다. 주택 계획과 겹치지 않는 범위에서."});
+  }
+
+  // ⑥ 아무것도 없을 때 — 왜 없는지
+  if(!acts_out.length){
+    const near = SECTOR.map(x=>{
+      const q=Q[x]; if(!q) return null;
+      const nxt = TR_LEVELS.find(lv=>q.drawdown_pct>lv);
+      return nxt==null?null:`${NAMES[x]} ${pctS(q.drawdown_pct)} (다음 계단 ${nxt}%)`;
+    }).filter(Boolean);
+    acts_out.push({cls:"info", head:"오늘 조치 없음",
+      why: near.length?near:["계단에 닿은 종목이 없습니다"],
+      note:"조용한 날이 많은 게 정상입니다. 게이트가 판단하고 성준님은 확인만 하시면 됩니다."});
+  }
+
+  html += `<h2>오늘의 판단</h2><div class="act-list">` + acts_out.map(a=>
+    `<div class="act-item ${a.cls}"><div class="act-head">${a.head}</div>
+     <ul class="act-why">${a.why.map(w=>`<li><span>${w}</span></li>`).join("")}</ul>
+     ${a.note?`<div class="act-note">${a.note}</div>`:""}</div>`).join("") + `</div>`;
+
   const inflow=Object.values(H.inflow_2026||{}).reduce((a,b)=>a+b,0);
   html += `<h2>올해</h2><div class="card">
     <div class="row"><span class="k">누적 순유입</span><span class="v">${won(inflow)}</span></div>
@@ -279,7 +365,7 @@ function render(D){
       <div class="pos-sub"><span>20일선 ${pctS((q.price/q.ma20-1)*100)}</span>
       <span>60일 ${pctS(q.chg60_pct)}</span>
       <span>52주 ${q.low52.toLocaleString("ko-KR")}~${q.high52.toLocaleString("ko-KR")}</span>${extra}</div>
-      ${spark(q.spark, q.chg60_pct>=0?"var(--up)":"var(--down)")}</div>`;
+      ${bars(q.spark,30)}</div>`;
   };
   let mh="";
   if(D.brief) mh+=`<div class="card"><h3>오늘의 읽을거리</h3><p>${D.brief.replace(/\n/g,"<br>")}</p>
