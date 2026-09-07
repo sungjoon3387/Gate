@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-09-07T15:08:40+09:00",
- "generated_at_label": "2026-09-07 15:08 KST",
+ "generated_at": "2026-09-08T07:53:06+09:00",
+ "generated_at_label": "2026-09-08 07:53 KST",
  "sector_ceiling": 35.0,
  "tranche_levels": [
   -15.0,
@@ -99,24 +99,45 @@
    ],
    "chg60_pct": 3.64,
    "bucket": "core",
-   "ccy": "USD"
+   "ccy": "USD",
+   "cal": {
+    "years": 1.2,
+    "median_dev": 10.9,
+    "current_dev": 9.3,
+    "align": "정배열",
+    "ma60_gap": 0.8,
+    "sell": {
+     "thr": 13.0,
+     "events": 3,
+     "per_year": 2.5,
+     "armed": true,
+     "days_since": 84
+    },
+    "buy": {
+     "thr": -4.0,
+     "events": 1,
+     "per_year": 0.8,
+     "armed": true,
+     "days_since": 111
+    }
+   }
   },
   "267260.KS": {
    "symbol": "267260.KS",
    "name": "HD현대일렉트릭",
    "kind": "position",
    "source": "naver",
-   "price": 762000.0,
+   "price": 763000.0,
    "prev_close": 714000.0,
-   "day_pct": 6.72,
+   "day_pct": 6.86,
    "last_trade_date": "2026-09-07",
    "high52": 1420000.0,
    "low52": 487000.0,
-   "drawdown_pct": -46.34,
-   "ma20": 756200.0,
-   "ma200": 921410.0,
-   "ma200_gap_pct": -17.3,
-   "rsi14": 50.0,
+   "drawdown_pct": -46.27,
+   "ma20": 756250.0,
+   "ma200": 921415.0,
+   "ma200_gap_pct": -17.19,
+   "rsi14": 50.1,
    "spark": [
     1130000.0,
     1194000.0,
@@ -177,11 +198,32 @@
     711000.0,
     706000.0,
     714000.0,
-    762000.0
+    763000.0
    ],
-   "chg60_pct": -26.23,
+   "chg60_pct": -26.14,
    "bucket": "sector",
-   "ccy": "KRW"
+   "ccy": "KRW",
+   "cal": {
+    "years": 1.3,
+    "median_dev": 34.7,
+    "current_dev": -17.2,
+    "align": "역배열",
+    "ma60_gap": -8.4,
+    "sell": {
+     "thr": 43.3,
+     "events": 3,
+     "per_year": 2.3,
+     "armed": true,
+     "days_since": 98
+    },
+    "buy": {
+     "thr": -11.7,
+     "events": 2,
+     "per_year": 1.5,
+     "armed": false,
+     "days_since": 38
+    }
+   }
   },
   "GEV": {
    "symbol": "GEV",
@@ -263,7 +305,28 @@
    ],
    "chg60_pct": 8.63,
    "bucket": "sector",
-   "ccy": "USD"
+   "ccy": "USD",
+   "cal": {
+    "years": 1.2,
+    "median_dev": 34.1,
+    "current_dev": 6.3,
+    "align": "혼조",
+    "ma60_gap": -7.4,
+    "sell": {
+     "thr": 45.5,
+     "events": 3,
+     "per_year": 2.5,
+     "armed": true,
+     "days_since": 47
+    },
+    "buy": {
+     "thr": -4.0,
+     "events": 0,
+     "per_year": 0.0,
+     "armed": true,
+     "days_since": null
+    }
+   }
   },
   "ETN": {
    "symbol": "ETN",
@@ -345,26 +408,46 @@
    ],
    "chg60_pct": 9.43,
    "bucket": "sector",
-   "ccy": "USD"
+   "ccy": "USD",
+   "cal": {
+    "years": 1.2,
+    "median_dev": 8.9,
+    "current_dev": 7.8,
+    "align": "정배열",
+    "ma60_gap": -0.9,
+    "sell": {
+     "thr": 18.7,
+     "events": 3,
+     "per_year": 2.5,
+     "armed": true,
+     "days_since": 22
+    },
+    "buy": {
+     "thr": -6.1,
+     "events": 1,
+     "per_year": 0.8,
+     "armed": true,
+     "days_since": 179
+    }
+   }
   },
   "KRW=X": {
    "symbol": "KRW=X",
    "name": "달러원",
    "kind": "macro",
    "source": "yahoo",
-   "price": 1344.08,
-   "prev_close": 1355.41,
-   "day_pct": -0.84,
+   "price": 1344.76,
+   "prev_close": 1345.0601,
+   "day_pct": -0.02,
    "last_trade_date": "2026-09-07",
    "high52": 1554.48,
-   "low52": 1344.08,
-   "drawdown_pct": -13.54,
-   "ma20": 1388.6155,
-   "ma200": 1469.8298,
-   "ma200_gap_pct": -8.56,
-   "rsi14": 18.8,
+   "low52": 1344.76,
+   "drawdown_pct": -13.49,
+   "ma20": 1385.037,
+   "ma200": 1469.2515,
+   "ma200_gap_pct": -8.47,
+   "rsi14": 18.9,
    "spark": [
-    1513.3101,
     1510.96,
     1525.42,
     1537.5601,
@@ -423,9 +506,10 @@
     1372.86,
     1358.39,
     1355.41,
-    1344.08
+    1345.0601,
+    1344.76
    ],
-   "chg60_pct": -10.96,
+   "chg60_pct": -11.14,
    "unit": "원"
   },
   "^FVX": {
@@ -676,17 +760,17 @@
    "name": "달러지수",
    "kind": "macro",
    "source": "yahoo",
-   "price": 99.114,
+   "price": 99.176,
    "prev_close": 99.16,
-   "day_pct": -0.05,
+   "day_pct": 0.02,
    "last_trade_date": "2026-09-07",
    "high52": 101.61,
    "low52": 96.22,
-   "drawdown_pct": -2.46,
-   "ma20": 99.3582,
-   "ma200": 99.1638,
-   "ma200_gap_pct": -0.05,
-   "rsi14": 42.2,
+   "drawdown_pct": -2.4,
+   "ma20": 99.3613,
+   "ma200": 99.1641,
+   "ma200_gap_pct": 0.01,
+   "rsi14": 43.2,
    "spark": [
     99.75,
     99.63,
@@ -747,9 +831,9 @@
     99.56,
     99.0,
     99.16,
-    99.114
+    99.176
    ],
-   "chg60_pct": -0.75,
+   "chg60_pct": -0.68,
    "unit": ""
   }
  },
@@ -815,43 +899,6 @@
    "drawdown": -46.34
   }
  ],
- "fired_today": [
-  {
-   "date": "2026-09-07",
-   "symbol": "267260.KS",
-   "name": "HD현대일렉트릭",
-   "event": "tranche",
-   "level": -15.0,
-   "price": 762000.0,
-   "drawdown": -46.34
-  },
-  {
-   "date": "2026-09-07",
-   "symbol": "267260.KS",
-   "name": "HD현대일렉트릭",
-   "event": "tranche",
-   "level": -25.0,
-   "price": 762000.0,
-   "drawdown": -46.34
-  },
-  {
-   "date": "2026-09-07",
-   "symbol": "267260.KS",
-   "name": "HD현대일렉트릭",
-   "event": "tranche",
-   "level": -35.0,
-   "price": 762000.0,
-   "drawdown": -46.34
-  },
-  {
-   "date": "2026-09-07",
-   "symbol": "GEV",
-   "name": "GE 버노바",
-   "event": "tranche",
-   "level": -15.0,
-   "price": 941.95,
-   "drawdown": -19.82
-  }
- ],
+ "fired_today": [],
  "errors": []
 }
