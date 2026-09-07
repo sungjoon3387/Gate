@@ -269,6 +269,34 @@ function render(D){
   const usable = sectorActs.filter(a=>!stale.includes(a.sym));
   const acts_out = [];
 
+  // ⓪ 편입 미달 — 목표 주식 수에 못 미치는 종목
+  H.positions.forEach(p=>{
+    if(!SECTOR.includes(p.sym) || !p.target_shares) return;
+    const short = p.target_shares - p.shares;
+    if(short<=0) return;
+    const q=Q[p.sym]; if(!q) return;
+    const one = q.ccy==="USD"&&fx ? q.price*fx : q.price;
+
+    // 상한 안에서 살 수 있는 최대 주식 수
+    let fit=0;
+    while(fit<short && (sectorV+one*(fit+1))/(total+one*(fit+1))*100 <= ceil) fit++;
+    const n = fit;
+    const cost = one*n;
+    const after = n? (sectorV+cost)/(total+cost)*100 : sectorW;
+
+    const why=[];
+    why.push(`현재 ${p.shares}주 / 목표 ${p.target_shares}주 — ${short}주 부족`);
+    why.push(`1주 ${won(one)} · ${n}주 ${won(cost)}`);
+    why.push(`매수 후 전력기기 ${after.toFixed(1)}% (상한 ${ceil}%)`);
+    if(q.rsi14!=null) why.push(`RSI ${q.rsi14} · 52주 고점 대비 ${pctS(q.drawdown_pct)} · 200일선 ${pctS(q.ma200_gap_pct)}`);
+    if(n<short) why.push(`상한 때문에 ${n}주까지만 가능합니다. 코어가 커지면 나머지 ${short-n}주 여유가 생깁니다`);
+
+    acts_out.push({cls: n>0?"buy":"info",
+      head: n>0 ? `편입 · ${NAMES[p.sym]} ${n}주` : `편입 대기 · ${NAMES[p.sym]}`,
+      why,
+      note:"신규 편입은 계단과 무관합니다. 눌림을 기다리는 게 아니라 자리를 만드는 매수입니다."});
+  });
+
   // ① 매수 후보
   if(open && usable.length){
     const multi = usable.length>=2;
