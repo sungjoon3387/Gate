@@ -1,0 +1,64 @@
+{
+ "fired": {
+  "QQQ": {
+   "high52": 746.16,
+   "levels": []
+  },
+  "267260.KS": {
+   "high52": 1420000.0,
+   "levels": [
+    -15.0,
+    -25.0,
+    -35.0
+   ]
+  },
+  "GEV": {
+   "high52": 1174.86,
+   "levels": [
+    -15.0
+   ]
+  },
+  "ETN": {
+   "high52": 459.96,
+   "levels": []
+  }
+ },
+ "history": [
+  {
+   "date": "2026-09-07",
+   "symbol": "267260.KS",
+   "name": "HD현대일렉트릭",
+   "event": "tranche",
+   "level": -15.0,
+   "price": 762000.0,
+   "drawdown": -46.34
+  },
+  {
+   "date": "2026-09-07",
+   "symbol": "267260.KS",
+   "name": "HD현대일렉트릭",
+   "event": "tranche",
+   "level": -25.0,
+   "price": 762000.0,
+   "drawdown": -46.34
+  },
+  {
+   "date": "2026-09-07",
+   "symbol": "267260.KS",
+   "name": "HD현대일렉트릭",
+   "event": "tranche",
+   "level": -35.0,
+   "price": 762000.0,
+   "drawdown": -46.34
+  },
+  {
+   "date": "2026-09-07",
+   "symbol": "GEV",
+   "name": "GE 버노바",
+   "event": "tranche",
+   "level": -15.0,
+   "price": 941.95,
+   "drawdown": -19.82
+  }
+ ]
+}
