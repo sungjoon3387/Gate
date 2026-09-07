@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gate</title>
+<meta name="theme-color" content="#141A22">
+<link rel="manifest" href='data:application/manifest+json,{"name":"Gate","short_name":"Gate","display":"standalone","theme_color":"%23141A22","background_color":"%23141A22","start_url":"."}'>
+<link rel="apple-touch-icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%23141A22"/><path d="M14 44V20M50 44V20" stroke="%237285A0" stroke-width="4" stroke-linecap="round"/><path d="M14 32h36" stroke="%2334C6A2" stroke-width="4" stroke-linecap="round"/></svg>'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root{
+  --bg:#141A22; --surface:#1B2330; --surface2:#222C3B; --line:#2C3849;
+  --text:#E6EBF2; --muted:#8B9AAE; --dim:#5F6E80;
+  --up:#F0524F; --down:#4C8DF0;
+  --open:#34C6A2; --shut:#7285A0; --warn:#DFA33C;
+  --pad:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  font-size:15px; line-height:1.55; letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1;
+  padding-bottom:40px;
+}
+.num{font-variant-numeric:tabular-nums}
+.up{color:var(--up)} .down{color:var(--down)} .muted{color:var(--muted)} .dim{color:var(--dim)}
+
+/* ---- header ---- */
+header{padding:18px var(--pad) 10px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h1{font-size:21px;font-weight:700;letter-spacing:-.02em}
+#stamp{font-size:12px;color:var(--dim);margin-left:auto}
+#stamp.stale{color:var(--warn)}
+
+/* ---- tabs ---- */
+nav{position:sticky;top:0;z-index:10;background:var(--bg);
+    border-bottom:1px solid var(--line);display:flex;padding:0 var(--pad)}
+nav button{flex:1;background:none;border:0;color:var(--dim);font:inherit;font-size:14px;
+    font-weight:600;padding:11px 2px 9px;border-bottom:2px solid transparent;cursor:pointer;
+    font-family:inherit}
+nav button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--open)}
+nav button:focus-visible{outline:2px solid var(--open);outline-offset:-2px}
+
+main{padding:var(--pad);max-width:640px;margin:0 auto}
+section[hidden]{display:none}
+
+/* ---- gate hero ---- */
+.gate{padding:20px 0 22px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.gate-state{display:flex;align-items:center;gap:9px;font-size:19px;font-weight:700}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.gate-why{color:var(--muted);font-size:13.5px;margin-top:5px}
+.track{position:relative;height:34px;margin-top:20px}
+.track-rail{position:absolute;top:13px;left:0;right:0;height:8px;background:var(--surface2);border-radius:4px}
+.track-fill{position:absolute;top:13px;left:0;height:8px;border-radius:4px;background:var(--open);transition:width .4s ease}
+.track-limit{position:absolute;top:6px;width:2px;height:22px;background:var(--warn)}
+.track-labels{position:relative;height:16px;font-size:11.5px;color:var(--dim)}
+.track-labels span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+
+/* ---- cards ---- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+      padding:15px 16px;margin-bottom:11px}
+.card.act{border-color:var(--open)}
+.card.lock{border-color:var(--warn)}
+.card h3{font-size:15.5px;font-weight:700;margin-bottom:3px}
+.card p{font-size:13.5px;color:var(--muted);margin-top:5px}
+.calm{text-align:center;padding:30px 16px;color:var(--muted);font-size:15px;
+      border:1px dashed var(--line);border-radius:12px}
+.calm b{display:block;font-size:17px;color:var(--text);font-weight:700;margin-bottom:5px}
+
+/* ---- rows ---- */
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+     padding:11px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .k{color:var(--muted);font-size:13.5px}
+.row .v{font-weight:600;text-align:right}
+.row .v small{display:block;font-weight:400;font-size:12px;color:var(--dim);margin-top:1px}
+
+h2{font-size:13px;font-weight:700;color:var(--muted);margin:22px 0 8px}
+h2:first-child{margin-top:0}
+
+/* ---- position block ---- */
+.pos{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+     padding:14px 16px;margin-bottom:10px}
+.pos-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.pos-name{font-weight:700;font-size:15.5px}
+.pos-ret{font-weight:700;font-size:16px}
+.pos-sub{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--dim);margin-top:3px}
+.split{display:flex;gap:8px;margin-top:11px;font-size:12.5px}
+.split div{flex:1;background:var(--surface2);border-radius:7px;padding:7px 9px}
+.split .lbl{color:var(--dim);font-size:11.5px}
+.split .val{font-weight:600;margin-top:1px}
+.bars{display:flex;height:7px;border-radius:4px;overflow:hidden;margin-top:14px;background:var(--surface2)}
+.bars i{display:block;height:100%}
+
+/* ---- sparkline ---- */
+svg.spark{display:block;width:100%;height:34px;margin-top:10px;overflow:visible}
+
+.note{font-size:12.5px;color:var(--dim);margin-top:14px;line-height:1.6}
+.err{color:var(--warn);font-size:12.5px;margin-top:10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Gate</h1>
+  <span id="stamp" class="dim">불러오는 중</span>
+</header>
+
+<nav role="tablist">
+  <button role="tab" aria-selected="true"  data-tab="today">오늘</button>
+  <button role="tab" aria-selected="false" data-tab="macro">금리·환율</button>
+  <button role="tab" aria-selected="false" data-tab="book">보유</button>
+  <button role="tab" aria-selected="false" data-tab="log">기록</button>
+</nav>
+
+<main>
+  <section id="today"></section>
+  <section id="macro" hidden></section>
+  <section id="book"  hidden></section>
+  <section id="log"   hidden></section>
+</main>
+
+<script src="holdings.js"></script>
+<script>
+const $ = (s,r=document)=>r.querySelector(s);
+const H = window.HOLDINGS || {positions:[],thesis:{},trades:[]};
+const SECTOR = ["267260.KS","GEV","ETN"];
+const CORE   = ["QQQ"];
+const NAMES  = {"QQQ":"QQQ","267260.KS":"HD현대일렉트릭","GEV":"GE 버노바","ETN":"Eaton"};
+
+const won  = n => n==null?"—":Math.round(n).toLocaleString("ko-KR")+"원";
+const pctS = n => n==null?"—":(n>0?"+":"")+n.toFixed(1)+"%";
+const cls  = n => n==null?"":(n>0?"up":n<0?"down":"");   // 한국식: 상승 빨강 / 하락 파랑
+
+// 탭
+document.querySelectorAll('nav button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('nav button').forEach(x=>x.setAttribute('aria-selected', x===b));
+    ['today','macro','book','log'].forEach(t=>$('#'+t).hidden = (t!==b.dataset.tab));
+    window.scrollTo(0,0);
+  };
+});
+
+function spark(vals,color){
+  if(!vals||vals.length<2) return "";
+  const lo=Math.min(...vals), hi=Math.max(...vals), rng=(hi-lo)||1;
+  const pts=vals.map((v,i)=>`${(i/(vals.length-1)*100).toFixed(2)},${(28-(v-lo)/rng*26).toFixed(2)}`).join(" ");
+  return `<svg class="spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.4"
+      vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`;
+}
+
+function daysSince(d){ if(!d) return 9999;
+  return Math.floor((Date.now()-new Date(d+"T00:00:00+09:00").getTime())/864e5); }
+
+fetch("data.json?v="+Date.now()).then(r=>r.json()).then(render).catch(e=>{
+  $('#today').innerHTML =
+    `<div class="calm"><b>데이터를 불러오지 못했습니다</b>data.json이 아직 생성되지 않았을 수 있습니다.
+     GitHub Actions에서 수집 작업을 한 번 실행해 보세요.</div>`;
+  $('#stamp').textContent="오류";
+});
+
+function render(D){
+  const Q = D.quotes || {};
+  const fx = Q["KRW=X"] ? Q["KRW=X"].price : null;
+
+  // 기준시각
+  const age = (Date.now()-new Date(D.generated_at).getTime())/36e5;
+  const st=$('#stamp');
+  st.textContent = D.generated_at_label + (age>8 ? "  ·  갱신 지연" : "");
+  if(age>8) st.classList.add('stale');
+
+  // ---- 평가 ----
+  const rows = H.positions.map(p=>{
+    const q=Q[p.sym]||{};
+    const isUSD = q.ccy==="USD" || (p.avg_usd!=null);
+    const priceKRW = q.price==null?null : (isUSD && fx ? q.price*fx : q.price);
+    const value = priceKRW!=null ? priceKRW*p.shares : 0;
+    let rKRW=null,rPx=null,rFX=null;
+    if(p.avg_krw && priceKRW!=null) rKRW=(priceKRW/p.avg_krw-1)*100;
+    if(p.avg_usd && q.price!=null && fx){
+      rPx=(q.price/p.avg_usd-1)*100;
+      rFX=(fx/(p.avg_krw/p.avg_usd)-1)*100;
+    }
+    return {...p, q, isUSD, priceKRW, value, rKRW, rPx, rFX,
+            bucket: SECTOR.includes(p.sym)?"sector":"core"};
+  });
+  const total  = rows.reduce((s,r)=>s+r.value,0) + (H.cash_krw||0);
+  const sectorV= rows.filter(r=>r.bucket==="sector").reduce((s,r)=>s+r.value,0);
+  const coreV  = rows.filter(r=>r.bucket==="core").reduce((s,r)=>s+r.value,0);
+  const sectorW= total? sectorV/total*100 : 0;
+  const ceil   = D.sector_ceiling || 35;
+
+  // ---- 트랜치: 발화했고 아직 유효(현재 낙폭이 계단 아래)한 것 ----
+  const acts=[];
+  SECTOR.concat(CORE).forEach(sym=>{
+    const t=(D.tranches||{})[sym]; const q=Q[sym]; if(!t||!q) return;
+    const live=(t.levels||[]).filter(lv=>q.drawdown_pct<=lv);
+    if(!live.length) return;
+    const deepest=Math.min(...live);
+    const fired=(D.tranche_history||[]).find(h=>h.symbol===sym&&h.level===deepest&&h.event==="tranche");
+    const bought=(H.trades||[]).some(tr=>tr.sym===sym&&tr.side==="매수"&&fired&&tr.date>=fired.date);
+    acts.push({sym,level:deepest,q,fired,bought});
+  });
+
+  const sectorActs = acts.filter(a=>SECTOR.includes(a.sym) && !a.bought);
+  const open = sectorW < ceil;
+
+  // ---- Today ----
+  const fillW=Math.min(sectorW/50*100,100);
+  let html = `<div class="gate">
+    <div class="gate-state"><span class="dot" style="background:${open?'var(--open)':'var(--shut)'}"></span>
+      ${open?"매수 가능":"매수 정지"}</div>
+    <div class="gate-why">${open
+      ? `전력기기 ${sectorW.toFixed(1)}% · 상한 ${ceil}%까지 ${won(total*ceil/100-sectorV)} 여유`
+      : `전력기기 ${sectorW.toFixed(1)}%로 상한 초과. 신규 매수만 정지하고 매도는 하지 않습니다. 다음 적립은 QQQ로.`}</div>
+    <div class="track">
+      <div class="track-rail"></div>
+      <div class="track-fill" style="width:${fillW}%;background:${open?'var(--open)':'var(--shut)'}"></div>
+      <div class="track-limit" style="left:${ceil/50*100}%"></div>
+    </div>
+    <div class="track-labels">
+      <span style="left:0;transform:none">0%</span>
+      <span style="left:${ceil/50*100}%;color:var(--warn)">상한 ${ceil}%</span>
+      <span style="left:100%;transform:translateX(-100%)">50%</span>
+    </div>
+  </div>`;
+
+  // 논거 만료 확인
+  const stale = SECTOR.filter(s=>daysSince((H.thesis[s]||{}).updated)>90);
+
+  if(stale.length){
+    html += `<div class="card lock"><h3>논거 갱신이 밀렸습니다</h3>
+      <p>${stale.map(s=>NAMES[s]).join(", ")} — 90일이 지났습니다.
+      갱신 전까지 이 종목의 매수 신호는 잠깁니다. holdings.js의 thesis를 고쳐주세요.</p></div>`;
+  }
+
+  const usable = sectorActs.filter(a=>!stale.includes(a.sym));
+
+  if(!open){
+    html += `<div class="calm"><b>오늘 조치 없음</b>상한을 넘은 상태라 신규 매수 신호를 띄우지 않습니다.</div>`;
+  } else if(usable.length>=2){
+    // 섹터 동시신호 — 하나로 묶음
+    html += `<div class="card act"><h3>섹터 조정 진행 중 · 한 종목만</h3>
+      <p>${usable.map(a=>`${NAMES[a.sym]} ${a.level}%`).join(" · ")} 동시 도달.
+      같은 논거에 걸린 종목들이라 한 번에 사면 상한을 한 번에 뚫습니다. 이번 주는 하나만.</p>
+      ${usable.map(a=>tranchePreview(a,fx,total,sectorV,ceil)).join("")}</div>`;
+  } else if(usable.length===1){
+    const a=usable[0];
+    html += `<div class="card act"><h3>${NAMES[a.sym]} · 52주 고점 대비 ${a.level}% 도달</h3>
+      ${tranchePreview(a,fx,total,sectorV,ceil)}
+      <p>RSI ${a.q.rsi14} · 200일선 ${pctS(a.q.ma200_gap_pct)}</p></div>`;
+  } else if(!stale.length){
+    html += `<div class="calm"><b>오늘 조치 없음</b>계단에 닿은 종목이 없습니다.</div>`;
+  }
+
+  const pen=H.pension||{limit_krw:9000000,paid_krw:0};
+  const inflow=Object.values(H.inflow_2026||{}).reduce((a,b)=>a+b,0);
+  html += `<h2>올해</h2><div class="card">
+    <div class="row"><span class="k">누적 순유입</span><span class="v">${won(inflow)}</span></div>
+    <div class="row"><span class="k">연금계좌 한도</span><span class="v">${won(pen.paid_krw)} / ${won(pen.limit_krw)}
+      <small>${(pen.paid_krw/pen.limit_krw*100).toFixed(0)}% 소진</small></span></div>
+    <div class="row"><span class="k">평가 총액</span><span class="v">${won(total)}</span></div>
+  </div>
+  <p class="note">2029년 9월 — 3년 창구 종료, 구조 재검토.</p>`;
+  $('#today').innerHTML=html;
+
+  // ---- Macro ----
+  const m=(sym,extra="")=>{
+    const q=Q[sym]; if(!q) return "";
+    const u=q.unit||"";
+    return `<div class="pos"><div class="pos-top">
+      <span class="pos-name">${q.name}</span>
+      <span class="pos-ret ${cls(q.day_pct)}">${q.price.toLocaleString("ko-KR")}${u}
+        <small style="display:block;font-size:12px;font-weight:400">${pctS(q.day_pct)}</small></span></div>
+      <div class="pos-sub"><span>20일선 ${pctS((q.price/q.ma20-1)*100)}</span>
+      <span>60일 ${pctS(q.chg60_pct)}</span>
+      <span>52주 ${q.low52.toLocaleString("ko-KR")}~${q.high52.toLocaleString("ko-KR")}</span>${extra}</div>
+      ${spark(q.spark, q.chg60_pct>=0?"var(--up)":"var(--down)")}</div>`;
+  };
+  let mh="";
+  if(D.brief) mh+=`<div class="card"><h3>오늘의 읽을거리</h3><p>${D.brief.replace(/\n/g,"<br>")}</p>
+    <p class="dim" style="font-size:11.5px">${D.brief_at||""}</p></div>`;
+  mh+=`<h2>환율</h2>${m("KRW=X")}`;
+
+  // 내 달러 자산의 가중평균 매입 환율
+  const usdRows = rows.filter(r=>r.shares>0 && r.avg_usd && r.avg_krw);
+  if(usdRows.length && fx){
+    const costKRW = usdRows.reduce((s,r)=>s+r.avg_krw*r.shares,0);
+    const costUSD = usdRows.reduce((s,r)=>s+r.avg_usd*r.shares,0);
+    const basis = costKRW/costUSD;
+    const gap = (fx/basis-1)*100;
+    mh+=`<div class="card"><div class="row"><span class="k">내 달러 자산 평균 매입 환율</span>
+      <span class="v">${Math.round(basis).toLocaleString("ko-KR")}원</span></div>
+      <div class="row"><span class="k">현재 환율과의 차이</span>
+      <span class="v ${cls(gap)}">${pctS(gap)}<small>${gap<0?"추가 매수는 이 환율보다 유리":"추가 매수는 이 환율보다 불리"}</small></span></div>
+      <p class="note">평단 환율은 이미 지난 거래의 기록입니다. 지금 달러를 사는 게 좋은지는
+      이 숫자가 아니라 현재 환율의 절대 수준이 답합니다.</p></div>`;
+  }
+
+  mh+=`
+       <h2>금리</h2>${m("^FVX")}${m("^TNX")}${m("^TYX")}`;
+  if(Q["^TNX"]&&Q["^FVX"]) mh+=`<div class="card"><div class="row">
+     <span class="k">10년 − 5년 스프레드</span>
+     <span class="v">${(Q["^TNX"].price-Q["^FVX"].price).toFixed(2)}%p</span></div></div>`;
+  mh+=`<h2>달러</h2>${m("DX-Y.NYB")}
+     <p class="note">보유 자산의 대부분이 달러 표시입니다. 환율이 20일선 위에 있으면 원화 환산 수익률이
+     주가보다 좋게 보이고, 아래면 반대입니다. 보유 탭의 분해와 함께 보세요.</p>`;
+  $('#macro').innerHTML=mh;
+
+  // ---- Book ----
+  let bh=`<div class="card"><div class="row"><span class="k">코어 (QQQ)</span>
+      <span class="v">${won(coreV)}<small>${total?(coreV/total*100).toFixed(1):0}%</small></span></div>
+    <div class="row"><span class="k">전력기기 3종목</span>
+      <span class="v">${won(sectorV)}<small>${sectorW.toFixed(1)}% · 상한 ${ceil}%</small></span></div>
+    <div class="bars"><i style="width:${total?coreV/total*100:0}%;background:var(--open)"></i>
+      <i style="width:${sectorW}%;background:var(--warn)"></i></div></div>`;
+
+  rows.filter(r=>r.shares>0).forEach(r=>{
+    bh+=`<div class="pos"><div class="pos-top">
+      <div><div class="pos-name">${NAMES[r.sym]||r.sym}</div>
+      <div class="pos-sub"><span>${r.shares}주</span><span>평단 ${won(r.avg_krw)}</span>
+        <span>현재 ${won(r.priceKRW)}</span></div></div>
+      <span class="pos-ret ${cls(r.rKRW)}">${pctS(r.rKRW)}</span></div>`;
+    if(r.rPx!=null){
+      bh+=`<div class="split">
+        <div><div class="lbl">주가 기여</div><div class="val ${cls(r.rPx)}">${pctS(r.rPx)}</div></div>
+        <div><div class="lbl">환율 기여</div><div class="val ${cls(r.rFX)}">${pctS(r.rFX)}</div></div>
+        <div><div class="lbl">원화 합계</div><div class="val ${cls(r.rKRW)}">${pctS(r.rKRW)}</div></div></div>`;
+    } else if(r.isUSD){
+      bh+=`<p class="note">토스에서 $로 토글한 평단을 holdings.js의 avg_usd에 넣으면
+        주가와 환율 기여분이 분리됩니다.</p>`;
+    }
+    bh+=`<div class="pos-sub" style="margin-top:10px">
+      <span>52주 고점 대비 ${pctS(r.q.drawdown_pct)}</span><span>RSI ${r.q.rsi14??"—"}</span>
+      <span>200일선 ${pctS(r.q.ma200_gap_pct)}</span></div></div>`;
+  });
+
+  bh+=`<h2>논거</h2>`;
+  SECTOR.forEach(s=>{
+    const t=H.thesis[s]||{}; const d=daysSince(t.updated);
+    bh+=`<div class="card${d>90?" lock":""}"><h3>${NAMES[s]}</h3>
+      <p>${t.text||"아직 비어 있습니다."}</p>
+      <p class="dim" style="font-size:12px">${t.updated||"—"} · ${d>900?"미작성":d+"일 경과"}${d>90?" · 잠김":""}</p></div>`;
+  });
+  $('#book').innerHTML=bh;
+
+  // ---- Log ----
+  let lh=`<h2>매매</h2>`;
+  if((H.trades||[]).length){
+    H.trades.slice().reverse().forEach(t=>{
+      lh+=`<div class="card"><h3>${t.date} · ${t.name||NAMES[t.sym]||t.sym} ${t.side}</h3>
+        <p>${t.shares}주 @ ${won(t.price_krw)}${t.note?" — "+t.note:""}</p></div>`;
+    });
+  } else lh+=`<div class="calm">아직 기록이 없습니다. holdings.js의 trades에 추가하세요.</div>`;
+
+  lh+=`<h2>계단 이력</h2>`;
+  const hist=(D.tranche_history||[]).filter(h=>h.event==="tranche");
+  if(hist.length){
+    lh+=`<div class="card">`+hist.slice(0,20).map(h=>
+      `<div class="row"><span class="k">${h.date} · ${h.name||h.symbol}</span>
+       <span class="v down">${h.level}%<small>${(h.price||0).toLocaleString("ko-KR")}</small></span></div>`).join("")+`</div>`;
+  } else lh+=`<div class="calm">발화한 계단이 없습니다.</div>`;
+
+  lh+=`<h2>월별 순유입</h2><div class="card">`+
+    Object.entries(H.inflow_2026||{}).map(([k,v])=>
+      `<div class="row"><span class="k">2026-${k}</span><span class="v">${won(v)}</span></div>`).join("")+`</div>`;
+
+  if((D.errors||[]).length)
+    lh+=`<p class="err">수집 실패: ${D.errors.map(e=>e.symbol).join(", ")}</p>`;
+  $('#log').innerHTML=lh;
+}
+
+function tranchePreview(a,fx,total,sectorV,ceil){
+  const q=a.q;
+  const one = q.ccy==="USD"&&fx ? q.price*fx : q.price;
+  // 대기 현금으로 못 채우는 만큼은 신규 유입이므로 총액도 함께 늘어난다
+  const fresh = Math.max(0, one - (H.cash_krw||0));
+  const after=(sectorV+one)/(total+fresh)*100;
+  const blocked=after>ceil;
+  return `<div class="row"><span class="k">${NAMES[a.sym]} 1주</span>
+    <span class="v">${won(one)}<small>매수 후 전력기기 ${after.toFixed(1)}%${blocked?" · 상한 초과":""}</small></span></div>`;
+}
+</script>
+</body>
+</html>
