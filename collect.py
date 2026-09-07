@@ -58,8 +58,13 @@ SYMBOLS = [
      "src": [("stooq", "dx.f"), ("yahoo", "DX-Y.NYB")]},
 ]
 
-TRANCHE_LEVELS = [-15.0, -25.0, -35.0]
+TRANCHE_LEVELS = [-15.0, -25.0, -35.0]   # (구버전 호환용, 더는 쓰지 않음)
 SECTOR_CEILING = 35.0
+
+TARGET_PER_YEAR = 2.5      # 종목별 매도·추매 신호 목표 빈도 (연)
+SELL_MAX_PER_YEAR = 3.0    # 매도 신호 상한 — 이 빈도를 넘는 문턱은 아예 후보에서 제외
+SELL_CLAMP = (6.0, 70.0)   # 매도 문턱 허용 범위 (200일선 대비 %)
+BUY_CLAMP  = (-40.0, -4.0) # 추매 문턱 허용 범위
 
 
 # ---------- HTTP ----------
@@ -176,6 +181,101 @@ def rsi(vals, n=14):
     return 100.0 - (100.0 / (1.0 + ag / al))
 
 
+def percentile(sorted_vals, p):
+    if not sorted_vals:
+        return None
+    k = (len(sorted_vals) - 1) * (p / 100.0)
+    lo, hi = int(k), min(int(k) + 1, len(sorted_vals) - 1)
+    return sorted_vals[lo] + (sorted_vals[hi] - sorted_vals[lo]) * (k - lo)
+
+
+def deviations(vals, n=200):
+    """각 시점의 200일선 대비 이격도(%) 시계열."""
+    out = []
+    run = sum(vals[:n])
+    out.append((vals[n - 1] / (run / n) - 1) * 100.0)
+    for i in range(n, len(vals)):
+        run += vals[i] - vals[i - n]
+        out.append((vals[i] / (run / n) - 1) * 100.0)
+    return out
+
+
+def count_events(devs, thr, mid, up):
+    """
+    문턱을 넘는 '사건' 수. 한 번 발화하면 중앙값으로 돌아올 때까지 재발화하지 않는다.
+    연속된 며칠간의 초과를 한 건으로 셈하기 위한 장치.
+    반환: (사건수, 마지막 발화 인덱스, 현재 무장 여부)
+    """
+    n, armed, last = 0, True, None
+    for i, d in enumerate(devs):
+        hit = d >= thr if up else d <= thr
+        if hit and armed:
+            n += 1
+            armed = False
+            last = i
+        elif not armed and ((d <= mid) if up else (d >= mid)):
+            armed = True
+    return n, last, armed
+
+
+def calibrate(vals):
+    """
+    이 종목의 2년 이격도 분포에서, 연 TARGET_PER_YEAR회쯤 나오는 문턱을 찾는다.
+    백분위를 훑으며 실제 사건 수를 세고 목표에 가장 가까운 값을 고른다.
+    """
+    if len(vals) < 260:
+        return None
+    devs = deviations(vals)
+    if len(devs) < 120:
+        return None
+    years = max(len(devs) / 252.0, 0.5)
+    srt = sorted(devs)
+    mid = percentile(srt, 50)
+
+    def pick(prange, up):
+        cands, fallback = [], None
+        for p in prange:
+            thr = percentile(srt, p)
+            clamp = SELL_CLAMP if up else BUY_CLAMP
+            thr = max(clamp[0], min(clamp[1], thr))
+            n, last, armed = count_events(devs, thr, mid, up)
+            rate = n / years
+            rec = {"thr": round(thr, 1), "events": n, "per_year": round(rate, 1),
+                   "armed": armed,
+                   "days_since": (len(devs) - 1 - last) if last is not None else None}
+            # 매도는 연 SELL_MAX_PER_YEAR 회를 넘는 문턱을 후보에서 제외한다
+            if up and rate > SELL_MAX_PER_YEAR:
+                if fallback is None or rate < fallback[0]:
+                    fallback = (rate, rec)
+                continue
+            cands.append((abs(rate - TARGET_PER_YEAR), rec))
+        if not cands:
+            return fallback[1] if fallback else None
+        cands.sort(key=lambda x: x[0])
+        return cands[0][1]
+
+    # 20/60/200 배열 — 트리거가 아니라 맥락 표시용
+    m20, m60, m200 = sma(vals, 20), sma(vals, 60), sma(vals, 200)
+    align = None
+    if m20 and m60 and m200:
+        if m20 > m60 > m200:
+            align = "정배열"
+        elif m20 < m60 < m200:
+            align = "역배열"
+        else:
+            align = "혼조"
+
+    return {
+        "years": round(years, 1),
+        "median_dev": round(mid, 1),
+        "current_dev": round(devs[-1], 1),
+        "align": align,
+        "ma60_gap": round((vals[-1] / m60 - 1) * 100, 1) if m60 else None,
+        "sell": pick(range(55, 100), True),
+        "buy": pick(range(1, 46), False),
+    }
+
+
 def pct(a, b):
     return None if not b else (a / b - 1.0) * 100.0
 
@@ -213,6 +313,9 @@ def analyze(entry):
             out["chg60_pct"] = round(pct(price, vals[-61]), 2)
         if entry["kind"] == "position":
             out["bucket"], out["ccy"] = entry["bucket"], entry["ccy"]
+            cal = calibrate(vals)
+            if cal:
+                out["cal"] = cal
         else:
             out["unit"] = entry.get("unit", "")
         return out, src_name
@@ -268,7 +371,11 @@ def main():
             q, src = analyze(entry)
             quotes.append(q)
             used[entry["sym"]] = src
-            print(f"  ok   {entry['sym']:<12} ({src})  {q['price']}")
+            c = q.get("cal")
+            extra = (f"  이격 {c['current_dev']:+.1f}%  매도 {c['sell']['thr']:+.1f}%"
+                     f"({c['sell']['per_year']}/yr)  추매 {c['buy']['thr']:+.1f}%"
+                     f"({c['buy']['per_year']}/yr)") if c else ""
+            print(f"  ok   {entry['sym']:<12} ({src})  {q['price']}{extra}")
         except Exception as e:  # noqa: BLE001
             errors.append({"symbol": entry["sym"], "error": str(e)[:300]})
             print(f"  FAIL {entry['sym']}: {e}", file=sys.stderr)
