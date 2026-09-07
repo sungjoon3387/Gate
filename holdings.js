@@ -6,6 +6,8 @@
    avg_usd : 토스증권 '$' 로 토글했을 때의 1주 평균 금액 (해외종목만)
              → 둘 다 넣으면 Book 탭에서 주가 기여분과 환율 기여분이
                분리되어 보입니다. 비워두면 원화 수익률만 표시됩니다.
+   target_shares : 아직 다 못 채운 편입 목표. 미달이면 오늘 탭에 편입 카드가 뜹니다.
+                   다 채우면 이 줄을 지우세요.
    ============================================================ */
 
 window.HOLDINGS = {
@@ -15,7 +17,7 @@ window.HOLDINGS = {
     { sym: "QQQ",       shares: 11, avg_krw: 1018364, avg_usd: null },
     { sym: "267260.KS", shares: 2,  avg_krw: 706000 },
     { sym: "GEV",       shares: 1,  avg_krw: 1289084, avg_usd: null },
-    { sym: "ETN",       shares: 0,  avg_krw: 0,       avg_usd: null }
+    { sym: "ETN",       shares: 0,  avg_krw: 0,       avg_usd: null, target_shares: 4 }
   ],
 
   // 이번 달 예정 적립액과 대기 현금 (원)
