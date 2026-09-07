@@ -369,8 +369,14 @@ function render(D){
     Object.entries(H.inflow_2026||{}).map(([k,v])=>
       `<div class="row"><span class="k">2026-${k}</span><span class="v">${won(v)}</span></div>`).join("")+`</div>`;
 
+  if(D.sources){
+    lh+=`<h2>데이터 소스</h2><div class="card">`+
+      Object.entries(D.sources).map(([k,v])=>
+        `<div class="row"><span class="k">${NAMES[k]||(Q[k]&&Q[k].name)||k}</span>
+         <span class="v">${v}</span></div>`).join("")+`</div>`;
+  }
   if((D.errors||[]).length)
-    lh+=`<p class="err">수집 실패: ${D.errors.map(e=>e.symbol).join(", ")}</p>`;
+    lh+=`<p class="err">수집 실패: ${D.errors.map(e=>e.symbol+" ("+e.error.slice(0,60)+")").join(" / ")}</p>`;
   $('#log').innerHTML=lh;
 }
 
