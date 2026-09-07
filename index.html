@@ -229,21 +229,6 @@ function render(D){
   const sectorW= total? sectorV/total*100 : 0;
   const ceil   = D.sector_ceiling || 35;
 
-  // ---- 트랜치: 발화했고 아직 유효(현재 낙폭이 계단 아래)한 것 ----
-  const acts=[];
-  SECTOR.concat(CORE).forEach(sym=>{
-    const t=(D.tranches||{})[sym]; const q=Q[sym]; if(!t||!q) return;
-    const live=(t.levels||[]).filter(lv=>q.drawdown_pct<=lv);
-    if(!live.length) return;
-    const deepest=Math.min(...live);
-    const fired=(D.tranche_history||[]).find(h=>h.symbol===sym&&h.level===deepest&&h.event==="tranche");
-    const bought=(H.trades||[]).some(tr=>tr.sym===sym&&tr.side==="매수"&&fired&&tr.date>=fired.date);
-    acts.push({sym,level:deepest,q,fired,bought});
-  });
-
-  const sectorActs = acts.filter(a=>SECTOR.includes(a.sym) && !a.bought);
-  const open = sectorW < ceil;
-
   // ---- Today ----
   // 환율 국면: 20일선 대비 위치로 국내/해외 어느 쪽이 유리한지
   const fxq = Q["KRW=X"];
@@ -274,7 +259,6 @@ function render(D){
 
   // 논거 만료 확인
   const stale = SECTOR.filter(s=>daysSince((H.thesis[s]||{}).updated)>90);
-  const usable = sectorActs.filter(a=>!stale.includes(a.sym));
   const acts_out = [];
 
   // ⓪ 편입 미달 — 목표 주식 수에 못 미치는 종목
@@ -303,31 +287,47 @@ function render(D){
       note:"신규 편입은 계단과 무관합니다. 눌림을 기다리는 게 아니라 자리를 만드는 매수입니다."});
   });
 
-  // ① 매수 후보
-  if(usable.length){
-    const multi = usable.length>=2;
-    usable.forEach((a,i)=>{
-      const q=a.q;
-      const one = q.ccy==="USD"&&fx ? q.price*fx : q.price;
-      const fresh = Math.max(0, one-(H.cash_krw||0));
-      const after = (sectorV+one)/(total+fresh)*100;
-      const over = after>ceil;
-      const why=[];
-      why.push(`52주 고점 ${q.high52.toLocaleString("ko-KR")} 대비 ${pctS(q.drawdown_pct)} — ${a.level}% 계단 통과`);
-      if(q.rsi14!=null) why.push(`RSI ${q.rsi14} ${q.rsi14<40?"(과매도권)":q.rsi14>60?"(과열권)":"(중립)"}`);
-      if(q.ma200_gap_pct!=null) why.push(`200일선 대비 ${pctS(q.ma200_gap_pct)}`);
-      why.push(`1주 ${won(one)} · 매수 후 전력기기 ${after.toFixed(1)}%${over?` — 기준선 ${ceil}% 초과`:""}`);
-      if(fxSide==="kr" && q.ccy==="USD")
-        why.push(`달러원 20일선 대비 ${pctS(fxGap)} — 달러 매수가 불리한 국면. 같은 논거면 HD현대일렉트릭 쪽이 유리합니다`);
-      if(fxSide==="us" && q.ccy==="USD")
-        why.push(`달러원 20일선 대비 ${pctS(fxGap)} — 달러 매수에 유리한 국면`);
-      if(a.fired) why.push(`계단 발화일 ${a.fired.date}, 이후 매수 기록 없음`);
-      acts_out.push({cls:"buy", head:`매수 검토 · ${NAMES[a.sym]} 1주`, why,
-        note: multi&&i===0
-          ? "세 종목이 같은 논거에 걸려 있습니다. 한 번에 다 사면 섹터 하나에 몰리니 순서를 정하세요."
-          : null});
-    });
-  }
+  // ① 급등·급락 판정 (종목별 200일선 이격도, 연 2~3회 빈도로 자동 보정된 문턱)
+  const NO_SELL = ["QQQ"];   // 코어는 무한 적립 — 매도 대상 아님
+  rows.filter(r=>r.shares>0 && r.q && r.q.cal).forEach(r=>{
+    const c=r.q.cal, dev=c.current_dev, sym=r.sym;
+    const one = r.q.ccy==="USD"&&fx ? r.q.price*fx : r.q.price;
+
+    // 급등 — 보유량 30% 매도
+    if(dev>=c.sell.thr && c.sell.armed && !NO_SELL.includes(sym)){
+      const n=Math.floor(r.shares*0.3);
+      const why=[
+        `200일선 대비 ${pctS(dev)} — 매도 문턱 ${pctS(c.sell.thr)} 통과`,
+        `이 문턱은 이 종목의 지난 ${c.years}년 이력에서 연 ${c.sell.per_year}회 나오는 자리입니다`,
+        n>0 ? `보유 ${r.shares}주의 30% = ${n}주 · ${won(one*n)}`
+            : `보유 ${r.shares}주라 30%가 1주에 못 미칩니다 — 실행 불가`,
+        `평가 ${pctS(r.rKRW)}`
+      ];
+      if(c.align) why.push(`20/60/200일선 ${c.align}`);
+      acts_out.push({cls:"trim", head:`급등 · ${NAMES[sym]} ${n>0?n+"주 매도":"매도 보류"}`, why,
+        note:"중앙값(200일선 대비 "+pctS(c.median_dev)+")으로 돌아오기 전까지 다시 뜨지 않습니다."});
+    }
+
+    // 급락 — 30% 추매
+    else if(dev<=c.buy.thr && c.buy.armed){
+      const n=Math.max(1,Math.round(r.shares*0.3));
+      const deep = dev <= c.buy.thr-10;
+      const why=[
+        `200일선 대비 ${pctS(dev)} — 추매 문턱 ${pctS(c.buy.thr)} 통과`,
+        `이 문턱은 지난 ${c.years}년 이력에서 연 ${c.buy.per_year}회 나오는 자리입니다`,
+        `보유 ${r.shares}주의 30% = ${n}주 · ${won(one*n)}`,
+        `RSI ${r.q.rsi14} · 52주 고점 대비 ${pctS(r.q.drawdown_pct)}`
+      ];
+      if(fxSide==="kr" && r.q.ccy==="USD")
+        why.push(`달러원 20일선 대비 ${pctS(fxGap)} — 달러 매수가 불리한 국면`);
+      if(c.align) why.push(`20/60/200일선 ${c.align}${c.align==="역배열"?" — 추세 자체가 꺾여 있다는 맥락 (신호 아님)":""}`);
+      if(deep) why.push(`문턱보다 10%p 더 내려온 자리입니다 — 추세가 꺾였을 가능성`);
+      acts_out.push({cls: deep?"trim":"buy",
+        head:`급락 · ${NAMES[sym]} ${deep?"논거 확인 후 추매":n+"주 추매"}`, why,
+        note: deep ? "이 깊이에서는 규칙보다 논거가 먼저입니다. 보유 이유를 다시 쓰고 나서 실행하세요."
+                  : null});
+    }
+  });
 
   // ② 환율 국면
   if(fxSide && fxSide!=="mid"){
@@ -370,14 +370,13 @@ function render(D){
 
   // ⑥ 아무것도 없을 때 — 왜 없는지
   if(!acts_out.length){
-    const near = SECTOR.map(x=>{
-      const q=Q[x]; if(!q) return null;
-      const nxt = TR_LEVELS.find(lv=>q.drawdown_pct>lv);
-      return nxt==null?null:`${NAMES[x]} ${pctS(q.drawdown_pct)} (다음 계단 ${nxt}%)`;
-    }).filter(Boolean);
-    acts_out.push({cls:"info", head:"오늘 조치 없음",
-      why: near.length?near:["계단에 닿은 종목이 없습니다"],
-      note:"조용한 날이 많은 게 정상입니다."});
+    const lines = rows.filter(r=>r.shares>0 && r.q && r.q.cal).map(r=>{
+      const c=r.q.cal;
+      return `${NAMES[r.sym]} 200일선 ${pctS(c.current_dev)} · 정상 구간 (${pctS(c.buy.thr)} ~ ${pctS(c.sell.thr)})`;
+    });
+    acts_out.push({cls:"info", head:"오늘 조치 없음 · 적립만",
+      why: lines.length?lines:["판정에 필요한 이력이 아직 부족합니다"],
+      note:"조용한 날이 많은 게 정상입니다. 문턱은 종목마다 연 2~3회 나오도록 맞춰져 있습니다."});
   }
 
   html += `<h2>오늘의 판단</h2><div class="act-list">` + acts_out.map(a=>
@@ -484,13 +483,19 @@ function render(D){
     });
   } else lh+=`<div class="calm">아직 기록이 없습니다. holdings.js의 trades에 추가하세요.</div>`;
 
-  lh+=`<h2>계단 이력</h2>`;
-  const hist=(D.tranche_history||[]).filter(h=>h.event==="tranche");
-  if(hist.length){
-    lh+=`<div class="card">`+hist.slice(0,20).map(h=>
-      `<div class="row"><span class="k">${h.date} · ${h.name||h.symbol}</span>
-       <span class="v down">${h.level}%<small>${(h.price||0).toLocaleString("ko-KR")}</small></span></div>`).join("")+`</div>`;
-  } else lh+=`<div class="calm">발화한 계단이 없습니다.</div>`;
+  lh+=`<h2>종목별 문턱</h2>`;
+  const cals = Object.values(Q).filter(q=>q.cal);
+  if(cals.length){
+    lh+=`<div class="card">`+cals.map(q=>{
+      const c=q.cal;
+      return `<div class="row"><span class="k">${NAMES[q.symbol]||q.name}
+        <small style="display:block;color:var(--dim);font-size:11.5px">현재 ${pctS(c.current_dev)} · ${c.align||"—"} · ${c.years}년 이력</small></span>
+        <span class="v">${pctS(c.buy.thr)} ~ ${pctS(c.sell.thr)}
+        <small>추매 ${c.buy.per_year}회/년 · 매도 ${c.sell.per_year}회/년</small></span></div>`;
+    }).join("")+`</div>
+    <p class="note">200일선 대비 이격도 기준입니다. 문턱은 각 종목의 실제 이력에서
+    연 2~3회 나오는 지점을 역산해 매일 다시 계산됩니다. 추세선이 올라가면 문턱도 같이 올라갑니다.</p>`;
+  } else lh+=`<div class="calm">문턱 계산에 필요한 이력이 아직 부족합니다.</div>`;
 
   lh+=`<h2>월별 순유입</h2><div class="card">`+
     Object.entries(H.inflow_2026||{}).map(([k,v])=>
