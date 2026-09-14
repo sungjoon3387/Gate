@@ -15,7 +15,8 @@
   "GEV": {
    "high52": 1174.86,
    "levels": [
-    -15.0
+    -15.0,
+    -25.0
    ]
   },
   "ETN": {
@@ -59,6 +60,15 @@
    "level": -15.0,
    "price": 941.95,
    "drawdown": -19.82
+  },
+  {
+   "date": "2026-09-15",
+   "symbol": "GEV",
+   "name": "GE 버노바",
+   "event": "tranche",
+   "level": -25.0,
+   "price": 874.76,
+   "drawdown": -25.54
   }
  ]
 }
