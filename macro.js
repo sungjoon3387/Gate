@@ -185,3 +185,149 @@ window.MACRO_CONTEXT = {
     setTimeout(function () { if (DOC) render(DOC); }, 80);
   });
 })();
+/* ==================== 이하 렌더러 ====================
+   index.html 의 render() 가 $('#macro').innerHTML 을 통째로 덮어쓰기 때문에,
+   한 번 붙이고 끝내면 지워집니다. 아래는 #macro 를 계속 감시해 다시 붙입니다.
+   ==================================================== */
+(function () {
+  "use strict";
+  var C = window.MACRO_CONTEXT;
+  var DOC = null;
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function num(v, unit) {
+    if (v == null) return "-";
+    return (Math.round(v * 1000) / 1000).toLocaleString("ko-KR") + (unit || "");
+  }
+  function sgn(v, unit) {
+    if (v == null) return "-";
+    return (v > 0 ? "+" : "") + (Math.round(v * 1000) / 1000) + (unit || "");
+  }
+
+  function style() {
+    if (document.getElementById("gm-style")) return;
+    var css = [
+      "#gm{margin:0 0 22px}",
+      ".gm-h{font-size:13px;font-weight:700;color:var(--muted,#8B9AAE);margin:0 0 8px}",
+      ".gm-box{border-radius:12px;border:1px solid var(--line,#2C3849);",
+      "background:var(--surface,#1B2330);padding:14px 16px;margin:0 0 11px}",
+      ".gm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:13px}",
+      ".gm-i .l{font-size:11.5px;color:var(--dim,#5F6E80);margin-bottom:3px}",
+      ".gm-i .v{font-size:19px;font-weight:700;color:var(--text,#E6EBF2);line-height:1.15}",
+      ".gm-i .d{font-size:11.5px;color:var(--dim,#5F6E80);margin-top:3px}",
+      ".gm-up{color:var(--up,#F0524F)}.gm-dn{color:var(--down,#4C8DF0)}",
+      ".gm-chain{border-radius:12px;border:1px solid var(--line,#2C3849);",
+      "background:var(--surface,#1B2330);padding:14px 16px;margin:0 0 10px}",
+      ".gm-chain h4{margin:0 0 4px;font-size:15px;font-weight:700;color:var(--text,#E6EBF2)}",
+      ".gm-path{font-size:11.5px;color:var(--dim,#5F6E80);margin:0 0 9px;line-height:1.5}",
+      ".gm-v{display:inline-block;font-size:11.5px;font-weight:700;padding:3px 10px;",
+      "border-radius:999px;margin:0 0 9px}",
+      ".gm-v.warn{background:rgba(240,82,79,.16);color:#F0524F}",
+      ".gm-v.watch{background:rgba(223,163,60,.16);color:#DFA33C}",
+      ".gm-v.ok{background:rgba(52,198,162,.15);color:#34C6A2}",
+      ".gm-chain p{margin:0;font-size:13.5px;line-height:1.62;color:var(--muted,#8B9AAE)}",
+      ".gm-ctx{border-left:2px solid var(--line,#2C3849);padding:2px 0 2px 12px;margin:0 0 13px}",
+      ".gm-ctx:last-of-type{margin-bottom:6px}",
+      ".gm-ctx .r{font-size:13.5px;font-weight:700;color:var(--text,#E6EBF2)}",
+      ".gm-ctx .w{font-size:11.5px;color:var(--dim,#5F6E80);margin:2px 0 6px}",
+      ".gm-ctx p{margin:0 0 5px;font-size:13px;line-height:1.6;color:var(--muted,#8B9AAE)}",
+      ".gm-foot{font-size:11.5px;color:var(--dim,#5F6E80);margin-top:8px}",
+      ".gm-err{font-size:11.5px;color:var(--warn,#DFA33C);margin-top:8px}"
+    ].join("");
+    var el = document.createElement("style");
+    el.id = "gm-style";
+    el.textContent = css;
+    document.head.appendChild(el);
+  }
+
+  function vclass(v) {
+    if (!v) return "";
+    if (/경고/.test(v)) return "warn";
+    if (/관찰|소폭|역풍|스티프닝/.test(v)) return "watch";
+    return "ok";
+  }
+
+  function build(doc) {
+    var i = doc.indicators || {};
+    var h = '<div id="gm">';
+
+    var order = ["real10", "ig", "ust2", "ust5", "ust10", "ust30", "be10", "dxy", "usdkrw"];
+    h += '<div class="gm-h">판정을 바꾸는 지표</div><div class="gm-box"><div class="gm-grid">';
+    order.forEach(function (k) {
+      var d = i[k];
+      if (!d) return;
+      var cls = d.chg_60d > 0 ? "gm-up" : (d.chg_60d < 0 ? "gm-dn" : "");
+      h += '<div class="gm-i"><div class="l">' + esc(d.label) + "</div>";
+      h += '<div class="v">' + num(d.value, d.unit) + "</div>";
+      h += '<div class="d">60일 <span class="' + cls + '">' + sgn(d.chg_60d) + "</span>";
+      if (d.pctile_5y != null) h += " · 5년 " + d.pctile_5y + "%";
+      h += "</div></div>";
+    });
+    h += "</div></div>";
+
+    h += '<div class="gm-h">인과 사슬</div>';
+    (doc.chains || []).forEach(function (c) {
+      h += '<div class="gm-chain"><h4>' + esc(c.title) + "</h4>";
+      h += '<div class="gm-path">' + esc(c.path) + "</div>";
+      if (c.verdict) h += '<span class="gm-v ' + vclass(c.verdict) + '">' + esc(c.verdict) + "</span>";
+      h += "<p>" + esc(c.text) + "</p></div>";
+    });
+
+    h += '<div class="gm-h">분기 맥락 · 판정 미연결</div><div class="gm-box">';
+    C.blocks.forEach(function (b) {
+      h += '<div class="gm-ctx"><div class="r">' + esc(b.region) + "</div>";
+      h += '<div class="w">비중 ' + esc(b.weight) + "</div>";
+      h += "<p>" + esc(b.text) + "</p>";
+      h += '<p style="color:var(--dim,#5F6E80)">볼 것 · ' + esc(b.watch) + "</p></div>";
+    });
+    h += '<div class="gm-foot">갱신 ' + esc(C.updated) + " · " + esc(C.note) + "</div></div>";
+
+    if ((doc.errors || []).length) {
+      h += '<div class="gm-err">수집 실패: ' +
+        doc.errors.map(function (e) { return esc(e.src); }).join(" / ") + "</div>";
+    }
+    h += '<div class="gm-foot">macro 수집 ' +
+      esc(String(doc.generated_at || "").slice(0, 16).replace("T", " ")) + "</div>";
+    return h + "</div>";
+  }
+
+  // #macro 섹션이 1순위. 없으면 텍스트로 금리 블록을 찾는다.
+  function host() {
+    var el = document.getElementById("macro");
+    if (el) return el;
+    var nodes = document.querySelectorAll("div,section");
+    var best = null, len = Infinity;
+    for (var n = 0; n < nodes.length; n++) {
+      var t = nodes[n].textContent || "";
+      if (t.indexOf("미국채 5년") === -1 || t.indexOf("미국채 30년") === -1) continue;
+      if (t.length < len) { len = t.length; best = nodes[n]; }
+    }
+    return best;
+  }
+
+  function paint() {
+    if (!DOC) return;
+    var el = host();
+    if (!el) return;
+    if (el.querySelector("#gm")) return;      // 이미 붙어 있음
+    style();
+    el.insertAdjacentHTML("afterbegin", build(DOC));
+  }
+
+  fetch("macro.json", { cache: "no-cache" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (j) { if (j) { DOC = j; paint(); } })
+    .catch(function () {});
+
+  // index.html 의 render() 가 innerHTML 을 덮어쓰면 다시 붙인다 — 멈추지 않는다
+  if (window.MutationObserver) {
+    new MutationObserver(function () { paint(); })
+      .observe(document.body, { childList: true, subtree: true });
+  }
+  setInterval(paint, 1000);
+  document.addEventListener("click", function () { setTimeout(paint, 80); });
+})();
