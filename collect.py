@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """
-Gate — 데이터 수집기 v2
+Gate — 데이터 수집기 v3
 
 Yahoo가 GitHub Actions IP를 429로 막는 문제 때문에 소스를 다중화했습니다.
 심볼마다 소스를 순서대로 시도하고, 처음 성공한 것을 씁니다.
 어떤 소스가 먹혔는지 로그와 data.json에 남기므로, 안 되는 소스는 나중에 지우면 됩니다.
 
+  fred  : api.stlouisfed.org        — 미국 금리·환율 공식 시계열, 키 필요 (FRED_API)
+  ecos  : ecos.bok.or.kr            — 한국은행 환율·금리, 키 필요 (ECOS_API)
   stooq : https://stooq.com/q/d/l/  — CSV, 키 없음, 봇 차단 거의 없음
-  naver : api.finance.naver.com    — 국내 종목용
-  yahoo : query1.finance.yahoo.com — 최후 수단
+  naver : api.finance.naver.com     — 국내 종목용
+  yahoo : query1.finance.yahoo.com  — 최후 수단
 
+키가 없으면 해당 소스는 조용히 건너뛰고 다음 소스로 넘어갑니다.
 표준 라이브러리만 사용합니다.
 """
 
@@ -35,6 +38,20 @@ TRANCHE_PATH = os.path.join(BASE, "tranches.json")
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
 
+# API 키 — GitHub Actions secrets에서 주입됩니다.
+FRED_KEY = os.environ.get("FRED_API", "").strip()
+ECOS_KEY = os.environ.get("ECOS_API", "").strip()
+
+
+def scrub(text):
+    """data.json은 공개 저장소에 커밋되므로, 에러 문구에 키가 섞여 나가지 않게 지웁니다."""
+    s = str(text)
+    for k in (FRED_KEY, ECOS_KEY):
+        if k and len(k) >= 8:
+            s = s.replace(k, "***")
+    return s
+
+
 # 심볼별 소스 후보. (소스이름, 그 소스에서의 코드) 순서대로 시도합니다.
 SYMBOLS = [
     {"sym": "QQQ", "name": "QQQ", "kind": "position", "bucket": "core", "ccy": "USD",
@@ -46,14 +63,20 @@ SYMBOLS = [
     {"sym": "ETN", "name": "Eaton", "kind": "position", "bucket": "sector", "ccy": "USD",
      "src": [("stooq", "etn.us"), ("yahoo", "ETN")]},
 
+    # ECOS 매매기준율이 가장 빠르고 정확. 실패하면 stooq/yahoo로 폴백.
     {"sym": "KRW=X", "name": "달러원", "kind": "macro", "unit": "원",
-     "src": [("stooq", "usdkrw"), ("yahoo", "KRW=X")]},
+     "src": [("ecos", "731Y001/D/0000001"), ("stooq", "usdkrw"), ("yahoo", "KRW=X")]},
+
+    # 미국채 금리는 FRED가 원본. stooq/yahoo와 값이 사실상 같아 폴백해도 이어집니다.
     {"sym": "^FVX", "name": "미국채 5년", "kind": "macro", "unit": "%",
-     "src": [("stooq", "5usy.b"), ("yahoo", "^FVX")]},
+     "src": [("fred", "DGS5"), ("stooq", "5usy.b"), ("yahoo", "^FVX")]},
     {"sym": "^TNX", "name": "미국채 10년", "kind": "macro", "unit": "%",
-     "src": [("stooq", "10usy.b"), ("yahoo", "^TNX")]},
+     "src": [("fred", "DGS10"), ("stooq", "10usy.b"), ("yahoo", "^TNX")]},
     {"sym": "^TYX", "name": "미국채 30년", "kind": "macro", "unit": "%",
-     "src": [("stooq", "30usy.b"), ("yahoo", "^TYX")]},
+     "src": [("fred", "DGS30"), ("stooq", "30usy.b"), ("yahoo", "^TYX")]},
+
+    # 달러지수(DXY)는 FRED에 없습니다. FRED의 DTWEXBGS는 광의 무역가중 지수라
+    # 레벨 자체가 달라(≈120 vs ≈98) 섞으면 이격도가 튀므로 넣지 않았습니다.
     {"sym": "DX-Y.NYB", "name": "달러지수", "kind": "macro", "unit": "",
      "src": [("stooq", "dx.f"), ("yahoo", "DX-Y.NYB")]},
 ]
@@ -85,11 +108,70 @@ def fetch(url, retries=2, expect_json=False):
         except Exception as e:  # noqa: BLE001
             last = e
             time.sleep(1.5 + i * 2 + random.random())
-    raise last
+    raise RuntimeError(scrub(last))
 
 
 # ---------- 소스별 시계열 로더 ----------
 # 모두 (dates, closes) 를 오래된 것 → 최신 순으로 돌려줍니다.
+
+def from_fred(series_id):
+    if not FRED_KEY:
+        raise ValueError("fred: FRED_API 키 없음")
+    start = (datetime.now(KST) - timedelta(days=800)).strftime("%Y-%m-%d")
+    url = ("https://api.stlouisfed.org/fred/series/observations"
+           "?series_id=" + urllib.parse.quote(series_id) +
+           "&api_key=" + urllib.parse.quote(FRED_KEY) +
+           "&file_type=json&observation_start=" + start)
+    raw = fetch(url, expect_json=True)
+
+    dates, vals = [], []
+    for o in raw.get("observations", []):
+        v = (o.get("value") or "").strip()
+        if v in ("", ".", "NA"):      # 휴일은 마침표로 채워져 옵니다
+            continue
+        try:
+            vals.append(float(v))
+            dates.append(o["date"])
+        except (ValueError, KeyError):
+            continue
+    if len(vals) < 30:
+        raise ValueError(f"fred: 데이터 부족 ({len(vals)}건)")
+    return dates, vals
+
+
+def from_ecos(spec):
+    """spec = '통계표코드/주기/항목코드'  예: 731Y001/D/0000001 (원/달러 매매기준율)"""
+    if not ECOS_KEY:
+        raise ValueError("ecos: ECOS_API 키 없음")
+    stat, cycle, item = spec.split("/")
+    end = datetime.now(KST)
+    start = end - timedelta(days=800)
+    url = ("https://ecos.bok.or.kr/api/StatisticSearch/" +
+           urllib.parse.quote(ECOS_KEY) + "/json/kr/1/1000/" +
+           f"{stat}/{cycle}/{start:%Y%m%d}/{end:%Y%m%d}/{item}")
+    raw = fetch(url, expect_json=True)
+
+    # 에러일 때는 {"RESULT": {"CODE": ..., "MESSAGE": ...}} 형태로 옵니다
+    if "RESULT" in raw:
+        raise ValueError("ecos: " + scrub(raw["RESULT"].get("MESSAGE", "알 수 없는 오류"))[:80])
+
+    rows = raw.get("StatisticSearch", {}).get("row", [])
+    pairs = []
+    for r in rows:
+        t = (r.get("TIME") or "").strip()
+        v = (r.get("DATA_VALUE") or "").strip()
+        if len(t) != 8 or not v:
+            continue
+        try:
+            pairs.append((t, float(v)))
+        except ValueError:
+            continue
+    pairs.sort(key=lambda x: x[0])
+    if len(pairs) < 30:
+        raise ValueError(f"ecos: 데이터 부족 ({len(pairs)}건)")
+    dates = [f"{t[0:4]}-{t[4:6]}-{t[6:8]}" for t, _ in pairs]
+    return dates, [v for _, v in pairs]
+
 
 def from_stooq(code):
     end = datetime.now(KST)
@@ -157,7 +239,8 @@ def from_yahoo(code):
     return dates, [float(c) for _, c in rows]
 
 
-LOADERS = {"stooq": from_stooq, "naver": from_naver, "yahoo": from_yahoo}
+LOADERS = {"fred": from_fred, "ecos": from_ecos,
+           "stooq": from_stooq, "naver": from_naver, "yahoo": from_yahoo}
 
 
 # ---------- 지표 ----------
@@ -287,7 +370,7 @@ def analyze(entry):
         try:
             dates, vals = LOADERS[src_name](code)
         except Exception as e:  # noqa: BLE001
-            errs.append(f"{src_name}: {str(e)[:80]}")
+            errs.append(f"{src_name}: {scrub(e)[:80]}")
             continue
 
         price, prev = vals[-1], (vals[-2] if len(vals) > 1 else vals[-1])
@@ -366,6 +449,9 @@ def main():
     now = datetime.now(KST)
     quotes, errors, used = [], [], {}
 
+    print(f"키 상태 — FRED_API: {'있음' if FRED_KEY else '없음'} / "
+          f"ECOS_API: {'있음' if ECOS_KEY else '없음'}")
+
     for entry in SYMBOLS:
         try:
             q, src = analyze(entry)
@@ -377,8 +463,8 @@ def main():
                      f"({c['buy']['per_year']}/yr)") if c else ""
             print(f"  ok   {entry['sym']:<12} ({src})  {q['price']}{extra}")
         except Exception as e:  # noqa: BLE001
-            errors.append({"symbol": entry["sym"], "error": str(e)[:300]})
-            print(f"  FAIL {entry['sym']}: {e}", file=sys.stderr)
+            errors.append({"symbol": entry["sym"], "error": scrub(e)[:300]})
+            print(f"  FAIL {entry['sym']}: {scrub(e)}", file=sys.stderr)
         time.sleep(0.6)   # 소스에 대한 예의
 
     if not quotes:
