@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FRED_API: ${{ secrets.FRED_API }}
+      ECOS_API: ${{ secrets.ECOS_API }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
