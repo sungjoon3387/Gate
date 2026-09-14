@@ -21,6 +21,7 @@ jobs:
       - run: |
           git config user.name gate-bot
           git config user.email gate-bot@users.noreply.github.com
-          git add data.json tranches.json
+          git add data.json tranches.json macro.json
           git diff --staged --quiet || git commit -m "데이터 갱신"
+          git pull --rebase
           git push
