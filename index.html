@@ -465,13 +465,6 @@ function render(D){
       <span>200일선 ${pctS(r.q.ma200_gap_pct)}</span></div></div>`;
   });
 
-  bh+=`<h2>논거</h2>`;
-  SECTOR.forEach(s=>{
-    const t=H.thesis[s]||{}; const d=daysSince(t.updated);
-    bh+=`<div class="card${d>90?" lock":""}"><h3>${NAMES[s]}</h3>
-      <p>${t.text||"아직 비어 있습니다."}</p>
-      <p class="dim" style="font-size:12px">${t.updated||"—"} · ${d>900?"미작성":d+"일 경과"}${d>90?" · 잠김":""}</p></div>`;
-  });
   $('#book').innerHTML=bh;
 
   // ---- Log ----
@@ -525,5 +518,6 @@ function tranchePreview(a,fx,total,sectorV,ceil){
 </script>
 <script src="thesis.js"></script>
 <script src="refresh.js"></script>
+<script src="macro.js"></script>
 </body>
 </html>
