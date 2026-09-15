@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-09-16T06:58:58+09:00",
- "generated_at_label": "2026-09-16 06:58 KST",
+ "generated_at": "2026-09-16T07:57:29+09:00",
+ "generated_at_label": "2026-09-16 07:57 KST",
  "sector_ceiling": 35.0,
  "tranche_levels": [
   -15.0,
@@ -437,15 +437,15 @@
    "name": "달러원",
    "kind": "macro",
    "source": "yahoo",
-   "price": 1362.8101,
+   "price": 1362.91,
    "prev_close": 1345.61,
-   "day_pct": 1.28,
+   "day_pct": 1.29,
    "last_trade_date": "2026-09-15",
    "high52": 1554.48,
    "low52": 1339.17,
-   "drawdown_pct": -12.33,
-   "ma20": 1364.4995,
-   "ma200": 1465.5818,
+   "drawdown_pct": -12.32,
+   "ma20": 1364.5045,
+   "ma200": 1465.5823,
    "ma200_gap_pct": -7.01,
    "rsi14": 40.9,
    "spark": [
@@ -508,7 +508,7 @@
     1348.17,
     1344.64,
     1345.61,
-    1362.8101
+    1362.91
    ],
    "chg60_pct": -11.23,
    "unit": "원"
@@ -842,17 +842,17 @@
    "name": "달러지수",
    "kind": "macro",
    "source": "yahoo",
-   "price": 99.65,
+   "price": 99.612,
    "prev_close": 99.46,
-   "day_pct": 0.19,
+   "day_pct": 0.15,
    "last_trade_date": "2026-09-15",
    "high52": 101.61,
    "low52": 96.22,
-   "drawdown_pct": -1.93,
-   "ma20": 99.194,
-   "ma200": 99.141,
-   "ma200_gap_pct": 0.51,
-   "rsi14": 53.4,
+   "drawdown_pct": -1.97,
+   "ma20": 99.1921,
+   "ma200": 99.1408,
+   "ma200_gap_pct": 0.48,
+   "rsi14": 52.9,
    "spark": [
     101.02,
     101.41,
@@ -913,9 +913,9 @@
     99.09,
     99.12,
     99.46,
-    99.65
+    99.612
    ],
-   "chg60_pct": -1.19,
+   "chg60_pct": -1.23,
    "unit": ""
   }
  },
