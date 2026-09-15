@@ -9,16 +9,14 @@
    ============================================================ */
 
 window.HOLDINGS = {
-  updated: "2026-09-10",
+  updated: "2026-09-15",
 
   positions: [
-    { sym: "QQQ",       shares: 11, avg_krw: 1018364, avg_usd: null },
+    { sym: "QQQ",       shares: 12, avg_krw: 1013140, avg_usd: null },
+    { sym: "JEPQ",      shares: 33, avg_krw: 82898,   avg_usd: null },
     { sym: "267260.KS", shares: 2,  avg_krw: 706000 },
     { sym: "GEV",       shares: 1,  avg_krw: 1289084, avg_usd: null },
     { sym: "ETN",       shares: 7,  avg_krw: 564603,  avg_usd: null }
-    // JEPQ 33주 (평단 82,898원) 보유 중 — 정리 예정이면 이대로 두고,
-    // 계속 들고 갈 거면 아래 줄을 살릴 것.
-    // ,{ sym: "JEPQ",   shares: 33, avg_krw: 82898,   avg_usd: null }
   ],
 
   // 이번 달 예정 적립액과 대기 현금 (원)
@@ -38,9 +36,10 @@ window.HOLDINGS = {
   },
 
   // 분기 논거 — 90일 넘으면 트랜치 알림이 잠깁니다
+  // 상세 논거는 thesis.js 에서 관리합니다. 여기는 만료 체크용 한 줄.
   thesis: {
-    "267260.KS": { updated: "2026-09-07", text: "북미 초고압 변압기 수주잔고. 교체 사이클이 실적으로 확인되는 동안 보유." },
-    "GEV":       { updated: "2026-09-07", text: "발전(가스터빈·원자력) + Electrification. AI 전력 수요의 상류." },
-    "ETN":       { updated: "2026-09-07", text: "데이터센터 내부 배전·UPS. 세 종목 중 수요처에 가장 가까움." }
+    "267260.KS": { updated: "2026-09-10", text: "북미 초고압 변압기 병목의 직접 수혜. 회사가 3년 만에 연간 수주목표를 42.22억 → 51.85억 달러로 올렸다." },
+    "GEV":       { updated: "2026-09-10", text: "AI 전력 수요의 최상류(발전). 가스터빈 수주잔고 116GW, 공급이 수요를 못 따라가 가격이 먼저 오른다." },
+    "ETN":       { updated: "2026-09-10", text: "데이터센터 내부 배전·UPS. 세 종목 중 수요처에 가장 가깝고 수주가 이미 실적으로 넘어오고 있다." }
   }
 };
