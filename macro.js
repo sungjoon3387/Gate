@@ -349,7 +349,18 @@ window.MACRO_CONTEXT = {
       ".gm-ctx .r{font-size:13.5px;font-weight:700;color:var(--text,#E6EBF2)}",
       ".gm-ctx .w{font-size:11.5px;color:var(--dim,#5F6E80);margin:2px 0 6px}",
       ".gm-ctx p{margin:0 0 5px;font-size:13px;line-height:1.6;color:var(--muted,#8B9AAE)}",
-      ".gm-err{font-size:11.5px;color:var(--warn,#DFA33C);margin-top:10px}"
+      ".gm-err{font-size:11.5px;color:var(--warn,#DFA33C);margin-top:10px}",
+      ".gw{border-radius:12px;border:1px solid var(--warn,#DFA33C);",
+      "background:rgba(223,163,60,.06);padding:15px 16px;margin:0 0 18px}",
+      ".gw-t{font-size:14px;font-weight:700;color:var(--warn,#DFA33C);margin-bottom:11px}",
+      ".gw-r{padding:11px 0;border-top:1px solid var(--line,#2C3849)}",
+      ".gw-r:first-of-type{border-top:0;padding-top:0}",
+      ".gw-rule{font-size:13px;font-weight:700;color:var(--text,#E6EBF2);line-height:1.5}",
+      ".gw-sym{font-size:11.5px;color:var(--dim,#5F6E80);margin:2px 0 7px}",
+      ".gw-i{display:block;font-size:12.5px;line-height:1.55;color:var(--muted,#8B9AAE);",
+      "text-decoration:none;margin-bottom:7px}",
+      ".gw-i span{display:block;font-size:11px;color:var(--dim,#5F6E80);margin-top:1px}",
+      ".gw-note{font-size:11.5px;color:var(--dim,#5F6E80);line-height:1.6;margin-top:10px}"
     ].join("");
     var el = document.createElement("style");
     el.id = "gm-style";
@@ -370,7 +381,32 @@ window.MACRO_CONTEXT = {
     return best;
   }
 
+  function paintWatch() {
+    if (!W || !(W.alerts || []).length) return;
+    var el = document.getElementById("today");
+    if (!el || el.querySelector("#gw")) return;
+    style();
+
+    var by = {};
+    W.alerts.forEach(function (a) { (by[a.id] = by[a.id] || []).push(a); });
+
+    var h = '<div id="gw" class="gw"><div class="gw-t">반증 조건 관련 뉴스</div>';
+    Object.keys(by).forEach(function (k) {
+      var g = by[k], r = g[0];
+      h += '<div class="gw-r"><div class="gw-rule">' + esc(r.rule) + "</div>";
+      h += '<div class="gw-sym">' + esc((r.syms || []).join(" · ")) + "</div>";
+      g.forEach(function (a) {
+        h += '<a class="gw-i" href="' + esc(a.url) + '" target="_blank" rel="noopener">' +
+          esc(a.title) + '<span>' + esc(a.source) + " · " + esc(a.date) + "</span></a>";
+      });
+      h += "</div>";
+    });
+    h += '<div class="gw-note">걸린 날에만 뜹니다. 기사 자체가 판정은 아닙니다 — 논거 카드의 반증 조건에 실제로 해당하는지 직접 확인하세요.</div></div>';
+    el.insertAdjacentHTML("afterbegin", h);
+  }
+
   function paint() {
+    paintWatch();
     if (!M) return;
     var el = host();
     if (!el || el.querySelector("#gm")) return;
@@ -381,6 +417,12 @@ window.MACRO_CONTEXT = {
   fetch("macro.json", { cache: "no-cache" })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (j) { if (j) { M = j; paint(); } })
+    .catch(function () {});
+
+  var W = null;
+  fetch("watch.json", { cache: "no-cache" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (j) { if (j) { W = j; paintWatch(); } })
     .catch(function () {});
 
   fetch("data.json", { cache: "no-cache" })
