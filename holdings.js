@@ -9,18 +9,18 @@
    ============================================================ */
 
 window.HOLDINGS = {
-  updated: "2026-09-15",
+  updated: "2026-09-16",
 
   positions: [
-    { sym: "QQQ",       shares: 12, avg_krw: 1013140, avg_usd: null },
-    { sym: "JEPQ",      shares: 33, avg_krw: 82898,   avg_usd: null },
-    { sym: "267260.KS", shares: 2,  avg_krw: 706000 },
-    { sym: "GEV",       shares: 1,  avg_krw: 1289084, avg_usd: null },
-    { sym: "ETN",       shares: 7,  avg_krw: 564603,  avg_usd: null }
+    { sym: "QQQ",  shares: 12, avg_krw: 1013140, avg_usd: null },
+    { sym: "JEPQ", shares: 33, avg_krw: 82898,   avg_usd: null },
+    { sym: "GEV",  shares: 1,  avg_krw: 1289084, avg_usd: null },
+    { sym: "ETN",  shares: 7,  avg_krw: 564603,  avg_usd: null }
+    // 267260.KS (HD현대일렉트릭) 2026-09-15 전량 매도
   ],
 
-  // 이번 달 예정 적립액과 대기 현금 (원)
-  cash_krw: 0,
+  // 대기 현금 — HD현대일렉 매도 대금. 실제 입금액으로 고쳐 주세요.
+  cash_krw: 1419448,
   monthly_krw: 0,
 
   // 올해 순유입 — 월별 입금액 (원)
@@ -28,18 +28,22 @@ window.HOLDINGS = {
     "09": 0, "10": 0, "11": 0, "12": 0
   },
 
-  // 연금계좌 (세액공제 한도 900만)
   pension: {
     year: 2026,
     limit_krw: 9000000,
     paid_krw: 0
   },
 
+  // 매매 기록 — 나중에 판단이 맞았는지 확인하는 용도
+  trades: [
+    { date: "2026-09-15", sym: "267260.KS", name: "HD현대일렉트릭", side: "매도",
+      shares: 2, price_krw: 711362,
+      note: "2분기 실적은 호조(영업이익 +37.3%, 수주잔고 +29.6%)였으나 주가가 논거를 따라오지 않아 정리. 매도 시점 52주 고점 대비 약 -47%." }
+  ],
+
   // 분기 논거 — 90일 넘으면 트랜치 알림이 잠깁니다
-  // 상세 논거는 thesis.js 에서 관리합니다. 여기는 만료 체크용 한 줄.
   thesis: {
-    "267260.KS": { updated: "2026-09-10", text: "북미 초고압 변압기 병목의 직접 수혜. 회사가 3년 만에 연간 수주목표를 42.22억 → 51.85억 달러로 올렸다." },
-    "GEV":       { updated: "2026-09-10", text: "AI 전력 수요의 최상류(발전). 가스터빈 수주잔고 116GW, 공급이 수요를 못 따라가 가격이 먼저 오른다." },
-    "ETN":       { updated: "2026-09-10", text: "데이터센터 내부 배전·UPS. 세 종목 중 수요처에 가장 가깝고 수주가 이미 실적으로 넘어오고 있다." }
+    "GEV": { updated: "2026-09-10", text: "AI 전력 수요의 최상류(발전). 가스터빈 수주잔고 116GW, 공급이 수요를 못 따라가 가격이 먼저 오른다." },
+    "ETN": { updated: "2026-09-10", text: "데이터센터 내부 배전·UPS. 세 종목 중 수요처에 가장 가깝고 수주가 이미 실적으로 넘어오고 있다." }
   }
 };
