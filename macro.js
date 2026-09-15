@@ -18,6 +18,8 @@ window.MACRO_CONTEXT = {
   events: [
     { date: "2026-09-16", title: "FOMC 결정 · 점도표",
       watch: "인상 여부보다 점도표의 내년 경로. 이미 인상은 대부분 반영돼 있어 '한 번 더'가 있는지가 관건" },
+    { date: "2026-09-18", title: "일본은행 금융정책결정회의",
+      watch: "정책금리보다 일본 10년물이 3%에서 더 가는지, 그리고 엔화가 급등하는지. 급등이면 캐리 청산 국면" },
     { date: "2026-10-22", approx: true, title: "GE 버노바 3분기 실적",
       watch: "가스터빈 수주잔고 125GW 목표 진도. 시장 기대는 130~140GW라 목표 달성만으로는 실망 재료" },
     { date: "2026-10-28", approx: true, title: "Eaton 3분기 실적",
@@ -216,6 +218,7 @@ window.MACRO_CONTEXT = {
   var PLAIN = {
     curve: "돈을 빌리는 기간마다 이자가 다릅니다. 지금은 2~5년짜리 이자가 30년짜리보다 빠르게 오르고 있습니다. 30년이 앞장섰다면 '나라 빚이 걱정된다'는 뜻이라 훨씬 나쁜 신호인데, 짧은 쪽이 앞장선 건 '연준이 곧 금리를 올릴 것 같다'는 뜻입니다.",
     capex: "데이터센터는 현금이 아니라 빌린 돈으로 짓습니다. 그래서 중요한 건 국채금리가 아니라 '기업이 빌릴 때 얹어내는 웃돈'입니다. 이 웃돈이 그대로면 금리가 올라도 공사는 계속됩니다. 웃돈이 뛰면 그때 발주가 멈추고, 성준님 전력기기 3종목이 동시에 흔들립니다.",
+    japan: "일본은 30년간 이자가 0이었습니다. 그래서 전 세계 투자자가 엔을 싸게 빌려 다른 나라 자산을 샀습니다. 이걸 엔 캐리라고 합니다. 이제 일본 금리가 오르면 빌린 돈을 갚아야 하고, 갚으려면 사뒀던 자산을 팔아야 합니다. 그게 전 세계에서 동시에 일어나는 게 캐리 청산입니다. 성준님은 일본 주식이 없지만 QQQ와 환율을 통해 영향을 받습니다.",
     fx: "해외주식은 달러로 사서 원화로 평가됩니다. 주가가 그대로여도 원화가 강해지면 계좌 숫자는 줄어듭니다. 지금이 그 구간입니다. 반대로 지금 새로 사는 달러는 싸게 사는 셈입니다."
   };
 
@@ -233,7 +236,7 @@ window.MACRO_CONTEXT = {
     h += "</details>";
 
     var i = doc.indicators || {};
-    var order = ["real10", "ig", "ust2", "ust5", "ust10", "ust30", "be10", "dxy", "usdkrw"];
+    var order = ["real10", "ig", "ust2", "ust5", "ust10", "ust30", "be10", "dxy", "usdkrw", "jpy", "n225"];
     h += '<details class="gm-d"><summary>지표 전체</summary><div class="gm-grid">';
     order.forEach(function (k) {
       var d = i[k];
@@ -241,7 +244,7 @@ window.MACRO_CONTEXT = {
       var cls = d.chg_60d > 0 ? "gm-up" : (d.chg_60d < 0 ? "gm-dn" : "");
       h += '<div class="gm-i"><div class="l">' + esc(d.label) + "</div>";
       h += '<div class="v">' + num(d.value, d.unit) + "</div>";
-      h += '<div class="d">60일 <span class="' + cls + '">' + sgn(d.chg_60d) + "</span>";
+      h += '<div class="d">60일 <span class="' + cls + '">' + sgn(d.chg_60d, d.is_pct ? "%" : "") + "</span>";
       if (d.pctile_5y != null) h += " · 5년 " + d.pctile_5y + "%";
       h += "</div></div>";
     });
