@@ -75,6 +75,10 @@ SYMBOLS = [
     {"sym": "^TYX", "name": "미국채 30년", "kind": "macro", "unit": "%",
      "src": [("fred", "DGS30"), ("stooq", "30usy.b"), ("yahoo", "^TYX")]},
 
+    # 엔 캐리 청산 감지용. 엔화 급등과 함께 움직이는지가 신호입니다.
+    {"sym": "^N225", "name": "닛케이225", "kind": "macro", "unit": "",
+     "src": [("fred", "NIKKEI225"), ("stooq", "^nkx"), ("yahoo", "^N225")]},
+
     # 달러지수(DXY)는 FRED에 없습니다. FRED의 DTWEXBGS는 광의 무역가중 지수라
     # 레벨 자체가 달라(≈120 vs ≈98) 섞으면 이격도가 튀므로 넣지 않았습니다.
     {"sym": "DX-Y.NYB", "name": "달러지수", "kind": "macro", "unit": "",
