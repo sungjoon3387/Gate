@@ -93,6 +93,82 @@ def stat(series_id, label, unit="%", years=5, invert_pctile=False):
     }
 
 
+# ---------------------------------------------------------------- Yahoo
+
+def from_data_json(symbol, label):
+    """collect.py 가 이미 받아둔 값을 재사용합니다.
+    야후를 두 번 때리지 않고, 차단·한도 문제도 피합니다."""
+    try:
+        with open("data.json", encoding="utf-8") as f:
+            q = (json.load(f).get("quotes") or {}).get(symbol)
+        if not q or q.get("price") is None:
+            return None
+        sp = q.get("spark") or []
+        last = float(q["price"])
+
+        def pct(n):
+            if len(sp) > n and sp[-1 - n]:
+                return round((last / sp[-1 - n] - 1) * 100, 2)
+            return None
+
+        out = {
+            "id": symbol, "label": label, "unit": "",
+            "value": round(last, 2), "asof": "data.json",
+            "chg_20d": pct(20),
+            "chg_60d": pct(60) if len(sp) > 60 else q.get("chg60_pct"),
+            "pctile_5y": None, "is_pct": True,
+            "min_1y": q.get("low52"), "max_1y": q.get("high52"),
+        }
+        if out["chg_20d"] is None and q.get("ma20"):
+            out["chg_20d"] = round((last / q["ma20"] - 1) * 100, 2)   # 근사 — 20일선 대비
+        return out
+    except Exception:
+        return None
+
+
+def yahoo(symbol, label, years=5):
+    """야후 차트 API에서 일간 종가를 받아 stat() 과 같은 모양으로 돌려줍니다.
+    변화폭은 지수라서 포인트가 아니라 퍼센트로 담습니다."""
+    url = ("https://query1.finance.yahoo.com/v8/finance/chart/"
+           + urllib.parse.quote(symbol)
+           + "?range=" + str(years) + "y&interval=1d")
+    try:
+        r = requests.get(url, timeout=20,
+                         headers={"User-Agent": "Mozilla/5.0 (gate-bot)"})
+        r.raise_for_status()
+        res = r.json()["chart"]["result"][0]
+        ts = res["timestamp"]
+        cl = res["indicators"]["quote"][0]["close"]
+    except Exception as e:
+        ERRORS.append({"src": symbol, "error": safe(e)})
+        return None
+
+    pts = [(t, c) for t, c in zip(ts, cl) if c is not None]
+    if len(pts) < 70:
+        ERRORS.append({"src": symbol, "error": "관측치 부족"})
+        return None
+
+    vals = [c for _, c in pts]
+    last = vals[-1]
+
+    def pct(n):
+        if len(vals) <= n or not vals[-1 - n]:
+            return None
+        return round((last / vals[-1 - n] - 1) * 100, 2)
+
+    below = sum(1 for v in vals if v <= last)
+    return {
+        "id": symbol, "label": label, "unit": "",
+        "value": round(last, 2),
+        "asof": datetime.datetime.utcfromtimestamp(pts[-1][0]).strftime("%Y-%m-%d"),
+        "chg_20d": pct(20), "chg_60d": pct(60),
+        "pctile_5y": round(below / len(vals) * 100, 1),
+        "min_1y": round(min(vals[-252:]), 2),
+        "max_1y": round(max(vals[-252:]), 2),
+        "is_pct": True,
+    }
+
+
 # ---------------------------------------------------------------- ECOS
 
 def ecos(stat_code, item_code, cycle="D", n=400):
@@ -165,6 +241,10 @@ def layer1():
     # 통화
     ind["dxy"]  = stat("DTWEXBGS", "달러인덱스(광의)", unit="")
     ind["usdkrw"] = stat("DEXKOUS", "원/달러", unit="원")
+    # 일본 — 캐리 청산의 실시간 신호
+    ind["jpy"] = stat("DEXJPUS", "엔/달러", unit="엔")
+    # collect.py 가 ^N225 를 이미 받았으면 그걸 쓰고, 없으면 직접 받습니다
+    ind["n225"] = from_data_json("^N225", "닛케이225") or yahoo("^N225", "닛케이225")
 
     return {k: v for k, v in ind.items() if v}
 
@@ -254,6 +334,65 @@ def verdict_fx(i, kr_base):
     return tag, txt + " — " + " · ".join(parts)
 
 
+def jgb10():
+    """일본 10년 국채 (OECD 장기금리, 월간). 일간 무료 소스가 없어 월간을 씁니다."""
+    try:
+        s = fred("IRLTLT01JPM156N", 5)
+    except Exception as e:
+        ERRORS.append({"src": "IRLTLT01JPM156N", "error": safe(e)})
+        return None
+    vals = [v for _, v in s]
+    return {"value": vals[-1], "asof": s[-1][0],
+            "chg_3m": round(vals[-1] - vals[-4], 3) if len(vals) > 3 else None}
+
+
+def verdict_japan(i, jgb):
+    """일본 정상화 → 캐리 청산 → 내 자산. 성준님은 일본 자산이 없으므로
+    일본 자체가 아니라 미 금리·원화로 전달되는 경로만 판정합니다."""
+    jpy, us10 = i.get("jpy"), i.get("ust10")
+    if not jpy:
+        return None, "엔/달러 수집 실패"
+
+    prev = jpy["value"] - (jpy["chg_20d"] or 0)
+    jpy_pct = (jpy["value"] - prev) / prev * 100 if prev else 0   # 음수 = 엔 강세
+
+    parts = ["엔/달러 %.1f엔, 20일 %+.1f%%" % (jpy["value"], jpy_pct)]
+    gap = None
+    if jgb and us10:
+        gap = round(us10["value"] - jgb["value"], 2)
+        parts.append("미일 10년 금리차 %.2f%%p (일본 %.2f%%, %s 기준)" % (gap, jgb["value"], jgb["asof"]))
+        if jgb["chg_3m"] is not None:
+            parts.append("일본 10년 3개월 %+.2f%%p" % jgb["chg_3m"])
+
+    nk = i.get("n225")
+    nk20 = nk["chg_20d"] if nk else None
+    if nk20 is not None:
+        parts.append("닛케이225 %.0f, 20일 %+.1f%%" % (nk["value"], nk20))
+
+    if jpy_pct <= -3 and nk20 is not None and nk20 <= -5:
+        tag = "청산 진행 — 경고"
+        txt = ("엔화 20일 %.1f%% 절상 + 닛케이 %.1f%%. 두 개가 같이 움직이면 청산입니다. "
+               "2024년 8월에도 엔 급등과 닛케이 급락이 동시에 나왔습니다. "
+               "빌린 엔을 갚느라 전 세계 위험자산이 함께 팔리는 국면이고, "
+               "이때 QQQ 하락은 금리 탓도 경기 탓도 아닌 '유동성 청산' 탓이라 회복이 가장 빠릅니다 — 적립 지속이 맞습니다. "
+               "다만 원/달러는 반대로 오르므로 신규 달러 매수는 불리해집니다.") % (abs(jpy_pct), nk20)
+    elif jpy_pct <= -3:
+        tag = "엔 강세 — 관찰"
+        txt = ("엔화가 20일 만에 %.1f%% 절상됐는데 닛케이는 버티고 있습니다. "
+               "청산이라면 둘이 같이 움직입니다. 지금은 금리차 축소나 안전자산 선호 같은 "
+               "다른 이유일 가능성이 큽니다. 닛케이가 따라 빠지는지가 갈림길입니다.") % abs(jpy_pct)
+    elif gap is not None and gap <= 1.5:
+        tag = "캐리 유인 축소 — 관찰"
+        txt = ("미일 금리차가 %.2f%%p까지 좁혀졌습니다. 엔을 빌려 달러 자산을 사는 이득이 줄어드는 만큼 "
+               "청산 압력이 쌓입니다. 아직 엔화는 조용하지만 재료는 모이는 중입니다.") % gap
+    else:
+        tag = "안정"
+        txt = ("엔화가 급격히 움직이지 않고 있습니다. 일본은행이 올려도 미일 금리차가 충분히 크면 "
+               "캐리는 유지됩니다. 지난 두 차례 인상에서도 우려하던 대규모 청산은 나타나지 않았습니다.")
+
+    return tag, txt + " — " + " · ".join(parts)
+
+
 def layer2(i):
     kr_base = None
     kb = ecos("722Y001", "0101000", "D")   # 한국은행 기준금리(일별)
@@ -273,6 +412,13 @@ def layer2(i):
         "id": "capex",
         "title": "금리 → 조달비용 → AI 캐펙스 → 전력기기",
         "path": "실질금리 ↑ → IG 회사채 스프레드 → 하이퍼스케일러 조달 → 데이터센터 발주",
+        "verdict": t, "text": x,
+    })
+    t, x = verdict_japan(i, jgb10())
+    chains.append({
+        "id": "japan",
+        "title": "일본 정상화 → 캐리 청산 → 내 자산",
+        "path": "일본 금리 ↑ → 미 국채 본국 회귀 → 미 장기금리 ↑ / 엔 급등 → 위험자산 청산 → 원화 약세",
         "verdict": t, "text": x,
     })
     t, x = verdict_fx(i, kr_base)
