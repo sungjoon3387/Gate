@@ -21,11 +21,14 @@ jobs:
           FRED_API_KEY: ${{ secrets.FRED_API }}
           ECOS_API_KEY: ${{ secrets.ECOS_API }}
         run: python3 macro.py
+      - name: Watch falsifiers
+        continue-on-error: true
+        run: python3 watch.py
       - name: Commit and push
         run: |
           git config user.name gate-bot
           git config user.email gate-bot@users.noreply.github.com
-          git add -A data.json tranches.json macro.json
+          git add -A data.json tranches.json macro.json watch.json
           git diff --staged --quiet && echo "변경 없음" && exit 0
           git commit -m "데이터 갱신"
           for i in 1 2 3; do
