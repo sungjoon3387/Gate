@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-16T08:05:14+09:00",
+ "generated_at": "2026-09-16T08:32:52+09:00",
  "alerts": [
   {
    "id": "trade-stop",
@@ -81,10 +81,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "[경제한방] 일본 금리인상 코앞…‘엔캐리 연쇄청산’ 오나? - KBS 뉴스",
+   "title": "[경제한방] 일본 금리인상 코앞…‘엔캐리 연쇄청산’ 오나? - news.kbs.co.kr",
    "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE02eU85S01EN0ZQQ2NZYmRLM0xMVlpQak5JRXhXeVEzSWo4R0hGWU1LWjU3VmhmeEp3dWcxcVBrdlM0bUxkaERSSk5SOVdSR0lfSHZuaGd0NVJDNWs?oc=5",
    "date": "2026-09-15",
-   "source": "KBS 뉴스"
+   "source": "news.kbs.co.kr"
   },
   {
    "id": "boj-carry",
