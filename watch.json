@@ -1,0 +1,155 @@
+{
+ "generated_at": "2026-09-16T08:05:14+09:00",
+ "alerts": [
+  {
+   "id": "trade-stop",
+   "syms": [
+    "ETN",
+    "GEV"
+   ],
+   "rule": "미국의 무역 중단·추가 관세 발효 → 데이터센터 건설 비용 상승, 발주 지연",
+   "title": "트럼프 잇단 위협에도⋯캐나다, 보복관세 발효 강행 - 이투데이",
+   "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE4xalVSSXNXVTZHenZxMGt1QWJINFdMYi0ybWlaSXdJZ3pxMFdYVTdhX0Z1Y2t5RmJQbV9CZDlXMTMyOVpmeVpvY3NWc25iMTRJT0V6Tw?oc=5",
+   "date": "2026-09-08",
+   "source": "이투데이"
+  },
+  {
+   "id": "trade-stop",
+   "syms": [
+    "ETN",
+    "GEV"
+   ],
+   "rule": "미국의 무역 중단·추가 관세 발효 → 데이터센터 건설 비용 상승, 발주 지연",
+   "title": "\"관세보다 더 큰 폭풍\"…트럼프, 캐나다 무역戰에 '수입금지' 카드 - 뉴시스",
+   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1PTmpzQ004aGJ3NUgtNmNKV3FiZ094dE5lMURBdDFvT09yWWVnQUFiSVlLN2FVNjczT2piSWIxQnVXM1BhNnVXdl9rSHJEeHRQNlJncU1pYWNSYmhuU205dtIBeEFVX3lxTE4ySnpKOGlhOEJONTdjX0xCZWZEMkt1eWRSZkRWQ0ZRWW1qNlZaN1h4eG5QdzhOcnZHM3ZtNnV0b1BkR0htRzdManY4SnptN0hMM3dFMl9zYTI0TmFtLTBZTm5DYnk3ZWRvNGd5U1kyLUhrZXI1el9WVw?oc=5",
+   "date": "2026-09-09",
+   "source": "뉴시스"
+  },
+  {
+   "id": "fed-independence",
+   "syms": [
+    "QQQ",
+    "ETN",
+    "GEV"
+   ],
+   "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
+   "title": "트럼프 압박에도…9월 FOMC, 금리 인상 유력 - 투데이신문",
+   "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1tZEo5WGhQaHJQa0JBNm9ySzZKbXMyWXFYa2JtZG5WMnYwaHJ6d1ZqYlNLMllTUVBtREFFdkhvRWVLcF9vaDdkaE5BVGxUdkt5QXYtcXVESHZwdWJRYjZtdkdHajJRSkVFaEh30gFvQVVfeXFMT0FCbzFOZnpOYlc0a2Q1U2JWV2VSQ1RtZC0xd0t0TnRDWFc2b0RVUXNTMkJGMXF4ajdpSkVMeGU2S3M4c2tEQW5GYUt3cTVPU2pFa2ZfQ2RMdXpYaXMtdHhEZnl1RnB5aVJya1Y0Q0dr?oc=5",
+   "date": "2026-09-15",
+   "source": "투데이신문"
+  },
+  {
+   "id": "fed-independence",
+   "syms": [
+    "QQQ",
+    "ETN",
+    "GEV"
+   ],
+   "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
+   "title": "뜨거운 물가에 '금리 인상' 판 깔렸다...연준 워시, 트럼프 압박 넘어설까 - 뉴스핌",
+   "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1CUlNfdGJOV0w3MWZyYk93UmVtMFkzMXpuaVhEQUM5RW9mTHZtVW5tSW5EMF96M05MZXFHYVZzb3VVTjB4RTZyMnd2NlFMcGRsU2IwZ1VJX1Jkd2Iy?oc=5",
+   "date": "2026-09-14",
+   "source": "뉴스핌"
+  },
+  {
+   "id": "fed-independence",
+   "syms": [
+    "QQQ",
+    "ETN",
+    "GEV"
+   ],
+   "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
+   "title": "트럼프, FOMC 앞두고 금리 인하 압박…워시와 충돌하나 - 아주경제",
+   "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE1COWNPdFZGQXlKM2FkMFhzU1BNd0ZEbXJaLVF0UDF6YkoyTDMxNmQ5d1N5V1RjdXdYMk1jNnZ4UjZLN1R4QjI3THRuWUFDWnJ3YTdITmN0ZFfSAVhBVV95cUxNQjljT3RWRkF5SjNhZDBYc1NQTXdGRG1yWi1RdFAxemJKMkwzMTZkOXdTeVdUY3V3WDJNYzZ2eFI2SzdUeEIyN0x0bllBQ1pyd2E3SE5jdGRX?oc=5",
+   "date": "2026-09-14",
+   "source": "아주경제"
+  },
+  {
+   "id": "gas-turbine",
+   "syms": [
+    "GEV"
+   ],
+   "rule": "미국 에너지 정책 변화로 가스터빈 발주가 밀림",
+   "title": "美 AI 전력난에 ‘伊 터빈 명가’ 가세···두산 가스터빈 영향은? - 뉴스프리존",
+   "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1IU2ZFczB5cFRBVGdodmpaZEFuUHdPWnc1b1hMdmtnUWJoN3dpdENqZTlNQXp1SDkyNDhoeFYtaWY0bDlKcjdIc1l6UWlqTlZ0cEwxVlJ2aHVfamdLd2xIeWJIckdYbmlpNldCWERySnVldE3SAXdBVV95cUxQNWRXY25nYlgxMWRvcEJSM2pFS09WQ2RWUkoxTUE1TjV1c1E1U0FMQjdiYjBQWWI2R0xoUWFETERXbU1oSFVNU0NGb0ZBNDVrRXhGTGpfVk9qcXlla01RMGtVOFluVVpRS0otYXVVTkZFb3hmbDlhaw?oc=5",
+   "date": "2026-09-08",
+   "source": "뉴스프리존"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "[경제한방] 일본 금리인상 코앞…‘엔캐리 연쇄청산’ 오나? - KBS 뉴스",
+   "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE02eU85S01EN0ZQQ2NZYmRLM0xMVlpQak5JRXhXeVEzSWo4R0hGWU1LWjU3VmhmeEp3dWcxcVBrdlM0bUxkaERSSk5SOVdSR0lfSHZuaGd0NVJDNWs?oc=5",
+   "date": "2026-09-15",
+   "source": "KBS 뉴스"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "일본 금리인상, 기폭제 되나⋯엔 캐리 청산 뇌관 ‘재깍재깍’ - 이투데이",
+   "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFAyOURjUFM0Wl9MV3Y5Z1hQZDNVSHgxWXVRS1EtcFNnTk53Rjl1UTRvX1NPTGxDUHVwLUNrRzhlbnF1TXpXcHVsYUMzQ2lnR3pKMnpvbw?oc=5",
+   "date": "2026-09-15",
+   "source": "이투데이"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "일본은행 금리 인상 전망…'엔 캐리 청산' 공포 재점화될까 - 한국경제",
+   "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1aWmlMLV9PY2Z6T0JfSTFlVHlPQW83U29LdTl2V1JLMlhkeUtlM0xFYmxqUFRoSlB1emtWQUxwY1l2R2VpMk51S2RGUXVkOEpremlaY1lSYlRlQQ?oc=5",
+   "date": "2026-09-13",
+   "source": "한국경제"
+  }
+ ],
+ "filings": [],
+ "rules": [
+  {
+   "id": "trade-stop",
+   "syms": [
+    "ETN",
+    "GEV"
+   ],
+   "rule": "미국의 무역 중단·추가 관세 발효 → 데이터센터 건설 비용 상승, 발주 지연"
+  },
+  {
+   "id": "dc-capex",
+   "syms": [
+    "ETN",
+    "GEV"
+   ],
+   "rule": "하이퍼스케일러가 데이터센터 투자 축소·연기를 공식화"
+  },
+  {
+   "id": "fed-independence",
+   "syms": [
+    "QQQ",
+    "ETN",
+    "GEV"
+   ],
+   "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)"
+  },
+  {
+   "id": "gas-turbine",
+   "syms": [
+    "GEV"
+   ],
+   "rule": "미국 에너지 정책 변화로 가스터빈 발주가 밀림"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)"
+  }
+ ],
+ "errors": []
+}

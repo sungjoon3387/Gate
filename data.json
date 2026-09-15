@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-09-16T07:57:29+09:00",
- "generated_at_label": "2026-09-16 07:57 KST",
+ "generated_at": "2026-09-16T08:04:54+09:00",
+ "generated_at_label": "2026-09-16 08:04 KST",
  "sector_ceiling": 35.0,
  "tranche_levels": [
   -15.0,
@@ -437,16 +437,16 @@
    "name": "달러원",
    "kind": "macro",
    "source": "yahoo",
-   "price": 1362.91,
+   "price": 1362.9301,
    "prev_close": 1345.61,
    "day_pct": 1.29,
    "last_trade_date": "2026-09-15",
    "high52": 1554.48,
    "low52": 1339.17,
    "drawdown_pct": -12.32,
-   "ma20": 1364.5045,
-   "ma200": 1465.5823,
-   "ma200_gap_pct": -7.01,
+   "ma20": 1364.5055,
+   "ma200": 1465.5824,
+   "ma200_gap_pct": -7.0,
    "rsi14": 40.9,
    "spark": [
     1542.76,
@@ -508,9 +508,9 @@
     1348.17,
     1344.64,
     1345.61,
-    1362.91
+    1362.9301
    ],
-   "chg60_pct": -11.23,
+   "chg60_pct": -11.22,
    "unit": "원"
   },
   "^FVX": {
