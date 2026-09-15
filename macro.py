@@ -13,7 +13,7 @@ collect.py 는 건드리지 않습니다. 이 스크립트가 macro.json 을 따
   3층 = 분기 맥락. macro-context.js 에서 수동 관리. 여기서 안 다룸.
 """
 
-import os, json, datetime, urllib.parse
+import os, json, time, datetime, urllib.parse
 import requests
 
 FRED_KEY = os.environ.get("FRED_API_KEY", "").strip()
@@ -21,6 +21,17 @@ ECOS_KEY = os.environ.get("ECOS_API_KEY", "").strip()
 
 OUT = "macro.json"
 ERRORS = []
+
+
+def safe(msg, limit=140):
+    """오류 문자열에서 API 키를 지웁니다.
+    ECOS 는 키를 URL 경로에 넣기 때문에 예외 메시지에 그대로 실립니다.
+    macro.json 은 공개 저장소에 커밋되므로 반드시 가려야 합니다."""
+    t = str(msg)
+    for k in (ECOS_KEY, FRED_KEY):
+        if k:
+            t = t.replace(k, "***")
+    return t[:limit]
 
 
 # ---------------------------------------------------------------- FRED
@@ -58,7 +69,7 @@ def stat(series_id, label, unit="%", years=5, invert_pctile=False):
     try:
         s = fred(series_id, years)
     except Exception as e:
-        ERRORS.append({"src": series_id, "error": str(e)[:120]})
+        ERRORS.append({"src": series_id, "error": safe(e)})
         return None
 
     vals = [v for _, v in s]
@@ -105,10 +116,22 @@ def ecos(stat_code, item_code, cycle="D", n=400):
         ECOS_KEY, "json", "kr", "1", "700",
         stat_code, cycle, start, end, item_code,
     ])
+    last = None
+    for attempt in range(3):          # 해외 IP에서 간헐적으로 연결이 끊깁니다
+        try:
+            r = requests.get(url, timeout=20)
+            r.raise_for_status()
+            j = r.json()
+            break
+        except Exception as e:
+            last = e
+            if attempt < 2:
+                time.sleep(3)
+    else:
+        ERRORS.append({"src": "ECOS " + stat_code, "error": safe(last)})
+        return None
+
     try:
-        r = requests.get(url, timeout=30)
-        r.raise_for_status()
-        j = r.json()
         rows = j.get("StatisticSearch", {}).get("row", [])
         out = []
         for row in rows:
@@ -117,11 +140,11 @@ def ecos(stat_code, item_code, cycle="D", n=400):
             except (KeyError, ValueError, TypeError):
                 pass
         if not out:
-            ERRORS.append({"src": "ECOS " + stat_code, "error": str(j)[:120]})
+            ERRORS.append({"src": "ECOS " + stat_code, "error": safe(j)})
             return None
         return out
     except Exception as e:
-        ERRORS.append({"src": "ECOS " + stat_code, "error": str(e)[:120]})
+        ERRORS.append({"src": "ECOS " + stat_code, "error": safe(e)})
         return None
 
 
