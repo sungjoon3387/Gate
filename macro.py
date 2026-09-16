@@ -234,6 +234,8 @@ def layer1():
     ind["ust10"] = stat("DGS10", "미국채 10년")
     ind["ust30"] = stat("DGS30", "미국채 30년")
     # 할인율의 본체
+    # 정책금리 — FOMC 결정 당일 갱신됩니다. 국채금리와 달리 지연이 거의 없습니다.
+    ind["ffr"] = stat("DFEDTARU", "미 정책금리 상단")
     ind["real10"] = stat("DFII10", "미 10년 실질금리")
     ind["be10"]   = stat("T10YIE", "10년 기대인플레")
     # 이 포트폴리오의 진짜 선행지표
@@ -303,7 +305,7 @@ def verdict_ig(i):
     return tag, txt
 
 
-def verdict_fx(i, kr_base):
+def verdict_fx(i, kr_base, kr=None):
     """정책 → 달러 → 원화 → 원화환산 수익률."""
     dxy, krw, r10 = i.get("dxy"), i.get("usdkrw"), i.get("real10")
     if not (dxy and krw):
@@ -316,7 +318,12 @@ def verdict_fx(i, kr_base):
     parts.append("달러인덱스 20일 %+.2f" % (d_dxy or 0))
     parts.append("원/달러 %.1f원, 20일 %+.1f원" % (krw["value"], d_krw or 0))
     if kr_base is not None:
-        parts.append("한은 기준금리 %.2f%%" % kr_base)
+        parts.append("한국 콜금리 %.2f%%" % kr_base)
+    kr10 = (kr or {}).get("kr10")
+    us10 = i.get("ust10")
+    if kr10 and us10:
+        parts.append("한미 10년 금리차 %.2f%%p (한국 %.2f%%, %s 기준)"
+                     % (us10["value"] - kr10["value"], kr10["value"], kr10["asof"]))
 
     if d_krw is not None and d_krw < -10:
         tag = "원화 강세 — 원화환산 수익률에 역풍"
@@ -393,13 +400,73 @@ def verdict_japan(i, jgb):
     return tag, txt + " — " + " · ".join(parts)
 
 
+def kr_rates():
+    """한국 금리는 FRED(OECD 취합)에서 받습니다.
+    ECOS 는 해외 IP에서 연결이 자주 끊겨 GitHub Actions 에서는 쓰지 않습니다.
+    월간이지만 기준금리·국고채 10년은 월간이면 충분합니다."""
+    out = {}
+    for key, sid, label in (
+        ("policy", "IRSTCI01KRM156N", "한국 콜금리"),
+        ("kr10", "IRLTLT01KRM156N", "한국 국고채 10년"),
+    ):
+        try:
+            ser = fred(sid, 5)
+            vals = [v for _, v in ser]
+            out[key] = {"label": label, "value": vals[-1], "asof": ser[-1][0],
+                        "chg_3m": round(vals[-1] - vals[-4], 3) if len(vals) > 3 else None}
+        except Exception as e:
+            ERRORS.append({"src": sid, "error": safe(e)})
+    return out
+
+
+def verdict_policy(i, kr):
+    """연준이 실제로 무엇을 했는가. 예상이 아니라 확정된 사실만 봅니다."""
+    f = i.get("ffr")
+    if not f:
+        return None, "정책금리 수집 실패"
+
+    d20, d60 = f.get("chg_20d"), f.get("chg_60d")
+    parts = ["미 정책금리 상단 %.2f%% (%s 기준)" % (f["value"], f["asof"])]
+
+    krp = (kr or {}).get("policy")
+    gap = None
+    if krp:
+        gap = round(f["value"] - krp["value"], 2)
+        parts.append("한국 콜금리 %.2f%% → 한미 금리차 %.2f%%p" % (krp["value"], gap))
+
+    if d20 and d20 > 0:
+        tag = "인상 확정"
+        txt = ("최근 20일 안에 %+.2f%%p 올랐습니다. 예상이 아니라 실행된 사실입니다. "
+               "인상 자체는 대개 미리 반영되므로 이제부터는 '다음 회의까지의 경로'가 값을 움직입니다.") % d20
+        if gap is not None:
+            txt += (" 한미 금리차가 %.2f%%p로 벌어졌습니다 — 그동안 통하지 않던 금리차 논리가 "
+                    "환율에 복원되는지가 다음 확인 지점입니다.") % gap
+    elif d20 and d20 < 0:
+        tag = "인하 확정"
+        txt = ("최근 20일 안에 %.2f%%p 내렸습니다. 장기 성장주의 할인율이 낮아지는 방향이라 "
+               "코어에는 순풍입니다.") % d20
+    elif d60 and d60 > 0:
+        tag = "인상 사이클 진행"
+        txt = ("60일 기준 %+.2f%%p. 최근 20일은 변동이 없지만 사이클 방향은 인상입니다.") % d60
+    else:
+        tag = "동결"
+        txt = "정책금리에 변화가 없습니다. 지금 움직이는 건 정책이 아니라 시장 금리입니다."
+
+    return tag, txt + " — " + " · ".join(parts)
+
+
 def layer2(i):
-    kr_base = None
-    kb = ecos("722Y001", "0101000", "D")   # 한국은행 기준금리(일별)
-    if kb:
-        kr_base = kb[-1][1]
+    kr = kr_rates()
+    kr_base = kr.get("policy", {}).get("value")
 
     chains = []
+    t, x = verdict_policy(i, kr)
+    chains.append({
+        "id": "policy",
+        "title": "연준이 실제로 한 일",
+        "path": "FOMC 결정 → 정책금리 → 한미 금리차 → 환율",
+        "verdict": t, "text": x,
+    })
     t, x = verdict_curve(i)
     chains.append({
         "id": "curve",
@@ -421,7 +488,7 @@ def layer2(i):
         "path": "일본 금리 ↑ → 미 국채 본국 회귀 → 미 장기금리 ↑ / 엔 급등 → 위험자산 청산 → 원화 약세",
         "verdict": t, "text": x,
     })
-    t, x = verdict_fx(i, kr_base)
+    t, x = verdict_fx(i, kr_base, kr)
     chains.append({
         "id": "fx",
         "title": "연준 → 달러 → 원화 → 내 원화환산 수익률",
