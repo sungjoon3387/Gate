@@ -190,15 +190,17 @@ window.MACRO_CONTEXT = {
     var rows = (C.events || []).map(function (e) {
       var d = new Date(e.date + "T00:00:00+09:00");
       return { e: e, dd: Math.round((d - today) / 864e5) };
-    }).filter(function (r) { return r.dd >= -1; })
+    }).filter(function (r) { return r.dd >= -2; })
       .sort(function (a, b) { return a.dd - b.dd; })
-      .slice(0, 4);
+      .slice(0, 5);
     if (!rows.length) return "";
 
     var h = '<div class="gm-h">다음 확인 일정</div><div class="gm-box">';
     rows.forEach(function (r) {
-      var tag = r.dd <= 0 ? "오늘" : "D-" + r.dd;
-      h += '<div class="gm-ev"><div class="t"><span class="dd' + (r.dd <= 3 ? " near" : "") + '">' +
+      var done = r.dd < 0;
+      var tag = done ? "종료" : (r.dd === 0 ? "오늘" : "D-" + r.dd);
+      h += '<div class="gm-ev' + (done ? " done" : "") + '"><div class="t"><span class="dd' +
+        (done ? " past" : (r.dd <= 3 ? " near" : "")) + '">' +
         tag + "</span>" + esc(r.e.title) + (r.e.approx ? ' <span class="ap">날짜 예상</span>' : "") + "</div>";
       h += '<div class="w">볼 것 · ' + esc(r.e.watch) + "</div></div>";
     });
@@ -236,7 +238,7 @@ window.MACRO_CONTEXT = {
     h += "</details>";
 
     var i = doc.indicators || {};
-    var order = ["real10", "ig", "ust2", "ust5", "ust10", "ust30", "be10", "dxy", "usdkrw", "jpy", "n225"];
+    var order = ["ffr", "real10", "ig", "ust2", "ust5", "ust10", "ust30", "be10", "dxy", "usdkrw", "jpy", "n225"];
     h += '<details class="gm-d"><summary>지표 전체</summary><div class="gm-grid">';
     order.forEach(function (k) {
       var d = i[k];
@@ -317,6 +319,9 @@ window.MACRO_CONTEXT = {
       "border-radius:999px;font-size:11.5px;font-weight:700;text-align:center;",
       "background:var(--surface2,#222C3B);color:var(--muted,#8B9AAE)}",
       ".gm-ev .dd.near{background:rgba(52,198,162,.16);color:var(--open,#34C6A2)}",
+      ".gm-ev .dd.past{background:transparent;border:1px solid var(--line,#2C3849);color:var(--dim,#5F6E80)}",
+      ".gm-ev.done .t{color:var(--dim,#5F6E80)}",
+      ".gm-ev.done .w{opacity:.6}",
       ".gm-ev .ap{font-size:11px;color:var(--dim,#5F6E80);font-weight:400}",
       ".gm-ev .w{font-size:12.5px;color:var(--muted,#8B9AAE);line-height:1.6;margin-top:5px;padding-left:53px}",
       ".gm-note{font-size:11.5px;color:var(--dim,#5F6E80);line-height:1.6;margin-top:11px}",
