@@ -1,18 +1,6 @@
 {
- "generated_at": "2026-09-16T08:32:52+09:00",
+ "generated_at": "2026-09-16T14:54:08+09:00",
  "alerts": [
-  {
-   "id": "trade-stop",
-   "syms": [
-    "ETN",
-    "GEV"
-   ],
-   "rule": "미국의 무역 중단·추가 관세 발효 → 데이터센터 건설 비용 상승, 발주 지연",
-   "title": "트럼프 잇단 위협에도⋯캐나다, 보복관세 발효 강행 - 이투데이",
-   "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE4xalVSSXNXVTZHenZxMGt1QWJINFdMYi0ybWlaSXdJZ3pxMFdYVTdhX0Z1Y2t5RmJQbV9CZDlXMTMyOVpmeVpvY3NWc25iMTRJT0V6Tw?oc=5",
-   "date": "2026-09-08",
-   "source": "이투데이"
-  },
   {
    "id": "trade-stop",
    "syms": [
@@ -26,17 +14,16 @@
    "source": "뉴시스"
   },
   {
-   "id": "fed-independence",
+   "id": "trade-stop",
    "syms": [
-    "QQQ",
     "ETN",
     "GEV"
    ],
-   "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "트럼프 압박에도…9월 FOMC, 금리 인상 유력 - 투데이신문",
-   "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1tZEo5WGhQaHJQa0JBNm9ySzZKbXMyWXFYa2JtZG5WMnYwaHJ6d1ZqYlNLMllTUVBtREFFdkhvRWVLcF9vaDdkaE5BVGxUdkt5QXYtcXVESHZwdWJRYjZtdkdHajJRSkVFaEh30gFvQVVfeXFMT0FCbzFOZnpOYlc0a2Q1U2JWV2VSQ1RtZC0xd0t0TnRDWFc2b0RVUXNTMkJGMXF4ajdpSkVMeGU2S3M4c2tEQW5GYUt3cTVPU2pFa2ZfQ2RMdXpYaXMtdHhEZnl1RnB5aVJya1Y0Q0dr?oc=5",
-   "date": "2026-09-15",
-   "source": "투데이신문"
+   "rule": "미국의 무역 중단·추가 관세 발효 → 데이터센터 건설 비용 상승, 발주 지연",
+   "title": "美·캐나다 무역 협상, 막판 이견 못 좁히고 결렬…50% 관세 발효 > 시애틀 뉴스/핫이슈 - SeattleN",
+   "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE1FUlVuVXBWakR1VWZTNVN5M1JSSlJqQlNZUzZvRy1TOXo0RXNFWmJ4aU9TQlB6SDBzcFBMNV9jck1LZ1FhcWZtM25R?oc=5",
+   "date": "2026-09-12",
+   "source": "SeattleN"
   },
   {
    "id": "fed-independence",
@@ -50,6 +37,19 @@
    "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1CUlNfdGJOV0w3MWZyYk93UmVtMFkzMXpuaVhEQUM5RW9mTHZtVW5tSW5EMF96M05MZXFHYVZzb3VVTjB4RTZyMnd2NlFMcGRsU2IwZ1VJX1Jkd2Iy?oc=5",
    "date": "2026-09-14",
    "source": "뉴스핌"
+  },
+  {
+   "id": "fed-independence",
+   "syms": [
+    "QQQ",
+    "ETN",
+    "GEV"
+   ],
+   "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
+   "title": "트럼프 압박에도…9월 FOMC, 금리 인상 유력 - 투데이신문",
+   "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1tZEo5WGhQaHJQa0JBNm9ySzZKbXMyWXFYa2JtZG5WMnYwaHJ6d1ZqYlNLMllTUVBtREFFdkhvRWVLcF9vaDdkaE5BVGxUdkt5QXYtcXVESHZwdWJRYjZtdkdHajJRSkVFaEh30gFvQVVfeXFMT0FCbzFOZnpOYlc0a2Q1U2JWV2VSQ1RtZC0xd0t0TnRDWFc2b0RVUXNTMkJGMXF4ajdpSkVMeGU2S3M4c2tEQW5GYUt3cTVPU2pFa2ZfQ2RMdXpYaXMtdHhEZnl1RnB5aVJya1Y0Q0dr?oc=5",
+   "date": "2026-09-15",
+   "source": "투데이신문"
   },
   {
    "id": "fed-independence",
@@ -81,21 +81,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "[경제한방] 일본 금리인상 코앞…‘엔캐리 연쇄청산’ 오나? - news.kbs.co.kr",
+   "title": "[경제한방] 일본 금리인상 코앞…‘엔캐리 연쇄청산’ 오나? - KBS 뉴스",
    "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE02eU85S01EN0ZQQ2NZYmRLM0xMVlpQak5JRXhXeVEzSWo4R0hGWU1LWjU3VmhmeEp3dWcxcVBrdlM0bUxkaERSSk5SOVdSR0lfSHZuaGd0NVJDNWs?oc=5",
    "date": "2026-09-15",
-   "source": "news.kbs.co.kr"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "일본 금리인상, 기폭제 되나⋯엔 캐리 청산 뇌관 ‘재깍재깍’ - 이투데이",
-   "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFAyOURjUFM0Wl9MV3Y5Z1hQZDNVSHgxWXVRS1EtcFNnTk53Rjl1UTRvX1NPTGxDUHVwLUNrRzhlbnF1TXpXcHVsYUMzQ2lnR3pKMnpvbw?oc=5",
-   "date": "2026-09-15",
-   "source": "이투데이"
+   "source": "KBS 뉴스"
   },
   {
    "id": "boj-carry",
@@ -107,6 +96,17 @@
    "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1aWmlMLV9PY2Z6T0JfSTFlVHlPQW83U29LdTl2V1JLMlhkeUtlM0xFYmxqUFRoSlB1emtWQUxwY1l2R2VpMk51S2RGUXVkOEpremlaY1lSYlRlQQ?oc=5",
    "date": "2026-09-13",
    "source": "한국경제"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "일본 금리인상, 기폭제 되나⋯엔 캐리 청산 뇌관 ‘재깍재깍’ - 이투데이",
+   "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFAyOURjUFM0Wl9MV3Y5Z1hQZDNVSHgxWXVRS1EtcFNnTk53Rjl1UTRvX1NPTGxDUHVwLUNrRzhlbnF1TXpXcHVsYUMzQ2lnR3pKMnpvbw?oc=5",
+   "date": "2026-09-15",
+   "source": "이투데이"
   }
  ],
  "filings": [],
