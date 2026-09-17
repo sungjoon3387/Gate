@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T06:35:15+09:00",
+ "generated_at": "2026-09-18T06:44:19+09:00",
  "alerts": [
   {
    "id": "fed-independence",
@@ -46,10 +46,21 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "[김대호 진단] 일본은행 금리인상과 엔캐리 청산 - 글로벌이코노믹",
+   "title": "[김대호 진단] 일본은행 금리인상과 엔캐리 청산 - g-enews.com",
    "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOdi12TzZ6c3dwWUFuQUNpTWVwbE5aOVNCQmRNSXNjOHhYM1E5UVdvTk81c0ZrSHg0U3pPNnIxSl9jb1Z1VmMtTEhDSlFWdm1zZGMtX3RLZTFHaFZRMkxrcTUzTHBUVjV6U3NOcTN6RkxqN1hDTDBPdlZxLXZkblFIZTdjaUw?oc=5",
    "date": "2026-09-17",
-   "source": "글로벌이코노믹"
+   "source": "g-enews.com"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "美 이어 日도 금리 인상?…또 고개드는 '엔캐리 청산' - SBS Biz",
+   "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE13NFU5bVlCaTcwam5VOVJTY1dUMjF6aFFrOTZKYWhfc1BYQzdfOHVOemdCaUlHaWZvRFJGcFZUOU9JTEtTc1pCX1M3Sk8zNHo5a1dV0gFYQVVfeXFMTS1RWkpubFRkdVFra2MyeTJYNGZ6M0FBNnRuQnQ5RmdNc2J2Y1RDeW5NbzkwNUxQMDd6NE9uNU1MVmVORHNvTHVNNTVjSWR1cnBXLWVWOHJXVw?oc=5",
+   "date": "2026-09-17",
+   "source": "SBS Biz"
   },
   {
    "id": "boj-carry",
@@ -61,17 +72,6 @@
    "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBWQXphWXBEZmMwZV9yaGZqSlJOR1hTajhad1lCTE9TUG1MbkhIMUZyc194bHVucWRPNjIta0FrUXBYZDRMdkt1MmpHZVBHNEtKci1qN2IxM2g5cXM?oc=5",
    "date": "2026-09-17",
    "source": "에너지경제신문"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "[경제한방] 일본 금리인상 코앞…‘엔캐리 연쇄청산’ 오나? - KBS 뉴스",
-   "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE02eU85S01EN0ZQQ2NZYmRLM0xMVlpQak5JRXhXeVEzSWo4R0hGWU1LWjU3VmhmeEp3dWcxcVBrdlM0bUxkaERSSk5SOVdSR0lfSHZuaGd0NVJDNWs?oc=5",
-   "date": "2026-09-15",
-   "source": "KBS 뉴스"
   }
  ],
  "filings": [],
