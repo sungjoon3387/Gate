@@ -1,18 +1,6 @@
 {
- "generated_at": "2026-09-17T08:41:14+09:00",
+ "generated_at": "2026-09-17T22:21:17+09:00",
  "alerts": [
-  {
-   "id": "trade-stop",
-   "syms": [
-    "ETN",
-    "GEV"
-   ],
-   "rule": "미국의 무역 중단·추가 관세 발효 → 데이터센터 건설 비용 상승, 발주 지연",
-   "title": "\"관세보다 더 큰 폭풍\"…트럼프, 캐나다 무역戰에 '수입금지' 카드 - 뉴시스",
-   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1PTmpzQ004aGJ3NUgtNmNKV3FiZ094dE5lMURBdDFvT09yWWVnQUFiSVlLN2FVNjczT2piSWIxQnVXM1BhNnVXdl9rSHJEeHRQNlJncU1pYWNSYmhuU205dtIBeEFVX3lxTE4ySnpKOGlhOEJONTdjX0xCZWZEMkt1eWRSZkRWQ0ZRWW1qNlZaN1h4eG5QdzhOcnZHM3ZtNnV0b1BkR0htRzdManY4SnptN0hMM3dFMl9zYTI0TmFtLTBZTm5DYnk3ZWRvNGd5U1kyLUhrZXI1el9WVw?oc=5",
-   "date": "2026-09-09",
-   "source": "뉴시스"
-  },
   {
    "id": "fed-independence",
    "syms": [
@@ -34,10 +22,10 @@
     "GEV"
    ],
    "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "연준, 물가에 긴축 칼 뺐다…트럼프 “금리 낮춰라” 압박 - 동방일보",
-   "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE4yS051bXJNcmdkLWJEYTlDRWI5V2hvdTdLVVJiNVZOUDlKUWFkSUVBNXlwWDh6WEJPeDE2ejFRcWJLWlRjWkhZNU1PbzFpd2NtQWJiRGpPcWdJMG9KZDRMSEMwSTBxVUFrQXI3WENXeFBEYTA?oc=5",
-   "date": "2026-09-16",
-   "source": "동방일보"
+   "title": "트럼프 압박에도…9월 FOMC, 금리 인상 유력 - 투데이신문",
+   "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1tZEo5WGhQaHJQa0JBNm9ySzZKbXMyWXFYa2JtZG5WMnYwaHJ6d1ZqYlNLMllTUVBtREFFdkhvRWVLcF9vaDdkaE5BVGxUdkt5QXYtcXVESHZwdWJRYjZtdkdHajJRSkVFaEh30gFvQVVfeXFMT0FCbzFOZnpOYlc0a2Q1U2JWV2VSQ1RtZC0xd0t0TnRDWFc2b0RVUXNTMkJGMXF4ajdpSkVMeGU2S3M4c2tEQW5GYUt3cTVPU2pFa2ZfQ2RMdXpYaXMtdHhEZnl1RnB5aVJya1Y0Q0dr?oc=5",
+   "date": "2026-09-15",
+   "source": "투데이신문"
   },
   {
    "id": "fed-independence",
@@ -47,21 +35,10 @@
     "GEV"
    ],
    "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "트럼프 압박에도…9월 FOMC, 금리 인상 유력 - 투데이신문",
-   "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1tZEo5WGhQaHJQa0JBNm9ySzZKbXMyWXFYa2JtZG5WMnYwaHJ6d1ZqYlNLMllTUVBtREFFdkhvRWVLcF9vaDdkaE5BVGxUdkt5QXYtcXVESHZwdWJRYjZtdkdHajJRSkVFaEh30gFvQVVfeXFMT0FCbzFOZnpOYlc0a2Q1U2JWV2VSQ1RtZC0xd0t0TnRDWFc2b0RVUXNTMkJGMXF4ajdpSkVMeGU2S3M4c2tEQW5GYUt3cTVPU2pFa2ZfQ2RMdXpYaXMtdHhEZnl1RnB5aVJya1Y0Q0dr?oc=5",
-   "date": "2026-09-15",
-   "source": "투데이신문"
-  },
-  {
-   "id": "gas-turbine",
-   "syms": [
-    "GEV"
-   ],
-   "rule": "미국 에너지 정책 변화로 가스터빈 발주가 밀림",
-   "title": "美 AI 전력난에 ‘伊 터빈 명가’ 가세···두산 가스터빈 영향은? - 뉴스프리존",
-   "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1IU2ZFczB5cFRBVGdodmpaZEFuUHdPWnc1b1hMdmtnUWJoN3dpdENqZTlNQXp1SDkyNDhoeFYtaWY0bDlKcjdIc1l6UWlqTlZ0cEwxVlJ2aHVfamdLd2xIeWJIckdYbmlpNldCWERySnVldE3SAXdBVV95cUxQNWRXY25nYlgxMWRvcEJSM2pFS09WQ2RWUkoxTUE1TjV1c1E1U0FMQjdiYjBQWWI2R0xoUWFETERXbU1oSFVNU0NGb0ZBNDVrRXhGTGpfVk9qcXlla01RMGtVOFluVVpRS0otYXVVTkZFb3hmbDlhaw?oc=5",
-   "date": "2026-09-08",
-   "source": "뉴스프리존"
+   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - 뉴시스",
+   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9QWWk4UE5YSnM0QndEVmdpa1h6dDczNUt5eHNpell1Y1JzZXdpRmVGeHd5VGViVmJodjFtaFRBT1FqOC1DV0ZWUGZxZldOY2N1QXR5bG1TM2ZCSkhpcnBNNtIBeEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURA?oc=5",
+   "date": "2026-09-17",
+   "source": "뉴시스"
   },
   {
    "id": "boj-carry",
@@ -69,20 +46,9 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "韓증시에 유입된 일본자금, 2024년보다 250% 증가...공포 과도vs 위기는 시작 - 아주경제",
-   "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE5aSm1GNUVQMzRBclJiSjJCSGpiYjJ5MGhFS25yUTQwQXA1djdocjlhR0txc1hMMnZuZ05aQTJmb0QtRGRqdFA2NUJSOEwwY3RKNU9QSEpuQUTSAVhBVV95cUxOWkptRjVFUDM0QXJSYkoyQkhqYmIyeTBoRUtuclE0MEFwNXY3aHI5YUdLcXNYTDJ2bmdOWkEyZm9ELURkanRQNjVCUjhMMGN0SjVPUEhKbkFE?oc=5",
-   "date": "2026-09-16",
-   "source": "아주경제"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "미·일 금리인상 결정 앞두고…커지는 '10조 엔캐리' 청산 공포 - v.daum.net",
-   "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE1wcVdfQXd1SEFRakYtT20zbmNaZklsTEdtWGRRYWZvb05scGlvWDJoWTNTVFhFWWhtM3hWWTR5bExfNzF5NFBRYVFBWDkwaHRqZVVHaw?oc=5",
-   "date": "2026-09-16",
+   "title": "클래리티법 부결·美 금리 인상…코인시장 다음 변수는 '엔 캐리 청산' - v.daum.net",
+   "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5oRW5hcTVHRnlJT1JuUndpeE8tY3BNX2FMNUxjcUhaSG91MWRwV05JY1BDQk43NDJJY1oteHBKRTVEVU9PUTZqVlhsTDk5NGs?oc=5",
+   "date": "2026-09-17",
    "source": "v.daum.net"
   },
   {
@@ -91,10 +57,21 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "일본은행 금리 인상 전망…'엔 캐리 청산' 공포 재점화될까 - hankyung.com",
-   "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1aWmlMLV9PY2Z6T0JfSTFlVHlPQW83U29LdTl2V1JLMlhkeUtlM0xFYmxqUFRoSlB1emtWQUxwY1l2R2VpMk51S2RGUXVkOEpremlaY1lSYlRlQQ?oc=5",
-   "date": "2026-09-13",
-   "source": "hankyung.com"
+   "title": "“엔화 환율 다시 160엔?”…‘매파 연준’에 日銀 초비상 [이슈+] - 에너지경제신문",
+   "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTFBWQXphWXBEZmMwZV9yaGZqSlJOR1hTajhad1lCTE9TUG1MbkhIMUZyc194bHVucWRPNjIta0FrUXBYZDRMdkt1MmpHZVBHNEtKci1qN2IxM2g5cXM?oc=5",
+   "date": "2026-09-17",
+   "source": "에너지경제신문"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "[경제한방] 일본 금리인상 코앞…‘엔캐리 연쇄청산’ 오나? - KBS 뉴스",
+   "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE02eU85S01EN0ZQQ2NZYmRLM0xMVlpQak5JRXhXeVEzSWo4R0hGWU1LWjU3VmhmeEp3dWcxcVBrdlM0bUxkaERSSk5SOVdSR0lfSHZuaGd0NVJDNWs?oc=5",
+   "date": "2026-09-15",
+   "source": "KBS 뉴스"
   }
  ],
  "filings": [],
