@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T06:58:38+09:00",
+ "generated_at": "2026-09-18T07:54:10+09:00",
  "alerts": [
   {
    "id": "fed-independence",
@@ -22,10 +22,10 @@
     "GEV"
    ],
    "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "트럼프 압박에도…9월 FOMC, 금리 인상 유력 - ntoday.co.kr",
+   "title": "트럼프 압박에도…9월 FOMC, 금리 인상 유력 - 투데이신문",
    "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1tZEo5WGhQaHJQa0JBNm9ySzZKbXMyWXFYa2JtZG5WMnYwaHJ6d1ZqYlNLMllTUVBtREFFdkhvRWVLcF9vaDdkaE5BVGxUdkt5QXYtcXVESHZwdWJRYjZtdkdHajJRSkVFaEh30gFvQVVfeXFMT0FCbzFOZnpOYlc0a2Q1U2JWV2VSQ1RtZC0xd0t0TnRDWFc2b0RVUXNTMkJGMXF4ajdpSkVMeGU2S3M4c2tEQW5GYUt3cTVPU2pFa2ZfQ2RMdXpYaXMtdHhEZnl1RnB5aVJya1Y0Q0dr?oc=5",
    "date": "2026-09-15",
-   "source": "ntoday.co.kr"
+   "source": "투데이신문"
   },
   {
    "id": "fed-independence",
@@ -35,10 +35,10 @@
     "GEV"
    ],
    "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - newsis.com",
-   "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURNIBeEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURA?oc=5",
+   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - 뉴시스",
+   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9QWWk4UE5YSnM0QndEVmdpa1h6dDczNUt5eHNpell1Y1JzZXdpRmVGeHd5VGViVmJodjFtaFRBT1FqOC1DV0ZWUGZxZldOY2N1QXR5bG1TM2ZCSkhpcnBNNtIBeEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURA?oc=5",
    "date": "2026-09-17",
-   "source": "newsis.com"
+   "source": "뉴시스"
   },
   {
    "id": "boj-carry",
@@ -46,10 +46,21 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "[김대호 진단] 일본은행 금리인상과 엔캐리 청산 - g-enews.com",
+   "title": "美 이어 日도 금리 인상?…또 고개드는 '엔캐리 청산' [글로벌 뉴스픽] - v.daum.net",
+   "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5zOGQteVA5U0Z4aVlyS01CaUF2WWFvbEVmOTFiWm80OGhVSzJobnJUY05zcDdMdmNwai1BZzRjQjJmRVlwYkhzMkxIekVKSk0?oc=5",
+   "date": "2026-09-17",
+   "source": "v.daum.net"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "[김대호 진단] 일본은행 금리인상과 엔캐리 청산 - 글로벌이코노믹",
    "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOdi12TzZ6c3dwWUFuQUNpTWVwbE5aOVNCQmRNSXNjOHhYM1E5UVdvTk81c0ZrSHg0U3pPNnIxSl9jb1Z1VmMtTEhDSlFWdm1zZGMtX3RLZTFHaFZRMkxrcTUzTHBUVjV6U3NOcTN6RkxqN1hDTDBPdlZxLXZkblFIZTdjaUw?oc=5",
    "date": "2026-09-17",
-   "source": "g-enews.com"
+   "source": "글로벌이코노믹"
   },
   {
    "id": "boj-carry",
@@ -61,17 +72,6 @@
    "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE13NFU5bVlCaTcwam5VOVJTY1dUMjF6aFFrOTZKYWhfc1BYQzdfOHVOemdCaUlHaWZvRFJGcFZUOU9JTEtTc1pCX1M3Sk8zNHo5a1dV0gFYQVVfeXFMTS1RWkpubFRkdVFra2MyeTJYNGZ6M0FBNnRuQnQ5RmdNc2J2Y1RDeW5NbzkwNUxQMDd6NE9uNU1MVmVORHNvTHVNNTVjSWR1cnBXLWVWOHJXVw?oc=5",
    "date": "2026-09-17",
    "source": "SBS Biz"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "[경제한방] 일본 금리인상 코앞…‘엔캐리 연쇄청산’ 오나? - KBS 뉴스",
-   "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE02eU85S01EN0ZQQ2NZYmRLM0xMVlpQak5JRXhXeVEzSWo4R0hGWU1LWjU3VmhmeEp3dWcxcVBrdlM0bUxkaERSSk5SOVdSR0lfSHZuaGd0NVJDNWs?oc=5",
-   "date": "2026-09-15",
-   "source": "KBS 뉴스"
   }
  ],
  "filings": [],
