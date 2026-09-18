@@ -240,6 +240,10 @@ def layer1():
     ind["be10"]   = stat("T10YIE", "10년 기대인플레")
     # 이 포트폴리오의 진짜 선행지표
     ind["ig"] = stat("BAMLC0A0CM", "투자등급 회사채 스프레드")
+    # 하이일드 — 투자등급보다 먼저 벌어집니다. 조기 경보용.
+    ind["hy"] = stat("BAMLH0A0HYM2", "하이일드 스프레드")
+    # 유가 — 물가 경로이자 전력기기 원가
+    ind["wti"] = stat("DCOILWTICO", "WTI 유가", unit="$")
     # 통화
     ind["dxy"]  = stat("DTWEXBGS", "달러인덱스(광의)", unit="")
     ind["usdkrw"] = stat("DEXKOUS", "원/달러", unit="원")
@@ -247,6 +251,8 @@ def layer1():
     ind["jpy"] = stat("DEXJPUS", "엔/달러", unit="엔")
     # collect.py 가 ^N225 를 이미 받았으면 그걸 쓰고, 없으면 직접 받습니다
     ind["n225"] = from_data_json("^N225", "닛케이225") or yahoo("^N225", "닛케이225")
+    # 구리 — 전력기기 원가의 본체. collect.py 가 HG=F 를 받으면 그걸 씁니다.
+    ind["copper"] = from_data_json("HG=F", "구리") or yahoo("HG=F", "구리")
 
     return {k: v for k, v in ind.items() if v}
 
@@ -279,29 +285,49 @@ def verdict_curve(i):
 
 
 def verdict_ig(i):
-    """조달여건 — 캐펙스 경로의 중간 고리."""
-    ig = i.get("ig")
+    """조달여건 — 캐펙스 경로의 중간 고리.
+    투자등급은 가장 늦게 벌어지므로 하이일드를 조기 경보로 함께 봅니다."""
+    ig, hy = i.get("ig"), i.get("hy")
     if not ig:
         return None, "IG 스프레드 수집 실패"
     d60 = ig["chg_60d"]
-    lvl = ig["value"]
     if d60 is None:
         return None, "변화폭 계산 불가"
-    if d60 >= 0.25:
+    h60 = hy["chg_60d"] if hy else None
+
+    if h60 is not None and h60 >= 0.75 and d60 < 0.25:
+        tag = "조기 경보 — 하이일드 선행"
+        txt = ("투자등급은 아직 조용한데 하이일드가 60일간 %+.2f%%p 벌어졌습니다. "
+               "신용 균열은 약한 곳에서 먼저 시작되고 투자등급은 가장 늦게 반응합니다. "
+               "2007년에도 하이일드가 먼저 움직였습니다. 지금이 그 순서의 첫 단계일 수 있습니다.") % h60
+    elif d60 >= 0.25:
         tag = "확대 — 경고"
-        txt = ("60일간 %+.2f%%p 확대. 금리 상승이 조달여건 악화로 번지는 국면입니다. "
+        txt = ("투자등급 스프레드가 60일간 %+.2f%%p 확대. 금리 상승이 조달여건 악화로 번지는 국면입니다. "
                "전력기기 3종목의 수주 파이프라인을 떠받치는 데이터센터 캐펙스가 실제로 둔화될 수 있는 "
-               "유일한 경로가 이것입니다. 반증 조건에 근접.") % d60
-    elif d60 >= 0.10:
+               "유일한 경로입니다. 반증 조건에 근접.") % d60
+    elif d60 >= 0.10 or (h60 is not None and h60 >= 0.35):
         tag = "소폭 확대 — 관찰"
-        txt = ("60일간 %+.2f%%p. 아직 경고는 아니지만 방향이 나쁩니다. "
-               "국채금리 상승과 같이 움직이는지 확인 필요.") % d60
+        txt = ("투자등급 %+.2f%%p" % d60)
+        if h60 is not None:
+            txt += ", 하이일드 %+.2f%%p" % h60
+        txt += ". 아직 경고는 아니지만 방향이 나쁩니다. 국채금리 상승과 같이 움직이는지 확인 필요."
     else:
         tag = "안정"
-        txt = ("60일간 %+.2f%%p. 국채금리가 올라도 신용 스프레드는 벌어지지 않았습니다. "
-               "금리 상승의 이유가 경기 호조라는 해석과 부합하고, 캐펙스 스토리는 아직 살아 있습니다. "
-               "금리가 캐펙스를 죽이는 게 아니라 스프레드가 죽입니다.") % d60
-    txt += " 현재 %.2f%%p, 5년 백분위 %s%%." % (lvl, ig["pctile_5y"])
+        txt = ("투자등급 60일 %+.2f%%p" % d60)
+        if h60 is not None:
+            txt += ", 하이일드 %+.2f%%p" % h60
+        txt += (". 국채금리가 올라도 신용 스프레드는 벌어지지 않았습니다. "
+                "금리 상승의 이유가 경기 호조라는 해석과 부합하고, 캐펙스 스토리는 아직 살아 있습니다. "
+                "금리가 캐펙스를 죽이는 게 아니라 스프레드가 죽입니다.")
+
+    txt += " 현재 투자등급 %.2f%%p (5년 백분위 %s%%)" % (ig["value"], ig["pctile_5y"])
+    if hy:
+        txt += " · 하이일드 %.2f%%p (5년 백분위 %s%%)" % (hy["value"], hy["pctile_5y"])
+
+    cu = i.get("copper")
+    if cu and cu.get("chg_60d") is not None:
+        txt += (" · 구리 60일 %+.1f%% — 전력기기 원가의 본체입니다. "
+                "마진이 깎일 때 증설 투자 탓인지 원자재 탓인지는 이 숫자로 갈립니다.") % cu["chg_60d"]
     return tag, txt
 
 
@@ -455,6 +481,41 @@ def verdict_policy(i, kr):
     return tag, txt + " — " + " · ".join(parts)
 
 
+def verdict_oil(i):
+    """유가 — 물가·연준 경로와 전력기기 원가로 동시에 들어옵니다."""
+    w = i.get("wti")
+    if not w:
+        return None, "유가 수집 실패"
+    v, d60 = w["value"], w["chg_60d"]
+    parts = ["WTI %.2f달러 (5년 백분위 %s%%)" % (v, w["pctile_5y"])]
+    if d60 is not None:
+        parts.append("60일 %+.2f달러" % d60)
+    be = i.get("be10")
+    if be:
+        parts.append("10년 기대인플레 %.2f%%" % be["value"])
+
+    pct60 = None
+    if d60 is not None and (v - d60):
+        pct60 = d60 / (v - d60) * 100
+
+    if v >= 110 or (pct60 is not None and pct60 >= 30):
+        tag = "경고"
+        txt = ("유가가 물가 경로를 직접 밀어올리는 구간입니다. 연준의 추가 인상 논거가 굳어지고, "
+               "동시에 구리·물류비를 통해 전력기기 원가도 압박합니다. 고정가 계약이 많은 구조에서는 "
+               "원가 상승이 곧바로 마진 하락입니다. 2008년에는 유가가 147달러에서 정점을 찍은 직후 "
+               "수요 파괴로 35달러까지 무너졌습니다 — 급등의 끝이 급락인 경우가 많습니다.")
+    elif v >= 90:
+        tag = "관찰"
+        txt = ("유가가 높은 구간에 있지만 아직 물가 전이가 확인되지는 않았습니다. "
+               "헤드라인 물가에는 바로 들어가고 근원 물가에는 몇 달 걸립니다. "
+               "근원까지 번지면 연준 경로가 바뀝니다. 다음 소비자물가 발표가 확인 지점입니다.")
+    else:
+        tag = "중립"
+        txt = ("유가가 물가를 밀어올릴 수준이 아닙니다. 전력기기 원가에도 부담이 적습니다.")
+
+    return tag, txt + " — " + " · ".join(parts)
+
+
 def layer2(i):
     kr = kr_rates()
     kr_base = kr.get("policy", {}).get("value")
@@ -479,6 +540,13 @@ def layer2(i):
         "id": "capex",
         "title": "금리 → 조달비용 → AI 캐펙스 → 전력기기",
         "path": "실질금리 ↑ → IG 회사채 스프레드 → 하이퍼스케일러 조달 → 데이터센터 발주",
+        "verdict": t, "text": x,
+    })
+    t, x = verdict_oil(i)
+    chains.append({
+        "id": "oil",
+        "title": "유가 → 물가 → 연준 / 원가",
+        "path": "유가 ↑ → 헤드라인 물가 → 근원 물가 → 추가 인상 / 구리·물류비 → 전력기기 마진 / 한국 무역수지 → 원달러",
         "verdict": t, "text": x,
     })
     t, x = verdict_japan(i, jgb10())
