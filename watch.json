@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-19T07:39:55+09:00",
+ "generated_at": "2026-09-19T08:21:13+09:00",
  "alerts": [
   {
    "id": "dc-capex",
@@ -48,8 +48,19 @@
    ],
    "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
    "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - 뉴시스",
-   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9QWWk4UE5YSnM0QndEVmdpa1h6dDczNUt5eHNpell1Y1JzZXdpRmVGeHd5VGViVmJodjFtaFRBT1FqOC1DV0ZWUGZxZldOY2N1QXR5bG1TM2ZCSkhpcnBNNtIBeEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURA?oc=5",
+   "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURNIBeEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURA?oc=5",
    "date": "2026-09-17",
+   "source": "뉴시스"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "日, 31년 만에 최고금리…'엔캐리 청산' 공포 재현될까 - 뉴시스",
+   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9TNDAwQ3g5QkJJNG4wcnIxc2ZZX1VkaXlEUEpWQ3VrbUNfSVFYUHZ1RTZ4NFQtQmN6WTNEYjI2N0k4dnR2TGpJUEtIRXNoc0hxb0lLbmxvLWZ2ZFF0b3V1Z9IBeEFVX3lxTFBxQzhTcTlQeWJRc2JXR0JTSm9qX0VFWmRGWGNRQTI3MjBPek1qUFU4RlRDa2dwampVajIwa19FbkZCMTBwYXhtZkZVUWxmb0NsUHo0ZG1feG9GcHZuenVuTzJfUnpmWjhzWDlSMEZNeFdxY0VHV0hONA?oc=5",
+   "date": "2026-09-18",
    "source": "뉴시스"
   },
   {
@@ -73,17 +84,6 @@
    "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5TTUY5eE1xWjJRdUl6TEotc0NNbzJLTUljR0U4d08wZkhSVGJJV0I2MzB6bGVsR3lfcEdrYjk3UkVydHdaTkx2YzJkVmFfcVdoMHRGV00ybHYtelRWSzBrMVhuazdtQVNfVXd0VkljZ04zeDZ60gF0QVVfeXFMTlNNRjl4TXFaMlF1SXpMSi1zQ01vMktNSWNHRTh3TzBmSFJUYklXQjYzMHpsZWxHeV9wR2tiOTdSRXJ0d1pOTHZjMmRWYV9xV2gwdEZXTTJsdi16VFZLMGsxWG5rN21BU19Vd3RWSWNnTjN4Nno?oc=5",
    "date": "2026-09-18",
    "source": "연합인포맥스"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "日 금리 올렸는데 엔화 가치 '뚝'…'엔캐리 청산'보다 무서운 변수 - v.daum.net",
-   "url": "https://news.google.com/rss/articles/CBMiRkFVX3lxTE9yaWRmZXVhLXpvd3NkX3ItOUZNdVJCamdiSVd2UFQ1elU3bjBJRGtSbnRPZnZkdEJuVXdfRVI1Q2tHTWUtVmc?oc=5",
-   "date": "2026-09-18",
-   "source": "v.daum.net"
   }
  ],
  "filings": [],
