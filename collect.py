@@ -74,6 +74,8 @@ SYMBOLS = [
      "src": [("fred", "DGS10"), ("stooq", "10usy.b"), ("yahoo", "^TNX")]},
     {"sym": "^TYX", "name": "미국채 30년", "kind": "macro", "unit": "%",
      "src": [("fred", "DGS30"), ("stooq", "30usy.b"), ("yahoo", "^TYX")]},
+    {"sym": "HG=F", "name": "구리", "kind": "macro", "unit": "$",
+     "src": [("stooq", "hg.f"), ("yahoo", "HG=F")]},
 
     # 엔 캐리 청산 감지용. 엔화 급등과 함께 움직이는지가 신호입니다.
     {"sym": "^N225", "name": "닛케이225", "kind": "macro", "unit": "",
