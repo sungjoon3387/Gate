@@ -41,7 +41,12 @@ window.THESIS = {
         "다만 해석의 검증은 필요: 지수 하락과 함께 빅테크 실적·캐펙스 가이던스가 같이 꺾이면 '금리 때문'이라는 설명이 틀린 것"
       ],
       risk: "장기금리 상승은 할인율만의 문제가 아니다. 조달비용 경로가 열리면 QQQ와 전력기기 3종목이 함께 움직인다.",
-      kpi: { label: "미 10년물 금리", value: "4.78%", prev: "4.15%", dir: "up", asof: "2026-09-07" },
+      kpis: [
+        { k: "수준", label: "하이퍼스케일러 4사 합산 캐펙스 가이던스", value: "$7,200~7,450억", asof: "2026-08" },
+        { k: "가속도", label: "데이터센터 캐펙스 성장률", value: "50%+", prev: "1조 달러 도달 전망 2029년 → 2026년", dir: "up", asof: "델오로, 2026" },
+        { k: "질량", label: "미국 내 건설 중인 데이터센터", value: "32GW", prev: "2030년까지 파이프라인 165~228GW", asof: "2026" },
+        { k: "참고", label: "미 10년물 금리", value: "5.00%", prev: "4.78%", dir: "up", asof: "2026-09-16" }
+      ],
       next: "9월 FOMC · 미 CPI",
       sources: "KB 환율 동향 및 전망 2026-09-07 / TradingEconomics",
       updated: "2026-09-10"
@@ -66,7 +71,12 @@ window.THESIS = {
         "[정치] 연준 독립성 훼손이 장기금리 상승으로 전이되어 커브가 베어 스티프닝으로 전환 — Gate 커브 판정이 자동으로 잡습니다"
       ],
       risk: "밸류에이션이 이미 비싼 데다 Q1'26에 인수 $110억 집행 + 자사주 매입 중단으로 부채가 늘어난 상태. 하반기 EBITDA가 밀리면 재무 레버리지가 그대로 노출된다.",
-      kpi: { label: "미주 book-to-bill", value: "1.3", prev: "1.2", dir: "up", asof: "2026 Q2" },
+      kpis: [
+        { k: "수준", label: "Electrical Americas book-to-bill", value: "1.2", prev: "1.2", asof: "2026 Q2" },
+        { k: "가속도", label: "미주 수주 증가율 (12개월 이동)", value: "+33%", prev: "+42%", dir: "down", asof: "2026 Q2 — 9%p 감속" },
+        { k: "질량", label: "수주잔고 커버리지", value: "약 2분기", prev: "수주잔고 $14.5B / 분기 매출 $7.5B", asof: "2026 Q2" },
+        { k: "참고", label: "부문 영업이익률", value: "25.6%", prev: "30.0%", dir: "down", asof: "2026 Q1 — 증설 투자로 440bp 하락" }
+      ],
       next: "Q3'26 실적 (10월 하순 예상)",
       sources: "Eaton Q2'26 earnings call 2026-07 / Q1'26 8-K",
       updated: "2026-09-10"
@@ -93,7 +103,12 @@ window.THESIS = {
         "[정치] 무역 중단·관세로 데이터센터 캐펙스 자체가 둔화"
       ],
       risk: "이익의 질이 아직 나쁘다. Q2'26 EPS가 컨센서스를 $0.71 하회했고 풍력은 EBITDA -$2.75억(마진 -13.6%), 수주 -40%. '수주잔고는 훌륭한데 손익은 미스'가 반복되는 패턴.",
-      kpi: { label: "가스터빈 수주잔고", value: "116GW", prev: "100GW", dir: "up", asof: "2026 Q2" },
+      kpis: [
+        { k: "수준", label: "가스터빈 수주잔고+슬롯예약", value: "116GW", prev: "100GW", dir: "up", asof: "2026 Q2" },
+        { k: "가속도", label: "분기 증가폭", value: "+16GW", prev: "다음 분기 +10GW 아래면 둔화 진입", dir: "up", asof: "2026 Q2" },
+        { k: "질량", label: "수주잔고 커버리지", value: "약 19분기", prev: "총 수주잔고 $1,760억 (장기 서비스 계약 포함 — 장비만 보면 더 짧음)", asof: "2026 Q2" },
+        { k: "참고", label: "Power 부문 book-to-bill", value: "3.05배", prev: "만드는 속도의 3배로 판매", asof: "2026 Q2" }
+      ],
       next: "Q3'26 실적 (10월 하순 예상) — 20GW 연산 도달 여부",
       sources: "GE Vernova Q2'26 보도자료 2026-07-22 / Utility Dive 2026-07-23",
       updated: "2026-09-10"
@@ -125,17 +140,21 @@ window.THESIS = {
     "JEPQ": {
       match: ["JEPQ"],
       bucket: "정리 대상",
-      claim: "보유 중이나 Gate의 정식 포지션이 아님. QQQ로 통합 예정.",
+      claim: "손익분기 대비 +3% 도달 시 전량 매도. 매도 대금은 그 시점 QQQ와 전력기기 비율에 맞춰 재배분한다.",
       evidence: [
         "나스닥100에 콜을 매도하는 구조 — QQQ와 기초자산이 동일하고 상방만 절삭된다",
         "변동성이 큰 현 국면에서는 옵션 프리미엄이 커져 분배금이 방어적으로 보이지만, 대가는 반등 시 상단 포기"
       ],
       falsifier: [
-        "해당 없음 — 논지가 '보유 이유가 없다'이므로 반증 조건은 '지금 인컴이 실제로 필요해졌다' 하나뿐"
+        "해당 없음 — 매도 조건이 논지 그 자체",
+        "다만 기준을 먼저 정해야 함: +3%가 원화 기준인지 달러 기준인지. 환율 때문에 도달 시점이 크게 달라진다"
       ],
-      risk: "코어를 둘로 쪼갠 상태가 유지되면 적립 기간이 긴 계좌에서 QQQ 대비 장기 복리가 구조적으로 뒤처진다. 또한 holdings.js 에 넣지 않으면 전력기기 비중 분모에서 빠져 게이트 수치가 실제보다 높게 표시된다.",
-      kpi: null,
-      next: "매도 후 QQQ 통합 여부 결정",
+      risk: "차트가 구조를 증명한다 — 2022년 이후 4년간 $54~62 박스에 갇혀 있고 수익은 전부 분배금에서 나왔다. 상방 절삭이 이론이 아니라 실측이다. +3%까지 기다리는 동안 그 기간만큼 코어 복리가 뒤처진다. 기다림의 비용을 계산에 넣을 것.",
+      kpis: [
+        { k: "조건", label: "매도 트리거", value: "+3%", prev: "달러 기준 평단 $60.18 → 목표 약 $62.0", asof: "2026-09-18" },
+        { k: "배분", label: "매도 대금 처리", value: "QQQ 약 66% / 전력기기 약 34%", prev: "현재 두 그룹 비율 기준 · 전력기기 상한 35% 확인 필요", asof: "2026-09-18" }
+      ],
+      next: "+3% 도달 시점",
       sources: "",
       updated: "2026-09-10"
     }
@@ -182,9 +201,14 @@ window.THESIS = {
       ".gt-wrap li::marker{color:rgba(255,255,255,.28)}",
       ".gt-fal li{color:#e8a3a3}",
       ".gt-risk{color:rgba(255,255,255,.62);background:rgba(255,255,255,.035);border-left:2px solid rgba(255,255,255,.14);padding:9px 12px;border-radius:0 6px 6px 0}",
-      ".gt-kpi{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;background:rgba(255,255,255,.04);border-radius:8px;padding:9px 12px}",
-      ".gt-kpi b{color:#fff;font-size:16px;font-weight:700}",
-      ".gt-kpi .from{color:rgba(255,255,255,.38)}",
+      ".gt-kpi{display:flex;gap:10px;background:rgba(255,255,255,.04);border-radius:8px;padding:10px 12px;margin-bottom:6px}",
+      ".gt-kpi .kk{flex:none;min-width:44px;font-size:11px;font-weight:700;color:rgba(255,255,255,.45);padding-top:3px}",
+      ".gt-kpi .kb{flex:1;min-width:0}",
+      ".gt-kpi .kl{font-size:11.5px;color:rgba(255,255,255,.45)}",
+      ".gt-kpi .kv{font-size:17px;font-weight:700;color:#fff;line-height:1.25}",
+      ".gt-kpi .kv.up{color:#8fd6a8}.gt-kpi .kv.dn{color:#e8918f}",
+      ".gt-kpi .kp{font-size:11.5px;color:rgba(255,255,255,.52);line-height:1.5;margin-top:2px}",
+      ".gt-kpi .ka{font-size:11px;color:rgba(255,255,255,.34);margin-top:2px}",
       ".gt-foot{margin-top:12px;font-size:11px;color:rgba(255,255,255,.34)}",
       ".gt-banner{margin:0 0 16px;padding:14px 16px;border-radius:12px;background:rgba(214,158,74,.09);border:1px solid rgba(214,158,74,.28)}",
       ".gt-banner h4{margin:0 0 8px;font-size:14px;color:#e8b877;font-weight:700;line-height:1.45}",
@@ -210,13 +234,19 @@ window.THESIS = {
 
     h += '<p class="gt-claim">' + esc(c.claim) + "</p>";
 
-    if (c.kpi) {
-      h += '<div class="gt-sec"><div class="gt-lab">추적 지표</div><div class="gt-kpi">';
-      h += "<span>" + esc(c.kpi.label) + "</span><b>" + esc(c.kpi.value) + "</b>";
-      if (c.kpi.prev) {
-        h += '<span class="from">' + (c.kpi.dir === "down" ? "↓" : "↑") + " 이전 " + esc(c.kpi.prev) + "</span>";
-      }
-      h += '<span class="from">· ' + esc(c.kpi.asof) + "</span></div></div>";
+    var kl = c.kpis || (c.kpi ? [c.kpi] : []);
+    if (kl.length) {
+      h += '<div class="gt-sec"><div class="gt-lab">추적 지표 — 수준 · 가속도 · 질량</div>';
+      kl.forEach(function (x) {
+        var dc = x.dir === "down" ? "dn" : (x.dir === "up" ? "up" : "");
+        h += '<div class="gt-kpi"><span class="kk">' + esc(x.k || "") + "</span>";
+        h += '<div class="kb"><div class="kl">' + esc(x.label) + "</div>";
+        h += '<div class="kv ' + dc + '">' + esc(x.value) + "</div>";
+        if (x.prev) h += '<div class="kp">' + esc(x.prev) + "</div>";
+        if (x.asof) h += '<div class="ka">' + esc(x.asof) + "</div>";
+        h += "</div></div>";
+      });
+      h += "</div>";
     }
 
     if (c.evidence && c.evidence.length) {
