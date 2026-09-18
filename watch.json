@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T08:34:17+09:00",
+ "generated_at": "2026-09-18T13:05:28+09:00",
  "alerts": [
   {
    "id": "dc-capex",
@@ -9,8 +9,8 @@
    ],
    "rule": "하이퍼스케일러가 데이터센터 투자 축소·연기를 공식화",
    "title": "[AI속도논란] ② 빅테크 CAPEX가 AI 투자 방향 좌우한다 - 스트레이트뉴스",
-   "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBJdVZvdnpfaXQyd00zbzFQT2JEbG9YVUNYVFoxYzlXcjU0MjhVajdERFR5U2JReGlUQTQ4emNJN1l3SkxnNmNtTUVkNzBDdXl5NkM4bU9RWlNCZTA5NVI3bDRtUFZTWjlpYllSOGF6SDJzRjDSAXdBVV95cUxPVi05RnhqaDRVelF1d3pIOGhNSHJVN29Mckx0SEEyWXYxQ1AxTjFSam0yanBsY0xubkhCdWpJSWFOQmZxdTFQREs2WVI1SFpvWlBROTMzbDRJT2EzM3RTZldkWFhURzc4bThhbk5tS0dqZEVBOTFscw?oc=5",
-   "date": "2026-09-16",
+   "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9WLTlGeGpoNFV6UXV3ekg4aE1IclU3b0xyTHRIQTJZdjFDUDFOMVJqbTJqcGxjTG5uSEJ1aklJYU5CZnF1MVBESzZZUjVIWm9aUFE5MzNsNElPYTMzdFNmV2RYWFRHNzhtOGFuTm1LR2pkRUE5MWxz0gF3QVVfeXFMT1YtOUZ4amg0VXpRdXd6SDhoTUhyVTdvTHJMdEhBMll2MUNQMU4xUmptMmpwbGNMbm5IQnVqSUlhTkJmcXUxUERLNllSNUhab1pQUTkzM2w0SU9hMzN0U2ZXZFhYVEc3OG04YW5ObUtHamRFQTkxbHM?oc=5",
+   "date": "2026-09-17",
    "source": "스트레이트뉴스"
   },
   {
@@ -34,10 +34,10 @@
     "GEV"
    ],
    "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "트럼프 압박에도…9월 FOMC, 금리 인상 유력 - ntoday.co.kr",
+   "title": "트럼프 압박에도…9월 FOMC, 금리 인상 유력 - 투데이신문",
    "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE1tZEo5WGhQaHJQa0JBNm9ySzZKbXMyWXFYa2JtZG5WMnYwaHJ6d1ZqYlNLMllTUVBtREFFdkhvRWVLcF9vaDdkaE5BVGxUdkt5QXYtcXVESHZwdWJRYjZtdkdHajJRSkVFaEh30gFvQVVfeXFMT0FCbzFOZnpOYlc0a2Q1U2JWV2VSQ1RtZC0xd0t0TnRDWFc2b0RVUXNTMkJGMXF4ajdpSkVMeGU2S3M4c2tEQW5GYUt3cTVPU2pFa2ZfQ2RMdXpYaXMtdHhEZnl1RnB5aVJya1Y0Q0dr?oc=5",
    "date": "2026-09-15",
-   "source": "ntoday.co.kr"
+   "source": "투데이신문"
   },
   {
    "id": "fed-independence",
@@ -47,10 +47,10 @@
     "GEV"
    ],
    "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - 뉴시스",
+   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - newsis.com",
    "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9QWWk4UE5YSnM0QndEVmdpa1h6dDczNUt5eHNpell1Y1JzZXdpRmVGeHd5VGViVmJodjFtaFRBT1FqOC1DV0ZWUGZxZldOY2N1QXR5bG1TM2ZCSkhpcnBNNtIBeEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURA?oc=5",
    "date": "2026-09-17",
-   "source": "뉴시스"
+   "source": "newsis.com"
   },
   {
    "id": "boj-carry",
@@ -80,10 +80,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "美 이어 日도 금리 인상?…또 고개드는 '엔캐리 청산' - SBS Biz",
-   "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE13NFU5bVlCaTcwam5VOVJTY1dUMjF6aFFrOTZKYWhfc1BYQzdfOHVOemdCaUlHaWZvRFJGcFZUOU9JTEtTc1pCX1M3Sk8zNHo5a1dV0gFYQVVfeXFMTS1RWkpubFRkdVFra2MyeTJYNGZ6M0FBNnRuQnQ5RmdNc2J2Y1RDeW5NbzkwNUxQMDd6NE9uNU1MVmVORHNvTHVNNTVjSWR1cnBXLWVWOHJXVw?oc=5",
+   "title": "日, 오늘 기준금리 1.25%로 올리나…엔화 움직임에 원화·증시도 촉각 - 조선일보",
+   "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQbFBBanp6WGxteW5JNEdTMHJrcWVmR0I1MGMyMVlzLTVQM2xQdDhLcC1fY3laYlJWSHU4ZXNuYk56cHk4eURBRjlERDdsS05sbWNGdEVNNDktMmRlVHBqenRzNV9DQmx3V09JVEJBNkRLM1QzTHllM1ZtV0duS2ZPRmhzeDZpbnkzX2FVWDJR?oc=5",
    "date": "2026-09-17",
-   "source": "SBS Biz"
+   "source": "조선일보"
   }
  ],
  "filings": [],
