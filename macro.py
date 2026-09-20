@@ -95,9 +95,10 @@ def stat(series_id, label, unit="%", years=5, invert_pctile=False):
 
 # ---------------------------------------------------------------- Yahoo
 
-def from_data_json(symbol, label):
+def from_data_json(symbol, label, unit="", pct=True):
     """collect.py 가 이미 받아둔 값을 재사용합니다.
-    야후를 두 번 때리지 않고, 차단·한도 문제도 피합니다."""
+    야후를 두 번 때리지 않고, 차단·한도 문제도 피합니다.
+    pct=False 면 변화폭을 퍼센트가 아니라 원래 단위로 돌려줍니다 (환율용)."""
     try:
         with open("data.json", encoding="utf-8") as f:
             q = (json.load(f).get("quotes") or {}).get(symbol)
@@ -106,21 +107,24 @@ def from_data_json(symbol, label):
         sp = q.get("spark") or []
         last = float(q["price"])
 
-        def pct(n):
+        def diff(n):
             if len(sp) > n and sp[-1 - n]:
-                return round((last / sp[-1 - n] - 1) * 100, 2)
+                if pct:
+                    return round((last / sp[-1 - n] - 1) * 100, 2)
+                return round(last - sp[-1 - n], 2)
             return None
 
         out = {
-            "id": symbol, "label": label, "unit": "",
+            "id": symbol, "label": label, "unit": unit,
             "value": round(last, 2), "asof": "data.json",
-            "chg_20d": pct(20),
-            "chg_60d": pct(60) if len(sp) > 60 else q.get("chg60_pct"),
-            "pctile_5y": None, "is_pct": True,
+            "chg_20d": diff(20),
+            "chg_60d": diff(60) if len(sp) > 60 else (q.get("chg60_pct") if pct else None),
+            "pctile_5y": None, "is_pct": bool(pct),
             "min_1y": q.get("low52"), "max_1y": q.get("high52"),
         }
         if out["chg_20d"] is None and q.get("ma20"):
-            out["chg_20d"] = round((last / q["ma20"] - 1) * 100, 2)   # 근사 — 20일선 대비
+            out["chg_20d"] = (round((last / q["ma20"] - 1) * 100, 2) if pct
+                              else round(last - q["ma20"], 2))   # 근사 — 20일선 대비
         return out
     except Exception:
         return None
@@ -245,10 +249,15 @@ def layer1():
     # 유가 — 물가 경로이자 전력기기 원가
     ind["wti"] = stat("DCOILWTICO", "WTI 유가", unit="$")
     # 통화
-    ind["dxy"]  = stat("DTWEXBGS", "달러인덱스(광의)", unit="")
-    ind["usdkrw"] = stat("DEXKOUS", "원/달러", unit="원")
+    # 환율은 FRED(연준 H.10)가 주 1회 발표라 최대 일주일 늦습니다.
+    # collect.py 가 받아둔 야후 일간 값을 우선 쓰고, 없으면 FRED 로 내려갑니다.
+    ind["dxy"] = (from_data_json("DX-Y.NYB", "달러인덱스", pct=False)
+                  or stat("DTWEXBGS", "달러인덱스(광의)", unit=""))
+    ind["usdkrw"] = (from_data_json("KRW=X", "원/달러", unit="원", pct=False)
+                     or stat("DEXKOUS", "원/달러", unit="원"))
     # 일본 — 캐리 청산의 실시간 신호
-    ind["jpy"] = stat("DEXJPUS", "엔/달러", unit="엔")
+    ind["jpy"] = (from_data_json("JPY=X", "엔/달러", unit="엔", pct=False)
+                  or stat("DEXJPUS", "엔/달러", unit="엔"))
     # collect.py 가 ^N225 를 이미 받았으면 그걸 쓰고, 없으면 직접 받습니다
     ind["n225"] = from_data_json("^N225", "닛케이225") or yahoo("^N225", "닛케이225")
     # 구리 — 전력기기 원가의 본체. collect.py 가 HG=F 를 받으면 그걸 씁니다.
@@ -342,7 +351,7 @@ def verdict_fx(i, kr_base, kr=None):
     if r10:
         parts.append("미 10년 실질금리 %.2f%% (5년 백분위 %s%%)" % (r10["value"], r10["pctile_5y"]))
     parts.append("달러인덱스 20일 %+.2f" % (d_dxy or 0))
-    parts.append("원/달러 %.1f원, 20일 %+.1f원" % (krw["value"], d_krw or 0))
+    parts.append("원/달러 %.1f원, 20일 %+.1f원 (%s 기준)" % (krw["value"], d_krw or 0, krw.get("asof", "-")))
     if kr_base is not None:
         parts.append("한국 콜금리 %.2f%%" % kr_base)
     kr10 = (kr or {}).get("kr10")
