@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-09-20T14:48:51+09:00",
- "generated_at_label": "2026-09-20 14:48 KST",
+ "generated_at": "2026-09-21T06:29:45+09:00",
+ "generated_at_label": "2026-09-21 06:29 KST",
  "sector_ceiling": 35.0,
  "tranche_levels": [
   -15.0,
@@ -207,12 +207,12 @@
    "ccy": "KRW",
    "cal": {
     "years": 1.3,
-    "median_dev": 34.7,
+    "median_dev": 34.8,
     "current_dev": -20.8,
     "align": "역배열",
     "ma60_gap": -7.0,
     "sell": {
-     "thr": 43.3,
+     "thr": 43.4,
      "events": 3,
      "per_year": 2.3,
      "armed": true,
@@ -438,17 +438,17 @@
    "name": "달러원",
    "kind": "macro",
    "source": "yahoo",
-   "price": 1385.0,
+   "price": 1384.61,
    "prev_close": 1379.53,
-   "day_pct": 0.4,
+   "day_pct": 0.37,
    "last_trade_date": "2026-09-20",
    "high52": 1554.48,
    "low52": 1339.17,
-   "drawdown_pct": -10.9,
-   "ma20": 1363.3355,
-   "ma200": 1464.2638,
-   "ma200_gap_pct": -5.41,
-   "rsi14": 54.0,
+   "drawdown_pct": -10.93,
+   "ma20": 1363.316,
+   "ma200": 1464.2618,
+   "ma200_gap_pct": -5.44,
+   "rsi14": 53.8,
    "spark": [
     1541.73,
     1548.61,
@@ -509,9 +509,9 @@
     1363.5699,
     1376.6,
     1379.53,
-    1385.0
+    1384.61
    ],
-   "chg60_pct": -9.79,
+   "chg60_pct": -9.81,
    "unit": "원"
   },
   "^FVX": {
