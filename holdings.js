@@ -9,10 +9,10 @@
    ============================================================ */
 
 window.HOLDINGS = {
-  updated: "2026-09-18",
+  updated: "2026-09-22",
 
   positions: [
-    { sym: "QQQ",  shares: 13, avg_krw: 1010035, avg_usd: 710.82 },
+    { sym: "QQQ",  shares: 14, avg_krw: 1009571, avg_usd: 711.80 },   // avg_usd 는 추정 — $ 토글로 확인 요망
     { sym: "JEPQ", shares: 35, avg_krw: 82838,   avg_usd: 60.18 },
     { sym: "GEV",  shares: 2,  avg_krw: 1274543, avg_usd: 936.20 },
     { sym: "ETN",  shares: 7,  avg_krw: 564603,  avg_usd: 421.00 }
@@ -45,7 +45,10 @@ window.HOLDINGS = {
       note: "코어 적립. 원/달러 1,340원대 환전분." },
     { date: "2026-09-18", sym: "JEPQ", name: "JEPQ", side: "매수",
       shares: 2, price_krw: 81838,
-      note: "평단 82,898 → 82,838원." }
+      note: "평단 82,898 → 82,838원." },
+    { date: "2026-09-22", sym: "QQQ", name: "QQQ", side: "매수",
+      shares: 1, price_krw: 1003539,
+      note: "코어 적립. 평단 1,010,035 → 1,009,571원. 원/달러 1,385원 구간." }
   ],
 
   thesis: {
