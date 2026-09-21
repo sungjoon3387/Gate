@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-21T06:59:45+09:00",
+ "generated_at": "2026-09-21T11:25:46+09:00",
  "alerts": [
   {
    "id": "dc-capex",
@@ -8,10 +8,10 @@
     "GEV"
    ],
    "rule": "하이퍼스케일러가 데이터센터 투자 축소·연기를 공식화",
-   "title": "[AI속도논란] ② 빅테크 CAPEX가 AI 투자 방향 좌우한다 - straightnews.co.kr",
+   "title": "[AI속도논란] ② 빅테크 CAPEX가 AI 투자 방향 좌우한다 - 스트레이트뉴스",
    "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9WLTlGeGpoNFV6UXV3ekg4aE1IclU3b0xyTHRIQTJZdjFDUDFOMVJqbTJqcGxjTG5uSEJ1aklJYU5CZnF1MVBESzZZUjVIWm9aUFE5MzNsNElPYTMzdFNmV2RYWFRHNzhtOGFuTm1LR2pkRUE5MWxz0gF3QVVfeXFMT1YtOUZ4amg0VXpRdXd6SDhoTUhyVTdvTHJMdEhBMll2MUNQMU4xUmptMmpwbGNMbm5IQnVqSUlhTkJmcXUxUERLNllSNUhab1pQUTkzM2w0SU9hMzN0U2ZXZFhYVEc3OG04YW5ObUtHamRFQTkxbHM?oc=5",
    "date": "2026-09-17",
-   "source": "straightnews.co.kr"
+   "source": "스트레이트뉴스"
   },
   {
    "id": "fed-independence",
@@ -58,10 +58,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "[사설] 日 잇단 금리 인상, 엔 캐리 청산 가능성 대비해야 - edaily.co.kr",
-   "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNU1U1Tmoyc2Y0ZHNQZTZEUmhmTkU4X3hGUDMwX2RFQ0NUbWVaeDV1dXF5VkVmdjhPVTBzU2VYa2JkSURkclRCRDZQbzl3RjBhNDFkRUJoaW9xQnlqS3hVQTE5bmlZTHRPMlVSXzE5Skl4NS1aVTJTb1ZjdlMyNHJjcA?oc=5",
+   "title": "日 금리 인상에도 엔화 약세 지속…'엔캐리 청산' 우려 약화 - 메트로신문",
+   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFB5TXpOMzkwMzlSb1NYcFVjeEJoYTJGVHZnejFqUGFpTWZ1cVNnSlJCVHdnM3kwTXZfU01DbjRIenVHRGxNeXlhWU1fMW13S0wwRnY0SURoMkZfZTFaZWFGNQ?oc=5",
    "date": "2026-09-20",
-   "source": "edaily.co.kr"
+   "source": "메트로신문"
   },
   {
    "id": "boj-carry",
@@ -80,10 +80,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "일본은행, 금리 올렸는데 엔화는 더 떨어졌다…엔캐리의 ‘이상한 생명력’ - 시사통신",
-   "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1zYjJ2dzB6STNMcjBzNlprSG1SaC10WkE0TVUzUzJxbU1GekJyQ1hwamlnWC04RFAyOGRjNHMtR2tyNXp3cmRidnhEdVVsT3JUZmltazBTU3h3TnZNS2NQaHpmNVcwVUQ10gFrQVVfeXFMT2Y3NVVVUzFScTZ2R3RWWGM0U2xRSXdSRVlmVWM3dzQ2STBoSktkb3dUbTdOMTN0cGRzUEhkZWh4WHhlcGduaWV4Y3M0V2l4dVJETUxsT0FCcG1LLXFpaF9JQ29PM2ZEM3NMNGs?oc=5",
+   "title": "[사설] 日 잇단 금리 인상, 엔 캐리 청산 가능성 대비해야 - edaily.co.kr",
+   "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNU1U1Tmoyc2Y0ZHNQZTZEUmhmTkU4X3hGUDMwX2RFQ0NUbWVaeDV1dXF5VkVmdjhPVTBzU2VYa2JkSURkclRCRDZQbzl3RjBhNDFkRUJoaW9xQnlqS3hVQTE5bmlZTHRPMlVSXzE5Skl4NS1aVTJTb1ZjdlMyNHJjcA?oc=5",
    "date": "2026-09-20",
-   "source": "시사통신"
+   "source": "edaily.co.kr"
   }
  ],
  "filings": [],
