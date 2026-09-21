@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-22T06:39:20+09:00",
+ "generated_at": "2026-09-22T08:22:39+09:00",
  "alerts": [
   {
    "id": "dc-capex",
@@ -47,21 +47,10 @@
     "GEV"
    ],
    "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - 뉴시스",
+   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - newsis.com",
    "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9QWWk4UE5YSnM0QndEVmdpa1h6dDczNUt5eHNpell1Y1JzZXdpRmVGeHd5VGViVmJodjFtaFRBT1FqOC1DV0ZWUGZxZldOY2N1QXR5bG1TM2ZCSkhpcnBNNtIBeEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURA?oc=5",
    "date": "2026-09-17",
-   "source": "뉴시스"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "日 금리 인상에도 엔화 약세 지속…'엔캐리 청산' 우려 약화 - 메트로신문",
-   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFB5TXpOMzkwMzlSb1NYcFVjeEJoYTJGVHZnejFqUGFpTWZ1cVNnSlJCVHdnM3kwTXZfU01DbjRIenVHRGxNeXlhWU1fMW13S0wwRnY0SURoMkZfZTFaZWFGNQ?oc=5",
-   "date": "2026-09-20",
-   "source": "메트로신문"
+   "source": "newsis.com"
   },
   {
    "id": "boj-carry",
@@ -73,6 +62,17 @@
    "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5zOGQteVA5U0Z4aVlyS01CaUF2WWFvbEVmOTFiWm80OGhVSzJobnJUY05zcDdMdmNwai1BZzRjQjJmRVlwYkhzMkxIekVKSk0?oc=5",
    "date": "2026-09-17",
    "source": "v.daum.net"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "日 금리 인상에도 엔화 약세 지속…'엔캐리 청산' 우려 약화 - 메트로신문",
+   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFB5TXpOMzkwMzlSb1NYcFVjeEJoYTJGVHZnejFqUGFpTWZ1cVNnSlJCVHdnM3kwTXZfU01DbjRIenVHRGxNeXlhWU1fMW13S0wwRnY0SURoMkZfZTFaZWFGNQ?oc=5",
+   "date": "2026-09-20",
+   "source": "메트로신문"
   },
   {
    "id": "boj-carry",
