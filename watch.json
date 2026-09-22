@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-22T08:22:39+09:00",
+ "generated_at": "2026-09-22T09:10:03+09:00",
  "alerts": [
   {
    "id": "dc-capex",
@@ -47,10 +47,10 @@
     "GEV"
    ],
    "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - newsis.com",
+   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - 뉴시스",
    "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE9QWWk4UE5YSnM0QndEVmdpa1h6dDczNUt5eHNpell1Y1JzZXdpRmVGeHd5VGViVmJodjFtaFRBT1FqOC1DV0ZWUGZxZldOY2N1QXR5bG1TM2ZCSkhpcnBNNtIBeEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURA?oc=5",
    "date": "2026-09-17",
-   "source": "newsis.com"
+   "source": "뉴시스"
   },
   {
    "id": "boj-carry",
