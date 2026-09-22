@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-23T06:05:03+09:00",
+ "generated_at": "2026-09-23T08:02:56+09:00",
  "alerts": [
   {
    "id": "dc-capex",
@@ -40,17 +40,15 @@
    "source": "뉴시스"
   },
   {
-   "id": "fed-independence",
+   "id": "boj-carry",
    "syms": [
-    "QQQ",
-    "ETN",
-    "GEV"
+    "QQQ"
    ],
-   "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "미국 연준, 금리 인상 유력에 트럼프 표밭 '비상' - 이코노믹포스트",
-   "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE1UMFBNMm5lT2VwRC0wcjZzOVJYVDhWV2FIa3dpZ0R4MU05Tl9iZkIyZURYRHk3TTM3LVQwVTFQTjZjX2cxSnI0cXZqMUM?oc=5",
-   "date": "2026-09-14",
-   "source": "이코노믹포스트"
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "저금리 시대의 역습, 360조 엔 차입이 부른 글로벌 청산의 공포 - 글로벌이코노믹",
+   "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOd0dvRF9JamhnVmMycE5UbXRRODUtNk4wWVNuTEZQY1hpUHhEUTFJQl9LTFI0T2cwR2ZnQmhGazhwRWtyRGFvOGFkelFxdk5SclNieWZEMExNUXlyVFMtUFIxc1BIVC00OFdkcHlMQ3g1azRhZ0FhbGdaTENLUjRkMG1VQXBhTVU5?oc=5",
+   "date": "2026-09-22",
+   "source": "글로벌이코노믹"
   },
   {
    "id": "boj-carry",
@@ -59,7 +57,7 @@
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
    "title": "엔캐리 청산은 없었지만…일본 돈은 귀국하고 있다 [마켓프리즘] - 조세일보",
-   "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE52SHMxT29IbklySmFackI5X1pqXzNhZVRuWE1PVnBVYWc1RURjMHNBTlZoLW1HV3NJaG9uX19zMXozdndZLWt6UmJ0eXdvYTNkNTVkcTlrU2Ywc2E5SVpN?oc=5",
+   "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE83bmZSRlVFSjRtMHo0anpxM1ctQjA3SmNyeUFwTDBnY2x4VUpuZ19mc3lUV0FvV2VUc0o4aXN0UHc3NWNyQkFXMUpzZGNvRENUMzVSQ0w5MEYzcUk5TkVLRl9feTJTa044QXNOTmVrWQ?oc=5",
    "date": "2026-09-22",
    "source": "조세일보"
   },
@@ -73,17 +71,6 @@
    "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFB5TXpOMzkwMzlSb1NYcFVjeEJoYTJGVHZnejFqUGFpTWZ1cVNnSlJCVHdnM3kwTXZfU01DbjRIenVHRGxNeXlhWU1fMW13S0wwRnY0SURoMkZfZTFaZWFGNQ?oc=5",
    "date": "2026-09-20",
    "source": "메트로신문"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "BOJ 금리 올려도 엔저, 달러당 157엔대…美日 금리차에 캐리트레이드 - 뉴스1",
-   "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5OVExTeEY2WXd2SUJ4clJHMkFTOU9XYnZjNldhbTkyZ0E4SlktMWUwemtvU2U3b0M1aEdqU0RkMkRuUDJmRllOS3N3VVFOZ1lWNjNON05OYzdqSDJXaFR4Mmd0eVQxVUk0ZC1yStIBbEFVX3lxTE5OVExTeEY2WXd2SUJ4clJHMkFTOU9XYnZjNldhbTkyZ0E4SlktMWUwemtvU2U3b0M1aEdqU0RkMkRuUDJmRllOS3N3VVFOZ1lWNjNON05OYzdqSDJXaFR4Mmd0eVQxVUk0ZC1ySg?oc=5",
-   "date": "2026-09-22",
-   "source": "뉴스1"
   }
  ],
  "filings": [],
