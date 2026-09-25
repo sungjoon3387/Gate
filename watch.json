@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-25T08:53:58+09:00",
+ "generated_at": "2026-09-26T03:02:06+09:00",
  "alerts": [
   {
    "id": "dc-capex",
@@ -12,19 +12,6 @@
    "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBJdVZvdnpfaXQyd00zbzFQT2JEbG9YVUNYVFoxYzlXcjU0MjhVajdERFR5U2JReGlUQTQ4emNJN1l3SkxnNmNtTUVkNzBDdXl5NkM4bU9RWlNCZTA5NVI3bDRtUFZTWjlpYllSOGF6SDJzRjDSAXdBVV95cUxPVi05RnhqaDRVelF1d3pIOGhNSHJVN29Mckx0SEEyWXYxQ1AxTjFSam0yanBsY0xubkhCdWpJSWFOQmZxdTFQREs2WVI1SFpvWlBROTMzbDRJT2EzM3RTZldkWFhURzc4bThhbk5tS0dqZEVBOTFscw?oc=5",
    "date": "2026-09-17",
    "source": "스트레이트뉴스"
-  },
-  {
-   "id": "fed-independence",
-   "syms": [
-    "QQQ",
-    "ETN",
-    "GEV"
-   ],
-   "rule": "연준 독립성 훼손이 장기금리 상승으로 전이 (커브 스티프닝은 Gate가 자동 판정)",
-   "title": "워시 연준, 만장일치로 3년 만에 금리 인상…\"독립성 보여준 행보\" - 뉴시스",
-   "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURNIBeEFVX3lxTE1kYkRBdU05NE8wWFVKTURMZzllYmpzaTRfZDZVSC1XUm9FejJCZVptZ0JjZWwxbVYySHlqbzZMUmxmQVR6LTA1MUVISEtsM3NQenlqTUdzYVdTb1lyZTJSZlVSMG1NaGQ1bFdVWDJNNE9HaDEzc1ZURA?oc=5",
-   "date": "2026-09-17",
-   "source": "뉴시스"
   },
   {
    "id": "gas-turbine",
@@ -54,10 +41,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "엔캐리 청산은 없었지만…일본 돈은 귀국하고 있다 [마켓프리즘] - 조세일보",
-   "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE83bmZSRlVFSjRtMHo0anpxM1ctQjA3SmNyeUFwTDBnY2x4VUpuZ19mc3lUV0FvV2VUc0o4aXN0UHc3NWNyQkFXMUpzZGNvRENUMzVSQ0w5MEYzcUk5TkVLRl9feTJTa044QXNOTmVrWQ?oc=5",
-   "date": "2026-09-22",
-   "source": "조세일보"
+   "title": "日 31년 만에 최고금리…엔 캐리 청산 우려는 ‘제한적’ - 서울경제TV",
+   "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBsakN1MThTXy1YQmNOakJiV2FMbHdmRS1zMDFsbTRqYUFvcjVuMkZZQkRXYU9JUWNISjB0b0VnRzJwNjlXQ19QU1BUU3hVMzhQSFpyUEg1cy1CY05JaHFtWGZDcVY?oc=5",
+   "date": "2026-09-19",
+   "source": "서울경제TV"
   },
   {
    "id": "boj-carry",
@@ -65,10 +52,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "[김대호 진단] 일본은행 금리인상과 엔캐리 청산 - 글로벌이코노믹",
-   "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOdi12TzZ6c3dwWUFuQUNpTWVwbE5aOVNCQmRNSXNjOHhYM1E5UVdvTk81c0ZrSHg0U3pPNnIxSl9jb1Z1VmMtTEhDSlFWdm1zZGMtX3RLZTFHaFZRMkxrcTUzTHBUVjV6U3NOcTN6RkxqN1hDTDBPdlZxLXZkblFIZTdjaUw?oc=5",
+   "title": "美 이어 日도 금리 인상?…또 고개드는 '엔캐리 청산' [글로벌 뉴스픽] - v.daum.net",
+   "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5zOGQteVA5U0Z4aVlyS01CaUF2WWFvbEVmOTFiWm80OGhVSzJobnJUY05zcDdMdmNwai1BZzRjQjJmRVlwYkhzMkxIekVKSk0?oc=5",
    "date": "2026-09-17",
-   "source": "글로벌이코노믹"
+   "source": "v.daum.net"
   }
  ],
  "filings": [],
