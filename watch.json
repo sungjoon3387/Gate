@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-26T08:21:01+09:00",
+ "generated_at": "2026-09-26T08:58:05+09:00",
  "alerts": [
   {
    "id": "gas-turbine",
@@ -11,6 +11,17 @@
    "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPZkpUQUg5X3hwU0hrdU5NODVZYU5BVFFWWHNkOWFCLVROb3hyclFYN1BpWVg4SlhhNGtfTmxEVldQWnJTSktWcVBRckZmRHNKTXBHejJFNVh4bEJFTE50TlpSV3pDaHhUd25ONGx5S1I1NGxzRjF1bFR2NW1YRktuVC14RjZOQVZG?oc=5",
    "date": "2026-09-23",
    "source": "글로벌이코노믹"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "2.3조달러 '엔캐리'의 덫…日, 금리 올려도 못 올려도 딜레마 - v.daum.net",
+   "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1mU0N0cFYtcHVnN2JweWZzblBDejZuYThSWHg2dlRXNVVUckJoMS1pR0tfa3cxLUNJeDdMMUpqTnFpUmViZ0JhaGYyT2FsOW8?oc=5",
+   "date": "2026-09-25",
+   "source": "v.daum.net"
   },
   {
    "id": "boj-carry",
@@ -33,17 +44,6 @@
    "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE10ZlJzRjlHRUp0WWsxc0hMQ1Myd2ZxNS1STDFZekJJNGtabHVpLVE4UTNFQ2xoR3VUTVFFSmUzUldIVHBtUEJ3Z3RxcGdkcmllbE1sRFliZXI1dw?oc=5",
    "date": "2026-09-23",
    "source": "한국경제"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "저금리 시대의 역습, 360조 엔 차입이 부른 글로벌 청산의 공포 - 글로벌이코노믹",
-   "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOd0dvRF9JamhnVmMycE5UbXRRODUtNk4wWVNuTEZQY1hpUHhEUTFJQl9LTFI0T2cwR2ZnQmhGazhwRWtyRGFvOGFkelFxdk5SclNieWZEMExNUXlyVFMtUFIxc1BIVC00OFdkcHlMQ3g1azRhZ0FhbGdaTENLUjRkMG1VQXBhTVU5?oc=5",
-   "date": "2026-09-22",
-   "source": "글로벌이코노믹"
   }
  ],
  "filings": [],
