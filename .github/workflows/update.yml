@@ -28,7 +28,7 @@ jobs:
         run: |
           git config user.name gate-bot
           git config user.email gate-bot@users.noreply.github.com
-          git add -A data.json tranches.json macro.json watch.json
+          git add -A data.json tranches.json macro.json macro_history.json watch.json
           git diff --staged --quiet && echo "변경 없음" && exit 0
           git commit -m "데이터 갱신"
           for i in 1 2 3; do
