@@ -118,7 +118,10 @@ def from_data_json(symbol, label, unit="", pct=True):
             "id": symbol, "label": label, "unit": unit,
             "value": round(last, 2), "asof": "data.json",
             "chg_20d": diff(20),
-            "chg_60d": diff(60) if len(sp) > 60 else (q.get("chg60_pct") if pct else None),
+            "chg_60d": diff(60) if len(sp) > 60 else (
+                q.get("chg60_pct") if pct else
+                (round(last - last / (1 + q["chg60_pct"] / 100), 2)
+                 if q.get("chg60_pct") else None)),
             "pctile_5y": None, "is_pct": bool(pct),
             "min_1y": q.get("low52"), "max_1y": q.get("high52"),
         }
@@ -577,19 +580,106 @@ def layer2(i):
 
 # ---------------------------------------------------------------- main
 
+HIST = "macro_history.json"
+HIST_DAYS = 180
+
+
+def load_hist():
+    try:
+        with open(HIST, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
+
+
+def save_hist(hist, snap):
+    hist = [h for h in hist if h.get("d") != snap["d"]]
+    hist.append(snap)
+    hist = hist[-HIST_DAYS:]
+    with open(HIST, "w", encoding="utf-8") as f:
+        json.dump(hist, f, ensure_ascii=False, separators=(",", ":"))
+    return hist
+
+
+def make_changes(hist, i, chains):
+    """어제와 달라진 것만 골라냅니다. 없으면 빈 목록 — 조용한 날이 정상입니다."""
+    out = {"moves": [], "flips": [], "records": [], "streak": {}}
+    prev = hist[-1] if hist else None
+
+    THR = {
+        "ust2": 0.05, "ust5": 0.05, "ust10": 0.05, "ust30": 0.05,
+        "real10": 0.05, "be10": 0.05, "ffr": 0.01,
+        "ig": 0.03, "hy": 0.10,
+        "wti": 2.0, "copper": 0.10,
+        "usdkrw": 8.0, "jpy": 1.0, "dxy": 0.5, "n225": 500.0,
+    }
+    if prev:
+        for k, d in i.items():
+            pv = (prev.get("v") or {}).get(k)
+            if pv is None or d.get("value") is None:
+                continue
+            delta = round(d["value"] - pv, 3)
+            if abs(delta) >= THR.get(k, 9e9):
+                out["moves"].append({
+                    "k": k, "label": d["label"], "from": pv, "to": d["value"],
+                    "delta": delta, "unit": d.get("unit", ""),
+                })
+        out["moves"].sort(key=lambda x: -abs(x["delta"]))
+
+    for c in chains:
+        cid, v = c["id"], c.get("verdict")
+        if not v:
+            continue
+        pv = (prev.get("j") or {}).get(cid) if prev else None
+        if pv and pv != v:
+            out["flips"].append({"id": cid, "title": c["title"], "from": pv, "to": v})
+        n = 1
+        for h in reversed(hist):
+            if (h.get("j") or {}).get(cid) == v:
+                n += 1
+            else:
+                break
+        out["streak"][cid] = n
+
+    for k, d in i.items():
+        p5 = d.get("pctile_5y")
+        if p5 is None:
+            continue
+        if p5 >= 99:
+            out["records"].append({"label": d["label"], "value": d["value"],
+                                   "unit": d.get("unit", ""), "kind": "최고"})
+        elif p5 <= 1:
+            out["records"].append({"label": d["label"], "value": d["value"],
+                                   "unit": d.get("unit", ""), "kind": "최저"})
+    return out
+
+
 def main():
     i = layer1()
+    chains = layer2(i)
+    now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+    hist = load_hist()
+    changes = make_changes(hist, i, chains)
+
+    snap = {
+        "d": now.strftime("%Y-%m-%d"),
+        "v": {k: d.get("value") for k, d in i.items()},
+        "j": {c["id"]: c.get("verdict") for c in chains},
+    }
+    save_hist(hist, snap)
+
     doc = {
-        "generated_at": datetime.datetime.now(
-            datetime.timezone(datetime.timedelta(hours=9))).isoformat(timespec="seconds"),
+        "generated_at": now.isoformat(timespec="seconds"),
         "indicators": i,
-        "chains": layer2(i),
+        "chains": chains,
+        "changes": changes,
         "errors": ERRORS,
     }
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(doc, f, ensure_ascii=False, indent=1)
-    print("wrote %s — 지표 %d개, 사슬 %d개, 오류 %d건"
-          % (OUT, len(i), len(doc["chains"]), len(ERRORS)))
+    print("wrote %s — 지표 %d개, 사슬 %d개, 변화 %d건, 판정전환 %d건, 오류 %d건"
+          % (OUT, len(i), len(chains), len(changes["moves"]),
+             len(changes["flips"]), len(ERRORS)))
     for e in ERRORS:
         print("  ! %s: %s" % (e["src"], e["error"]))
 
