@@ -459,7 +459,11 @@ window.MACRO_CONTEXT = {
     (doc.chains || []).forEach(function (c) {
       h += '<div class="gm-chain"><h4>' + esc(c.title) + "</h4>";
       h += '<div class="gm-path">' + esc(c.path) + "</div>";
-      if (c.verdict) h += '<span class="gm-v ' + vclass(c.verdict) + '">' + esc(c.verdict) + "</span>";
+      if (c.verdict) {
+        h += '<span class="gm-v ' + vclass(c.verdict) + '">' + esc(c.verdict) + "</span>";
+        var st = ((M.changes || {}).streak || {})[c.id];
+        if (st && st > 1) h += '<span class="gm-st">' + st + "일째 유지</span>";
+      }
       h += "<p>" + esc(c.text) + "</p>";
       h += plainFor(c);
       h += "</div>";
@@ -493,6 +497,37 @@ window.MACRO_CONTEXT = {
 
   /* ---------- 조립 ---------- */
 
+  function changesHTML() {
+    var C2 = M.changes;
+    if (!C2) return "";
+    var mv = C2.moves || [], fl = C2.flips || [], rc = C2.records || [];
+    if (!mv.length && !fl.length && !rc.length) {
+      return '<div class="gm-h">오늘 달라진 것</div><div class="gm-box">' +
+        '<div class="gm-quiet">어제와 의미 있게 달라진 지표가 없습니다. 조용한 날이 대부분인 게 정상입니다.</div></div>';
+    }
+    var h = '<div class="gm-h">오늘 달라진 것</div><div class="gm-box">';
+
+    fl.forEach(function (f) {
+      h += '<div class="gm-flip"><div class="t">' + esc(f.title) + " 판정 전환</div>" +
+        '<div class="w"><s>' + esc(f.from) + "</s> → <b>" + esc(f.to) + "</b></div></div>";
+    });
+
+    mv.slice(0, 6).forEach(function (m) {
+      var up = m.delta > 0;
+      h += '<div class="gm-mv"><span class="l">' + esc(m.label) + "</span>" +
+        '<span class="r"><b class="' + (up ? "gm-up" : "gm-dn") + '">' +
+        (up ? "+" : "") + m.delta + esc(m.unit) + "</b>" +
+        '<small>' + m.from + " → " + m.to + esc(m.unit) + "</small></span></div>";
+    });
+
+    if (rc.length) {
+      h += '<div class="gm-rec">5년 ' + esc(rc[0].kind) + ' 수준 · ' +
+        rc.map(function (r) { return esc(r.label) + " " + r.value + esc(r.unit); }).join(" · ") +
+        "</div>";
+    }
+    return h + "</div>";
+  }
+
   function build() {
     var j = judge();
     var h = '<div id="gm">';
@@ -504,6 +539,7 @@ window.MACRO_CONTEXT = {
     });
     h += "</div>";
 
+    h += changesHTML();
     h += translate();
     h += calendar();
     h += details(M);
@@ -591,6 +627,22 @@ window.MACRO_CONTEXT = {
       ".gm-ctx .w{font-size:11.5px;color:var(--dim,#5F6E80);margin:2px 0 6px}",
       ".gm-ctx p{margin:0 0 5px;font-size:13px;line-height:1.6;color:var(--muted,#8B9AAE)}",
       ".gm-err{font-size:11.5px;color:var(--warn,#DFA33C);margin-top:10px}",
+      ".gm-st{display:inline-block;margin-left:7px;font-size:11px;color:var(--dim,#5F6E80)}",
+      ".gm-quiet{font-size:13px;line-height:1.6;color:var(--muted,#8B9AAE)}",
+      ".gm-flip{padding:11px 13px;border-radius:9px;background:rgba(223,163,60,.10);",
+      "border:1px solid rgba(223,163,60,.30);margin-bottom:10px}",
+      ".gm-flip .t{font-size:13px;font-weight:700;color:var(--warn,#DFA33C)}",
+      ".gm-flip .w{font-size:13px;color:var(--muted,#8B9AAE);margin-top:3px}",
+      ".gm-flip s{color:var(--dim,#5F6E80)}.gm-flip b{color:var(--text,#E6EBF2)}",
+      ".gm-mv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;",
+      "padding:9px 0;border-bottom:1px solid var(--line,#2C3849)}",
+      ".gm-mv:last-of-type{border-bottom:0}",
+      ".gm-mv .l{font-size:13px;color:var(--muted,#8B9AAE)}",
+      ".gm-mv .r{text-align:right}",
+      ".gm-mv .r b{font-size:15px;font-weight:700}",
+      ".gm-mv .r small{display:block;font-size:11.5px;color:var(--dim,#5F6E80);margin-top:1px}",
+      ".gm-rec{margin-top:11px;padding-top:10px;border-top:1px solid var(--line,#2C3849);",
+      "font-size:12px;color:var(--warn,#DFA33C);line-height:1.6}",
       ".gw{border-radius:12px;border:1px solid var(--warn,#DFA33C);",
       "background:rgba(223,163,60,.06);padding:15px 16px;margin:0 0 18px}",
       ".gw-t{font-size:14px;font-weight:700;color:var(--warn,#DFA33C);margin-bottom:11px}",
