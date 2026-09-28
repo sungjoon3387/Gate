@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-28T07:38:21+09:00",
+ "generated_at": "2026-09-29T06:39:24+09:00",
  "alerts": [
   {
    "id": "gas-turbine",
@@ -18,6 +18,17 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "\"BOJ, 금리 또 올리나\" 연속 인상 경고…엔캐리 청산 변수에 증시 ’긴장’ By EBN - Investing.com 한국어",
+   "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBUNjZ6UjdQb3Vldm03NDcwQWNpemZIemdWNzlGTWlfT1hkY3dfcC1KRGpnbkpySklrZ2xoektXTWxJOGFxR3M2MnFFeERxS2NfSHdVeksxalBla2VqYVlSYVEySEpvdmtrM3VRdUdYMVA?oc=5",
+   "date": "2026-09-28",
+   "source": "Investing.com 한국어"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
    "title": "2.3조달러 '엔캐리'의 덫…日, 금리 올려도 못 올려도 딜레마 - 뉴스1",
    "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBrUFY2c2VFWUFiOVRpa3N3NlhBT040aldWdWN0OGRPamxiS3Bjc2dUaXQwc2tkYlJfV1liV3ZwbWkzMDltU0p3YlBvTElNRFJ1Y1ZEeVhqSTg0cl8xM0FEQmMyMFB5VVRiR3gxMdIBbEFVX3lxTFBrUFY2c2VFWUFiOVRpa3N3NlhBT040aldWdWN0OGRPamxiS3Bjc2dUaXQwc2tkYlJfV1liV3ZwbWkzMDltU0p3YlBvTElNRFJ1Y1ZEeVhqSTg0cl8xM0FEQmMyMFB5VVRiR3gxMQ?oc=5",
    "date": "2026-09-25",
@@ -29,21 +40,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "금리 올려도 안 풀리는 엔캐리…최대 2조달러 '청산 시한폭탄' 커지나 [김주완의 글로벌머니 X파일] - 한국경제",
-   "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE10ZlJzRjlHRUp0WWsxc0hMQ1Myd2ZxNS1STDFZekJJNGtabHVpLVE4UTNFQ2xoR3VUTVFFSmUzUldIVHBtUEJ3Z3RxcGdkcmllbE1sRFliZXI1dw?oc=5",
-   "date": "2026-09-23",
-   "source": "한국경제"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "日 금리 인상에도 엔화 약세 지속…'엔캐리 청산' 우려 약화 - 메트로신문",
-   "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFB5TXpOMzkwMzlSb1NYcFVjeEJoYTJGVHZnejFqUGFpTWZ1cVNnSlJCVHdnM3kwTXZfU01DbjRIenVHRGxNeXlhWU1fMW13S0wwRnY0SURoMkZfZTFaZWFGNQ?oc=5",
-   "date": "2026-09-20",
-   "source": "메트로신문"
+   "title": "[이원호의 경제톡] ‘값싼 엔화’의 시대가 흔들린다 - 빅터뉴스",
+   "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBVOGZxNUdtUWoxUG5ub1M2Z2I3cjNTbExjWmY4Y3ZjMHRBeTJQdkdhZGFsYkVPbXB2MENYMlB0Y2lWUGw3NklhOFcwZDVESHJnTUJIZTQ1T2FyVWdUT1BjMlhfaDlqNmc?oc=5",
+   "date": "2026-09-28",
+   "source": "빅터뉴스"
   }
  ],
  "filings": [],
