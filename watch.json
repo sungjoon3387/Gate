@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-30T09:31:32+09:00",
+ "generated_at": "2026-10-01T06:39:48+09:00",
  "alerts": [
   {
    "id": "gas-turbine",
@@ -29,10 +29,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "2.3조달러 '엔캐리'의 덫…日, 금리 올려도 못 올려도 딜레마 - news1.kr",
-   "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTFBrUFY2c2VFWUFiOVRpa3N3NlhBT040aldWdWN0OGRPamxiS3Bjc2dUaXQwc2tkYlJfV1liV3ZwbWkzMDltU0p3YlBvTElNRFJ1Y1ZEeVhqSTg0cl8xM0FEQmMyMFB5VVRiR3gxMdIBbEFVX3lxTFBrUFY2c2VFWUFiOVRpa3N3NlhBT040aldWdWN0OGRPamxiS3Bjc2dUaXQwc2tkYlJfV1liV3ZwbWkzMDltU0p3YlBvTElNRFJ1Y1ZEeVhqSTg0cl8xM0FEQmMyMFB5VVRiR3gxMQ?oc=5",
+   "title": "2.3조달러 '엔캐리'의 덫…日, 금리 올려도 못 올려도 딜레마 - 뉴스1",
+   "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1GSUZacWVhSzFxVUZsSU5QX0JJSmttNHJhUWFFODBfTHFmZWpkMGg0TWJqenpuWUVyWk50dU1aTUJuRG5pN1pUX1JyWjRrSlVXZHNFTk9RbDFzTjY2T1BaZTFneUROVWfSAWxBVV95cUxQa1BWNnNlRVlBYjlUaWtzdzZYQU9ONGpXVnVjdDhkT2psYktwY3NnVGl0MHNrZGJSX1dZYld2cG1pMzA5bVNKd2JQb0xJTURSdWNWRHlYakk4NHJfMTNBREJjMjBQeVVUYkd4MTE?oc=5",
    "date": "2026-09-25",
-   "source": "news1.kr"
+   "source": "뉴스1"
   },
   {
    "id": "boj-carry",
