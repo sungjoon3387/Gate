@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-01T08:57:36+09:00",
+ "generated_at": "2026-10-01T09:35:21+09:00",
  "alerts": [
   {
    "id": "gas-turbine",
@@ -18,10 +18,10 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "\"BOJ, 금리 또 올리나\" 연속 인상 경고…엔캐리 청산 변수에 증시 ’긴장’ By EBN - kr.investing.com",
+   "title": "\"BOJ, 금리 또 올리나\" 연속 인상 경고…엔캐리 청산 변수에 증시 ’긴장’ By EBN - Investing.com 한국어",
    "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBUNjZ6UjdQb3Vldm03NDcwQWNpemZIemdWNzlGTWlfT1hkY3dfcC1KRGpnbkpySklrZ2xoektXTWxJOGFxR3M2MnFFeERxS2NfSHdVeksxalBla2VqYVlSYVEySEpvdmtrM3VRdUdYMVA?oc=5",
    "date": "2026-09-28",
-   "source": "kr.investing.com"
+   "source": "Investing.com 한국어"
   },
   {
    "id": "boj-carry",
