@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-03T08:51:19+09:00",
- "generated_at_label": "2026-10-03 08:51 KST",
+ "generated_at": "2026-10-03T09:32:07+09:00",
+ "generated_at_label": "2026-10-03 09:32 KST",
  "sector_ceiling": 35.0,
  "tranche_levels": [
   -15.0,
@@ -27,18 +27,19 @@
    "name": "QQQ",
    "kind": "position",
    "source": "yahoo",
-   "price": 749.58,
-   "prev_close": 742.03,
-   "day_pct": 1.02,
-   "last_trade_date": "2026-10-02",
-   "high52": 749.58,
+   "price": 742.03,
+   "prev_close": 739.77,
+   "day_pct": 0.31,
+   "last_trade_date": "2026-10-01",
+   "high52": 747.46,
    "low52": 558.28,
-   "drawdown_pct": 0.0,
-   "ma20": 727.7795,
-   "ma200": 668.604,
-   "ma200_gap_pct": 12.11,
-   "rsi14": 65.4,
+   "drawdown_pct": -0.73,
+   "ma20": 726.184,
+   "ma200": 667.9088,
+   "ma200_gap_pct": 11.1,
+   "rsi14": 61.5,
    "spark": [
+    723.28,
     725.51,
     711.74,
     719.69,
@@ -97,31 +98,30 @@
     736.53,
     737.93,
     739.77,
-    742.03,
-    749.58
+    742.03
    ],
-   "chg60_pct": 3.64,
+   "chg60_pct": 4.3,
    "bucket": "core",
    "ccy": "USD",
    "cal": {
     "years": 1.2,
     "median_dev": 11.2,
-    "current_dev": 12.1,
+    "current_dev": 11.1,
     "align": "정배열",
-    "ma60_gap": 4.8,
+    "ma60_gap": 3.8,
     "sell": {
      "thr": 13.0,
      "events": 3,
      "per_year": 2.5,
      "armed": true,
-     "days_since": 103
+     "days_since": 102
     },
     "buy": {
      "thr": -4.0,
      "events": 1,
      "per_year": 0.8,
      "armed": true,
-     "days_since": 130
+     "days_since": 129
     }
    }
   },
@@ -233,18 +233,19 @@
    "name": "GE 버노바",
    "kind": "position",
    "source": "yahoo",
-   "price": 988.7,
-   "prev_close": 987.45,
-   "day_pct": 0.13,
-   "last_trade_date": "2026-10-02",
+   "price": 987.45,
+   "prev_close": 950.49,
+   "day_pct": 3.89,
+   "last_trade_date": "2026-10-01",
    "high52": 1174.86,
    "low52": 547.96,
-   "drawdown_pct": -15.85,
-   "ma20": 944.6645,
-   "ma200": 917.5017,
-   "ma200_gap_pct": 7.76,
-   "rsi14": 57.8,
+   "drawdown_pct": -15.95,
+   "ma20": 942.3215,
+   "ma200": 915.965,
+   "ma200_gap_pct": 7.8,
+   "rsi14": 57.5,
    "spark": [
+    1075.26,
     1091.5699,
     1042.6,
     1066.01,
@@ -303,24 +304,23 @@
     949.77,
     962.49,
     950.49,
-    987.45,
-    988.7
+    987.45
    ],
-   "chg60_pct": -8.05,
+   "chg60_pct": -7.8,
    "bucket": "sector",
    "ccy": "USD",
    "cal": {
     "years": 1.2,
-    "median_dev": 31.9,
+    "median_dev": 32.0,
     "current_dev": 7.8,
     "align": "혼조",
-    "ma60_gap": 0.9,
+    "ma60_gap": 0.7,
     "sell": {
      "thr": 45.7,
      "events": 3,
      "per_year": 2.5,
      "armed": true,
-     "days_since": 66
+     "days_since": 65
     },
     "buy": {
      "thr": -4.0,
@@ -336,18 +336,19 @@
    "name": "Eaton",
    "kind": "position",
    "source": "yahoo",
-   "price": 436.11,
-   "prev_close": 437.28,
-   "day_pct": -0.27,
-   "last_trade_date": "2026-10-02",
+   "price": 437.28,
+   "prev_close": 429.71,
+   "day_pct": 1.76,
+   "last_trade_date": "2026-10-01",
    "high52": 459.96,
    "low52": 315.82,
-   "drawdown_pct": -5.19,
-   "ma20": 423.2375,
-   "ma200": 389.1159,
-   "ma200_gap_pct": 12.08,
-   "rsi14": 56.3,
+   "drawdown_pct": -4.93,
+   "ma20": 421.288,
+   "ma200": 388.6014,
+   "ma200_gap_pct": 12.53,
+   "rsi14": 57.0,
    "spark": [
+    405.83,
     407.28,
     402.85,
     415.52,
@@ -406,31 +407,30 @@
     431.41,
     433.27,
     429.71,
-    437.28,
-    436.11
+    437.28
    ],
-   "chg60_pct": 7.46,
+   "chg60_pct": 9.44,
    "bucket": "sector",
    "ccy": "USD",
    "cal": {
     "years": 1.2,
     "median_dev": 8.7,
-    "current_dev": 12.1,
+    "current_dev": 12.5,
     "align": "정배열",
-    "ma60_gap": 4.0,
+    "ma60_gap": 4.4,
     "sell": {
      "thr": 18.7,
      "events": 3,
      "per_year": 2.5,
      "armed": true,
-     "days_since": 41
+     "days_since": 40
     },
     "buy": {
      "thr": -6.1,
      "events": 1,
      "per_year": 0.8,
      "armed": true,
-     "days_since": 198
+     "days_since": 197
     }
    }
   },
