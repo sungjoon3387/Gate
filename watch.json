@@ -1,18 +1,6 @@
 {
- "generated_at": "2026-10-03T09:48:14+09:00",
+ "generated_at": "2026-10-05T06:57:19+09:00",
  "alerts": [
-  {
-   "id": "dc-capex",
-   "syms": [
-    "ETN",
-    "GEV"
-   ],
-   "rule": "하이퍼스케일러가 데이터센터 투자 축소·연기를 공식화",
-   "title": "AI 투자 커지자 국내 설비투자도 반등…\"반도체 쏠림 경계해야\" - v.daum.net",
-   "url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE93SkhKdEtMWjJFeVlnU1M5T1ppazNSY2EzaEU0OXotNmJmVVE1WDBsWndRR1Nia0hIYlNvejk5NjJuNFlKU082QXV0azE3V3c?oc=5",
-   "date": "2026-09-26",
-   "source": "v.daum.net"
-  },
   {
    "id": "boj-carry",
    "syms": [
