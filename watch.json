@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-05T06:57:19+09:00",
+ "generated_at": "2026-10-06T06:39:38+09:00",
  "alerts": [
   {
    "id": "boj-carry",
@@ -7,10 +7,21 @@
     "QQQ"
    ],
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "\"BOJ, 금리 또 올리나\" 연속 인상 경고…엔캐리 청산 변수에 증시 ’긴장’ By EBN - Investing.com 한국어",
-   "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBUNjZ6UjdQb3Vldm03NDcwQWNpemZIemdWNzlGTWlfT1hkY3dfcC1KRGpnbkpySklrZ2xoektXTWxJOGFxR3M2MnFFeERxS2NfSHdVeksxalBla2VqYVlSYVEySEpvdmtrM3VRdUdYMVA?oc=5",
+   "title": "\"BOJ, 금리 또 올리나\" 연속 인상 경고…엔캐리 청산 변수에 증시 '긴장' - ebn.co.kr",
+   "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBpWGF5ZGtmNVJDSTQ0OTFjTFpnRVByaFpzQTVkSTViWjA2eXhVaGhmem1SY2NSRFZQYWlaeUhWRDJ4OEk0clJlTFFfVldSTnh2bl84eFJZQ0VBYlgteE1RSndPdzl2Vjds?oc=5",
    "date": "2026-09-28",
-   "source": "Investing.com 한국어"
+   "source": "ebn.co.kr"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "버튼을 길게 누르는 기능이 있나요? 제주 오리엔탈 카지노 - calgaryroughnecks.com",
+   "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNUzNnNUxpNXVGM29mYXhTWTZvemNlRkllT3RHbEt5QTZEWHFyb1VqQVBiUmpRMzh0bEcxMTd6aHNQcEI4bVdJdjRjVFpIdUNjREYtZW93ZC1WanBrMC1xMHVsS25mdmRqYnQxN1BEQUJXcjBIZzFzWFFfb09lN29ZTFBfanhFa3M3VzZ3?oc=5",
+   "date": "2026-10-01",
+   "source": "calgaryroughnecks.com"
   },
   {
    "id": "boj-carry",
@@ -22,20 +33,16 @@
    "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE01S21DRlF0LXJLVWJzVUxhYkp4UklZU2VHcjdSVzhITEtvMGU5YUdRcUg5TGtSQjViZUxCRTk0RGt0S2tFcVZhb0ozSUlqLWRCTlJGakRpTWw3UFU?oc=5",
    "date": "2026-09-29",
    "source": "The Economy Korea"
-  },
-  {
-   "id": "boj-carry",
-   "syms": [
-    "QQQ"
-   ],
-   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
-   "title": "[이원호의 경제톡] ‘값싼 엔화’의 시대가 흔들린다 - 빅터뉴스",
-   "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBVOGZxNUdtUWoxUG5ub1M2Z2I3cjNTbExjWmY4Y3ZjMHRBeTJQdkdhZGFsYkVPbXB2MENYMlB0Y2lWUGw3NklhOFcwZDVESHJnTUJIZTQ1T2FyVWdUT1BjMlhfaDlqNmc?oc=5",
-   "date": "2026-09-28",
-   "source": "빅터뉴스"
   }
  ],
- "filings": [],
+ "filings": [
+  {
+   "sym": "ETN",
+   "form": "8-K",
+   "date": "2026-10-05",
+   "url": "https://www.sec.gov/Archives/edgar/data/1551182/000114036126038523/ef20083229_8k.htm"
+  }
+ ],
  "rules": [
   {
    "id": "trade-stop",
