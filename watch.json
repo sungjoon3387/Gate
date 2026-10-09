@@ -1,6 +1,17 @@
 {
- "generated_at": "2026-10-08T10:02:48+09:00",
+ "generated_at": "2026-10-09T09:28:44+09:00",
  "alerts": [
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "\"엔화 절상률 8~10% 돼야 엔 캐리 청산…현시점서 가능성 낮아\" - 연합인포맥스",
+   "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE84eFBKUE13cXR0OVJ1aDZhUUJzRjZweW1OMG9QQ05UbE5QYjFXQXRfdjMxZXl0MEhiUGRhZjJ5XzJVb2JfTC15OXc1U2ttdEJoWGVINFVTanF4cUwyMzNvd2taQ3FoSU1lUVVkNDZ5NnIyZ3V50gF0QVVfeXFMTzh4UEpQTXdxdHQ5UnVoNmFRQnNGNnB5bU4wb1BDTlRsTlBiMVdBdF92MzFleXQwSGJQZGFmMnlfMlVvYl9MLXk5dzVTa210QmhYZUg0VVNqcXhxTDIzM293a1pDcWhJTWVRVWQ0Nnk2cjJndXk?oc=5",
+   "date": "2026-10-08",
+   "source": "연합인포맥스"
+  },
   {
    "id": "boj-carry",
    "syms": [
