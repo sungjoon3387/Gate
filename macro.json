@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-10T09:05:47+09:00",
+ "generated_at": "2026-10-10T09:25:02+09:00",
  "indicators": {
   "ust2": {
    "id": "DGS2",
@@ -232,48 +232,7 @@
   }
  ],
  "changes": {
-  "moves": [
-   {
-    "k": "n225",
-    "label": "닛케이225",
-    "from": 68333.99,
-    "to": 69042.11,
-    "delta": 708.12,
-    "unit": ""
-   },
-   {
-    "k": "copper",
-    "label": "구리",
-    "from": 6.58,
-    "to": 6.71,
-    "delta": 0.13,
-    "unit": ""
-   },
-   {
-    "k": "ust30",
-    "label": "미국채 30년",
-    "from": 5.67,
-    "to": 5.6,
-    "delta": -0.07,
-    "unit": "%"
-   },
-   {
-    "k": "ust10",
-    "label": "미국채 10년",
-    "from": 5.28,
-    "to": 5.22,
-    "delta": -0.06,
-    "unit": "%"
-   },
-   {
-    "k": "real10",
-    "label": "미 10년 실질금리",
-    "from": 2.92,
-    "to": 2.87,
-    "delta": -0.05,
-    "unit": "%"
-   }
-  ],
+  "moves": [],
   "flips": [],
   "records": [
    {
@@ -302,12 +261,12 @@
    }
   ],
   "streak": {
-   "policy": 3,
-   "curve": 12,
-   "capex": 2,
-   "oil": 3,
-   "japan": 12,
-   "fx": 9
+   "policy": 4,
+   "curve": 13,
+   "capex": 3,
+   "oil": 4,
+   "japan": 13,
+   "fx": 10
   }
  },
  "errors": []
