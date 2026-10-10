@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-09T10:15:17+09:00",
+ "generated_at": "2026-10-10T09:05:49+09:00",
  "alerts": [
   {
    "id": "boj-carry",
@@ -22,6 +22,17 @@
    "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1DM0NqMUVSSlBHS1hzVXdfOGhzeGNXczk4RFNvcTc5LXdnTlBwYjMwc1ZfOUJyYXA0aUUwUmRMdG5RM0tOUXNGQ0ZieEVNczRYc1NvSXBLMWxieTFE?oc=5",
    "date": "2026-10-06",
    "source": "뉴스핌"
+  },
+  {
+   "id": "boj-carry",
+   "syms": [
+    "QQQ"
+   ],
+   "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)",
+   "title": "게임 설명에 나온 배수의 기준을 찾는 아시안 게임 축구 일본 카타르 - Calgary Roughnecks",
+   "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNNzdJa0w5eHM3OWV6eWdOTWVDckY3ZWRjVDZMdGVOT1J2OW9xang5bU5xWEJKNldBQ3RTdVhMMmx6MUF4SG5xeEU4Y01sQ0p2THdZY0FNWEs5Q3dVcW1uTEZNaFVYMHM5WndqQ2VwRFpBODZOV2UxX295Y093dDc3aG9VWktmSUpXbmE0SHVuRUhmdC14ZEZDRFROR09wdS0xd1g3Mm9QS0NtZnBvMkE?oc=5",
+   "date": "2026-10-08",
+   "source": "Calgary Roughnecks"
   }
  ],
  "filings": [
