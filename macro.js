@@ -84,42 +84,69 @@ window.MACRO_CONTEXT = {
   function judge() {
     var i = M.indicators || {};
     var fxp = pos52(i.usdkrw);
-    var ig = i.ig, r10 = i.real10;
+    var ig = i.ig, hy = i.hy, r10 = i.real10;
     var out = { lines: [], head: "" };
 
-    // (1) 달러 매수 유불리
+    /* (1) 달러 매수 유불리 — 수준(52주 위치)과 방향(20일 변화)을 함께 본다.
+       둘을 따로 보면 "52주 바닥"과 "최근엔 조용함"이 서로 다른 말을 하게 된다. */
     var dollarGood = null;
     if (fxp != null) {
+      var k = i.usdkrw;
+      var d20 = k.chg_20d;
+      var moving = d20 != null && Math.abs(d20) >= 10;   // 20일 10원 이상이면 "움직이는 중"
+      var lvl = "원/달러 " + num(k.value) + "원 — 52주 범위의 " +
+        (fxp <= 50 ? "아래쪽 " + Math.round(fxp) : "위쪽 " + Math.round(100 - fxp)) + "%";
+      var mv = d20 == null ? "" :
+        (moving ? " · 최근 20일 " + sgn(d20) + "원으로 " + (d20 > 0 ? "오르는 중" : "내리는 중")
+                : " · 최근 20일 " + sgn(d20) + "원으로 거의 정체");
+
       if (fxp <= 25) {
         dollarGood = true;
-        out.lines.push({ t: "달러 사기 좋은 자리",
-          d: "원/달러 " + num(i.usdkrw.value) + "원 — 52주 범위의 아래쪽 " + Math.round(fxp) + "%. 같은 논거라면 이번 매수는 달러 자산으로." });
+        out.lines.push({
+          t: moving && d20 > 0 ? "달러 사기 좋지만 이미 오르는 중" : "달러 사기 좋은 자리",
+          d: lvl + mv + ". " + (moving && d20 > 0
+              ? "바닥권이지만 되돌림이 시작됐습니다. 지금 환전은 며칠 전보다 불리합니다."
+              : "같은 논거라면 이번 매수는 달러 자산으로.")
+        });
       } else if (fxp >= 75) {
         dollarGood = false;
-        out.lines.push({ t: "달러 사기 나쁜 자리",
-          d: "원/달러 " + num(i.usdkrw.value) + "원 — 52주 범위의 위쪽 " + Math.round(fxp) + "%. 같은 논거라면 원화 종목이 환 부담이 적습니다." });
+        out.lines.push({
+          t: moving && d20 < 0 ? "달러 사기 나쁘지만 내려오는 중" : "달러 사기 나쁜 자리",
+          d: lvl + mv + ". " + (moving && d20 < 0
+              ? "고점권이지만 방향은 아래입니다. 서두를 이유는 없습니다."
+              : "같은 논거라면 원화 종목이 환 부담이 적습니다.")
+        });
       } else {
         out.lines.push({ t: "환율은 중립",
-          d: "원/달러 " + num(i.usdkrw.value) + "원 — 52주 범위 중간. 통화 선택이 수익률을 좌우하는 국면은 아닙니다." });
+          d: lvl + mv + ". 통화 선택이 수익률을 좌우하는 국면은 아닙니다." });
       }
     }
 
-    // (2) 캐펙스 논거 생사 — 전력기기 3종목의 목숨줄
+    /* (2) 캐펙스 논거 생사 — 사슬과 같은 기준으로 판정한다.
+       투자등급은 가장 늦게 벌어지므로 하이일드를 같이 본다. */
     var capexAlive = null;
     if (ig) {
-      var d60 = ig.chg_60d;
+      var d60 = ig.chg_60d, h60 = hy ? hy.chg_60d : null;
+      var names = sectorNames();
       if (d60 >= 0.25) {
         capexAlive = false;
         out.lines.push({ t: "전력기기 논거 — 경고", warn: 1,
-          d: "회사채 스프레드가 60일간 " + sgn(d60) + "%p 벌어졌습니다. 기업이 돈 빌리기 어려워지는 중이고, 데이터센터 발주가 실제로 줄 수 있는 유일한 경로입니다. 논거 재검토 시점." });
-      } else if (d60 >= 0.10) {
+          d: "투자등급 회사채 스프레드가 60일간 " + sgn(d60) + "%p 벌어졌습니다. 기업이 돈 빌리기 어려워지는 중이고, 데이터센터 발주가 실제로 줄 수 있는 유일한 경로입니다. 논거 재검토 시점." });
+      } else if (h60 != null && h60 >= 0.75 && d60 < 0.25) {
+        capexAlive = true;
+        out.lines.push({ t: "전력기기 논거 — 조기 경보", warn: 1,
+          d: "투자등급은 " + sgn(d60) + "%p로 조용한데 하이일드만 " + sgn(h60) + "%p 벌어졌습니다. 신용 균열은 약한 곳에서 먼저 시작되고 투자등급은 가장 늦게 반응합니다." });
+      } else if (d60 >= 0.10 || (h60 != null && h60 >= 0.35)) {
         capexAlive = true;
         out.lines.push({ t: "전력기기 논거 — 관찰", watch: 1,
-          d: "회사채 스프레드 60일 " + sgn(d60) + "%p. 아직 경고는 아니지만 방향이 나쁩니다." });
+          d: "투자등급 60일 " + sgn(d60) + "%p" + (h60 != null ? ", 하이일드 " + sgn(h60) + "%p" : "") +
+             ". 아직 경고는 아니지만 방향이 나쁩니다. " + names + "의 수주 논거는 유지되나, 다음 실적에서 마진을 확인해야 합니다." });
       } else {
         capexAlive = true;
         out.lines.push({ t: "전력기기 논거 유지",
-          d: "회사채 스프레드 60일 " + sgn(d60) + "%p, 5년 기준 하위 " + ig.pctile_5y + "%. 국채금리는 올랐는데 기업 조달은 안 나빠졌습니다. ETN·GEV·HD현대일렉의 수주 논거는 아직 깨지지 않았습니다." });
+          d: "투자등급 60일 " + sgn(d60) + "%p, 5년 기준 하위 " + ig.pctile_5y + "%" +
+             (h60 != null ? " · 하이일드 " + sgn(h60) + "%p" : "") +
+             ". 국채금리는 올랐는데 기업 조달은 안 나빠졌습니다. " + names + "의 수주 논거는 아직 깨지지 않았습니다." });
       }
     }
 
@@ -134,11 +161,31 @@ window.MACRO_CONTEXT = {
       }
     }
 
-    // 한 줄 결론
-    var a = dollarGood === true ? "달러 사기 좋고" : dollarGood === false ? "원화 쪽이 유리하고" : "환율은 중립이고";
-    var b = capexAlive === false ? "전력기기 논거는 흔들리는 중" : "전력기기 논거는 살아 있다";
+    // 한 줄 결론 — 환율은 수준과 방향을 합쳐서 말한다
+    var a = "환율은 중립이고";
+    if (dollarGood === true) {
+      a = (i.usdkrw && i.usdkrw.chg_20d > 10) ? "달러는 바닥권이나 되돌림 중이고" : "달러 사기 좋고";
+    } else if (dollarGood === false) {
+      a = (i.usdkrw && i.usdkrw.chg_20d < -10) ? "달러는 고점권이나 내려오는 중이고" : "원화 쪽이 유리하고";
+    }
+    var b = capexAlive === false ? "전력기기 논거는 흔들리는 중"
+          : (out.lines.some(function (x) { return x.warn || x.watch; })
+             ? "전력기기 논거는 살아 있으나 관찰 구간" : "전력기기 논거는 살아 있다");
     out.head = a + ", " + b;
     return out;
+  }
+
+  /* 보유 중인 전력기기 종목명 — holdings.js 에서 가져온다.
+     판 종목이 문구에 남는 일을 막는다. */
+  function sectorNames() {
+    var LABEL = { "ETN": "ETN", "GEV": "GEV", "267260.KS": "HD현대일렉" };
+    var SECTOR = ["267260.KS", "GEV", "ETN"];
+    var H = window.HOLDINGS;
+    if (!H || !H.positions) return "전력기기 종목";
+    var held = H.positions.filter(function (p) {
+      return SECTOR.indexOf(p.sym) !== -1 && p.shares > 0;
+    }).map(function (p) { return LABEL[p.sym] || p.sym; });
+    return held.length ? held.join("·") : "전력기기 종목";
   }
 
   /* ---------- 2. 내 계좌로 번역 ---------- */
