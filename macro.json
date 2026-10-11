@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-12T06:50:05+09:00",
+ "generated_at": "2026-10-12T07:02:01+09:00",
  "indicators": {
   "ust2": {
    "id": "DGS2",
@@ -151,10 +151,10 @@
    "id": "JPY=X",
    "label": "엔/달러",
    "unit": "엔",
-   "value": 158.26,
+   "value": 158.3,
    "asof": "data.json",
-   "chg_20d": 4.84,
-   "chg_60d": -4.26,
+   "chg_20d": 4.88,
+   "chg_60d": -4.21,
    "pctile_5y": null,
    "is_pct": false,
    "min_1y": 151.731,
@@ -261,12 +261,12 @@
    }
   ],
   "streak": {
-   "policy": 4,
-   "curve": 13,
-   "capex": 3,
-   "oil": 4,
-   "japan": 13,
-   "fx": 10
+   "policy": 5,
+   "curve": 14,
+   "capex": 4,
+   "oil": 5,
+   "japan": 14,
+   "fx": 11
   }
  },
  "errors": []

@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-12T06:49:42+09:00",
- "generated_at_label": "2026-10-12 06:49 KST",
+ "generated_at": "2026-10-12T07:01:12+09:00",
+ "generated_at_label": "2026-10-12 07:01 KST",
  "sector_ceiling": 35.0,
  "tranche_levels": [
   -15.0,
@@ -925,17 +925,17 @@
    "name": "엔/달러",
    "kind": "macro",
    "source": "yahoo",
-   "price": 158.262,
+   "price": 158.3,
    "prev_close": 158.063,
-   "day_pct": 0.13,
+   "day_pct": 0.15,
    "last_trade_date": "2026-10-11",
    "high52": 163.864,
    "low52": 151.731,
-   "drawdown_pct": -3.42,
-   "ma20": 157.342,
-   "ma200": 158.5359,
-   "ma200_gap_pct": -0.17,
-   "rsi14": 55.7,
+   "drawdown_pct": -3.4,
+   "ma20": 157.3439,
+   "ma200": 158.5361,
+   "ma200_gap_pct": -0.15,
+   "rsi14": 56.0,
    "spark": [
     162.487,
     163.186,
@@ -996,9 +996,9 @@
     158.296,
     158.06,
     158.063,
-    158.262
+    158.3
    ],
-   "chg60_pct": -2.62,
+   "chg60_pct": -2.59,
    "unit": "엔"
   },
   "DX-Y.NYB": {
