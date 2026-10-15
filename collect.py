@@ -62,7 +62,7 @@ SYMBOLS = [
      "src": [("stooq", "gev.us"), ("yahoo", "GEV")]},
     {"sym": "ETN", "name": "Eaton", "kind": "position", "bucket": "sector", "ccy": "USD",
      "src": [("stooq", "etn.us"), ("yahoo", "ETN")]},
-    # 삼성전자 → 매매 대상 아님. OPI2 특별성과과금 주식 평가에 사용하므로 kind=macro.
+    # 삼성전자 → 매매 대상 아님. OPI2 특별경영성과급 주식 평가에 사용하므로 kind=macro.
     # kind=position 으로 두면 calibrate() 가 쓸모 없는 매수·매도 문턱을 만들어낸다.
     {"sym": "005930.KS", "name": "삼성전자", "kind": "macro", "unit": "원",
      "src": [("naver", "005930"), ("stooq", "005930.kr"), ("yahoo", "005930.KS")]},
@@ -363,7 +363,7 @@ def calibrate(vals):
 
     sell = pick(range(55, 100), True)
     buy = pick(range(1, 46), False)
-    # 중립 보류 문턱 — 실시간과 매도 문턱의 중간. 재계산 없이 기존 값만 쓴다.
+    # 적립 보류 문턱 — 중앙값과 매도 문턱의 중간. 재계산 없이 기존 값만 쓴다.
     pause = None
     if sell and sell.get("thr") is not None:
         pause = {"thr": round(mid + (sell["thr"] - mid) * 0.5, 1)}
