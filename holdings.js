@@ -12,14 +12,14 @@ window.HOLDINGS = {
   updated: "2026-10-15",
 
   positions: [
-    { sym: "QQQ",  shares: 15, avg_krw: null, avg_usd: 714.24 },   // ← avg_krw 를 토스증권 '원' 탭 값으로 반드시 채울 것
-    { sym: "JEPQ", shares: 35, avg_krw: 82838,   avg_usd: 60.18 },
+    { sym: "QQQ",  shares: 15, avg_krw: 1010063, avg_usd: 714.24 },
+    { sym: "JEPQ", shares: 25, avg_krw: 82838,   avg_usd: 60.18 },
     { sym: "GEV",  shares: 2,  avg_krw: 1274543, avg_usd: 936.20 },
     { sym: "ETN",  shares: 7,  avg_krw: 564603,  avg_usd: 421.00 }
   ],
 
   // 대기 현금
-  cash_krw: 0,      // 원화 — 중립 보류 대금 포함
+  cash_krw: 0,      // 원화 — 적립 보류 대금 포함
   cash_usd: 0,      // 달러 — 매도 후 환전 전 보유분. 비워두면 매도한 돈이 화면에서 사라진다
   monthly_krw: 0,
 
@@ -46,7 +46,7 @@ window.HOLDINGS = {
   ],
 
   thesis: {
-    "QQQ":  { updated: "2026-09-10", text: "코어. 30년 적립이므로 전망으로 재고하지 않는다. 매도 로직 요구 사항 제외." },
+    "QQQ":  { updated: "2026-09-10", text: "코어. 30년 자산이므로 전망으로 사고팔지 않는다. 매도 로직 영구 제외." },
     "JEPQ": { updated: "2026-10-15", text: "정리 대상. 달러·주가 기준 +3%($61.99) 도달 시 전량 매도, QQQ 66% / 전력기기 34%로 재배분." },
     "GEV":  { updated: "2026-09-10", text: "AI 전력 수요의 최상류(발전). 가스터빈 수주잔고 116GW, 공급이 수요를 못 따라가 가격이 먼저 오른다." },
     "ETN":  { updated: "2026-09-10", text: "데이터센터 내부 배전·UPS. 수요처에 가장 가깝고 수주가 이미 실적으로 넘어오고 있다." }
