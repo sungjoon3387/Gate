@@ -132,9 +132,11 @@ window.PERF_CONFIG = {
     var gain = value - cost;
 
     // 세금 — 지금 전량 매도 가정
-    var used = C.realized_gain_krw || 0;
-    var deductLeft = Math.max(0, (C.overseas_deduction || 0) - used);
-    var taxable = Math.max(0, gain - deductLeft);
+    // realized: 올해 이미 실현한 해외주식 손익 (손실이면 음수)
+    var realized = C.realized_gain_krw || 0;
+    var ded = C.overseas_deduction || 0;
+    var deductLeft = Math.max(0, ded - Math.max(0, realized));   // 공제는 이익만 소진한다
+    var taxable = Math.max(0, gain + realized - ded);            // 손실은 같은 해 이익과 상계
     var tax = taxable * (C.overseas_tax_rate || 0);
 
     return {
@@ -145,7 +147,7 @@ window.PERF_CONFIG = {
       costUSD: costUSD,
       cashKRW: cashKRW, cashUSD: cashUSD,
       total: value + cashKRW + cashUSD,
-      deductLeft: deductLeft, taxable: taxable, tax: tax,
+      deductLeft: deductLeft, taxable: taxable, tax: tax, realized: realized,
       netGain: gain - tax,
       rows: rows, missing: missing, noSplit: noSplit,
       H: H, Q: Q
@@ -238,8 +240,12 @@ window.PERF_CONFIG = {
 
     /* 5. 세금 */
     h += '<div class="gp-h">세금</div><div class="gp-box">';
+    if (S.realized) {
+      h += '<div class="gp-row"><span>올해 실현 손익 (해외)</span><b class="' + ud(S.realized) + '">' +
+        swon(S.realized) + "<small>이미 매도한 분 · 연간 합산 대상</small></b></div>";
+    }
     h += '<div class="gp-row"><span>양도소득세 기본공제 잔액</span><b>' + won(S.deductLeft) + "</b></div>";
-    h += '<div class="gp-row"><span>지금 전량 매도 시</span><b>' + won(S.tax) +
+    h += '<div class="gp-row"><span>올해 세금 (지금 전량 매도 시)</span><b>' + won(S.tax) +
       (S.tax === 0 ? "<small>공제 범위 안</small>"
                    : "<small>차익 " + won(S.taxable) + " × 22%</small>") + "</b></div>";
     var dleft = daysUntil(C.tax_year_cutoff);
