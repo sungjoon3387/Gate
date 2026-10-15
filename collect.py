@@ -114,7 +114,7 @@ def fetch(url, retries=2, expect_json=False):
                 "Accept": "*/*",
                 "Accept-Language": "ko,en;q=0.8",
             })
-            with urllib.request.urlopen(req, timeout=20, context=ctx) as r:
+            with urllib.request.urlopen(req, timeout=10, context=ctx) as r:
                 body = r.read().decode("utf-8", errors="replace")
             return json.loads(body) if expect_json else body
         except Exception as e:  # noqa: BLE001
@@ -445,9 +445,10 @@ def main():
     quotes, errors, used = [], [], {}
 
     print(f"키 상태 — FRED_API: {'있음' if FRED_KEY else '없음'} / "
-          f"ECOS_API: {'있음' if ECOS_KEY else '없음'}")
+          f"ECOS_API: {'있음' if ECOS_KEY else '없음'}", flush=True)
 
     for entry in SYMBOLS:
+        print(f"  ...  {entry['sym']} 시도 중", flush=True)
         try:
             q, src = analyze(entry)
             quotes.append(q)
@@ -456,14 +457,14 @@ def main():
             extra = (f"  이격 {c['current_dev']:+.1f}%  매도 {c['sell']['thr']:+.1f}%"
                      f"({c['sell']['per_year']}/yr)  추매 {c['buy']['thr']:+.1f}%"
                      f"({c['buy']['per_year']}/yr)") if c else ""
-            print(f"  ok   {entry['sym']:<12} ({src})  {q['price']}{extra}")
+            print(f"  ok   {entry['sym']:<12} ({src})  {q['price']}{extra}", flush=True)
         except Exception as e:  # noqa: BLE001
             errors.append({"symbol": entry["sym"], "error": scrub(e)[:300]})
-            print(f"  FAIL {entry['sym']}: {scrub(e)}", file=sys.stderr)
+            print(f"  FAIL {entry['sym']}: {scrub(e)}", file=sys.stderr, flush=True)
         time.sleep(0.6)   # 소스에 대한 예의
 
     if not quotes:
-        print("전부 실패 — 기존 data.json을 유지합니다.", file=sys.stderr)
+        print("전부 실패 — 기존 data.json을 유지합니다.", file=sys.stderr, flush=True)
         return 1
 
     payload = {
@@ -478,7 +479,7 @@ def main():
     with open(DATA_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=1)
 
-    print(f"완료 — 성공 {len(quotes)}건 / 실패 {len(errors)}건")
+    print(f"완료 — 성공 {len(quotes)}건 / 실패 {len(errors)}건", flush=True)
     return 0
 
 
