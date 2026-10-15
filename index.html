@@ -255,7 +255,7 @@ function render(D){
   if(missingPrice.length){
     acts_out.push({cls:"trim", head:"시세 수집 실패 — 비중 계산이 흔들립니다",
       why:[`${missingPrice.join(", ")} 의 가격이 data.json에 없습니다`,
-           `해당 종목이 평가액 0원으로 집계되어 전력기기 비중이 과소계산됩니다`,
+           `해당 종목이 평가액 0원으로 집계되어 전력기기 비중이 왜곡됩니다 (코어 종목이 빠지면 과대, 전력기기가 빠지면 과소)`,
            `collect.py의 SYMBOLS 목록을 확인하세요`],
       note:"이 경고가 뜨는 동안은 비중 판정을 믿지 마세요."});
   }
@@ -300,15 +300,15 @@ function render(D){
                   : null});
     }
 
-    // 중립 보류 — 매도 문턱까지는 아니지만 평시보다 비싼 구간
+    // 적립 보류 — 매도 문턱까지는 아니지만 평소보다 비싼 구간
     else if(c.pause && dev >= c.pause.thr){
       const why=[
         `200일선 대비 ${pctS(dev)} — 보류 문턱 ${pctS(c.pause.thr)} 초과`,
         `중앙값 ${pctS(c.median_dev)} 과 매도 문턱 ${pctS(c.sell.thr)} 의 중간 지점입니다`,
-        `이번 차수 적립을 미루고 대기 현금으로 쌓습니다 (건드리는 게 아닙니다)`
+        `이번 회차 적립을 미루고 대기 현금으로 쌓습니다 (건너뛰는 것이 아닙니다)`
       ];
-      acts_out.push({cls:"info", head:`중립 보류 · ${NAMES[sym]}`, why,
-        note:"10거래일 연속 보류되면 대신 현금으로 간주 진행합니다."});
+      acts_out.push({cls:"info", head:`적립 보류 · ${NAMES[sym]}`, why,
+        note:"10거래일 연속 보류되면 누적 현금으로 강제 집행합니다."});
     }
   });
 
@@ -330,7 +330,7 @@ function render(D){
 
   // ⑥ 아무것도 없을 때 — 왜 없는지
   if(!acts_out.length){
-    const lines = rows.filter(r=>r.shares>0 && r.q && r.q.cal).map(r=>{
+    const lines = rows.filter(r=>r.shares>0 && r.q && r.q.cal && r.sym!=='JEPQ').map(r=>{
       const c=r.q.cal;
       return `${NAMES[r.sym]} 200일선 ${pctS(c.current_dev)} · 정상 구간 (${pctS(c.buy.thr)} ~ ${pctS(c.sell.thr)})`;
     });
@@ -402,9 +402,9 @@ function render(D){
   $('#macro').innerHTML=mh;
 
   // ---- Book ----
-  let bh=`<div class="card"><div class="row"><span class="k">코어 (QQQ)</span>
+  let bh=`<div class="card"><div class="row"><span class="k">코어 (QQQ·JEPQ)</span>
       <span class="v">${won(coreV)}<small>${total?(coreV/total*100).toFixed(1):0}%</small></span></div>
-    <div class="row"><span class="k">전력기기 3종목</span>
+    <div class="row"><span class="k">전력기기 (GEV·ETN)</span>
       <span class="v">${won(sectorV)}<small>${sectorW.toFixed(1)}% · 상한 ${ceil}%</small></span></div>
     <div class="bars"><i style="width:${total?coreV/total*100:0}%;background:var(--open)"></i>
       <i style="width:${sectorW}%;background:var(--warn)"></i></div></div>`;
