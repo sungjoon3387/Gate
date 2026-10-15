@@ -84,24 +84,20 @@
     t._h = setTimeout(function () { t.classList.remove("on"); }, ms || 2600);
   }
 
-  // 화면 헤더의 수집 시각 텍스트 (예: "2026-09-10 08:18 KST")
+  // 헤더의 수집 시각 → "MMDDHHmm" (kst() 출력의 숫자 8자리와 같은 꼴)
   function screenStamp() {
-    var nodes = document.querySelectorAll("div,span,p,small,time,h1,h2,h3");
-    for (var i = 0; i < nodes.length; i++) {
-      var t = (nodes[i].textContent || "").trim();
-      if (t.length < 40 && /KST/.test(t) && nodes[i].children.length === 0) return t;
-    }
-    return null;
+    var el = document.getElementById("stamp");
+    if (!el) return null;
+    var m = (el.textContent || "").match(/\d{4}-(\d{2})-(\d{2}) (\d{2}):(\d{2})/);
+    return m ? m[1] + m[2] + m[3] + m[4] : null;
   }
 
+  // stamp 안이 아니라 바로 옆에 붙인다 — stamp 텍스트를 오염시키지 않기 위해
   function place(btn) {
-    var nodes = document.querySelectorAll("div,span,p,small,time");
-    for (var i = 0; i < nodes.length; i++) {
-      var t = (nodes[i].textContent || "").trim();
-      if (t.length < 40 && /KST/.test(t) && nodes[i].children.length === 0) {
-        nodes[i].appendChild(btn);
-        return true;
-      }
+    var el = document.getElementById("stamp");
+    if (el && el.parentNode) {
+      el.parentNode.insertBefore(btn, el.nextSibling);
+      return true;
     }
     btn.classList.add("fixed");
     document.body.appendChild(btn);
@@ -129,7 +125,7 @@
         var stale = true;
         if (before && genTxt) {
           var norm = function (s) { return s.replace(/[^0-9]/g, ""); };
-          stale = norm(before).slice(-8) !== norm(genTxt).slice(-8);
+          stale = before !== norm(genTxt).slice(-8);
         }
 
         if (stale) {
