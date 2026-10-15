@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gate</title>
+<meta name="theme-color" content="#141A22">
+<link rel="manifest" href='data:application/manifest+json,{"name":"Gate","short_name":"Gate","display":"standalone","theme_color":"%23141A22","background_color":"%23141A22","start_url":"."}'>
+<link rel="apple-touch-icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%23141A22"/><path d="M14 44V20M50 44V20" stroke="%237285A0" stroke-width="4" stroke-linecap="round"/><path d="M14 32h36" stroke="%2334C6A2" stroke-width="4" stroke-linecap="round"/></svg>'>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root{
+  --bg:#141A22; --surface:#1B2330; --surface2:#222C3B; --line:#2C3849;
+  --text:#E6EBF2; --muted:#8B9AAE; --dim:#5F6E80;
+  --up:#F0524F; --down:#4C8DF0;
+  --open:#34C6A2; --shut:#7285A0; --warn:#DFA33C;
+  --pad:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  font-size:15px; line-height:1.55; letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1;
+  padding-bottom:40px;
+}
+.num{font-variant-numeric:tabular-nums}
+.up{color:var(--up)} .down{color:var(--down)} .muted{color:var(--muted)} .dim{color:var(--dim)}
+
+/* ---- header ---- */
+header{padding:18px var(--pad) 10px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h1{font-size:21px;font-weight:700;letter-spacing:-.02em}
+#stamp{font-size:12px;color:var(--dim);margin-left:auto}
+#stamp.stale{color:var(--warn)}
+
+/* ---- tabs ---- */
+nav{position:sticky;top:0;z-index:10;background:var(--bg);
+    border-bottom:1px solid var(--line);display:flex;padding:0 var(--pad)}
+nav button{flex:1;background:none;border:0;color:var(--dim);font:inherit;font-size:14px;
+    font-weight:600;padding:11px 2px 9px;border-bottom:2px solid transparent;cursor:pointer;
+    font-family:inherit}
+nav button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--open)}
+nav button:focus-visible{outline:2px solid var(--open);outline-offset:-2px}
+
+main{padding:var(--pad);max-width:640px;margin:0 auto}
+section[hidden]{display:none}
+
+/* ---- gate hero ---- */
+.gate{padding:20px 0 22px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.gate-state{display:flex;align-items:center;gap:9px;font-size:19px;font-weight:700}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.gate-why{color:var(--muted);font-size:13.5px;margin-top:5px}
+.track{position:relative;height:34px;margin-top:20px}
+.track-rail{position:absolute;top:13px;left:0;right:0;height:8px;background:var(--surface2);border-radius:4px}
+.track-fill{position:absolute;top:13px;left:0;height:8px;border-radius:4px;background:var(--open);transition:width .4s ease}
+.track-limit{position:absolute;top:6px;width:2px;height:22px;background:var(--warn)}
+.track-labels{position:relative;height:16px;font-size:11.5px;color:var(--dim)}
+.track-labels span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+
+/* ---- cards ---- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+      padding:15px 16px;margin-bottom:11px}
+.card.act{border-color:var(--open)}
+.card.lock{border-color:var(--warn)}
+.card h3{font-size:15.5px;font-weight:700;margin-bottom:3px}
+.card p{font-size:13.5px;color:var(--muted);margin-top:5px}
+.calm{text-align:center;padding:30px 16px;color:var(--muted);font-size:15px;
+      border:1px dashed var(--line);border-radius:12px}
+.calm b{display:block;font-size:17px;color:var(--text);font-weight:700;margin-bottom:5px}
+
+/* ---- rows ---- */
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+     padding:11px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .k{color:var(--muted);font-size:13.5px}
+.row .v{font-weight:600;text-align:right}
+.row .v small{display:block;font-weight:400;font-size:12px;color:var(--dim);margin-top:1px}
+
+h2{font-size:13px;font-weight:700;color:var(--muted);margin:22px 0 8px}
+h2:first-child{margin-top:0}
+
+/* ---- position block ---- */
+.pos{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+     padding:14px 16px;margin-bottom:10px}
+.pos-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.pos-name{font-weight:700;font-size:15.5px}
+.pos-ret{font-weight:700;font-size:16px}
+.pos-sub{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--dim);margin-top:3px}
+.split{display:flex;gap:8px;margin-top:11px;font-size:12.5px}
+.split div{flex:1;background:var(--surface2);border-radius:7px;padding:7px 9px}
+.split .lbl{color:var(--dim);font-size:11.5px}
+.split .val{font-weight:600;margin-top:1px}
+.bars{display:flex;height:7px;border-radius:4px;overflow:hidden;margin-top:14px;background:var(--surface2)}
+.bars i{display:block;height:100%}
+
+/* ---- sparkline ---- */
+svg.spark{display:block;width:100%;height:34px;margin-top:10px;overflow:visible}
+svg.bars-c{display:block;width:100%;height:52px;margin-top:12px}
+.bars-ax{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);margin-top:4px}
+
+/* ---- 오늘의 판단 ---- */
+.act-list{margin-bottom:6px}
+.act-item{background:var(--surface);border:1px solid var(--line);border-left-width:3px;
+  border-radius:10px;padding:13px 15px;margin-bottom:9px}
+.act-item.buy{border-left-color:var(--open)}
+.act-item.trim{border-left-color:var(--warn)}
+.act-item.info{border-left-color:var(--shut)}
+.act-head{font-weight:700;font-size:15.5px;margin-bottom:6px}
+.act-why{list-style:none;font-size:13px;color:var(--muted);line-height:1.75}
+.act-why li{display:flex;gap:8px}
+.act-why li::before{content:"·";color:var(--dim);flex:none}
+.act-note{font-size:12.5px;color:var(--dim);margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+
+.note{font-size:12.5px;color:var(--dim);margin-top:14px;line-height:1.6}
+.err{color:var(--warn);font-size:12.5px;margin-top:10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Gate</h1>
+  <span id="stamp" class="dim">불러오는 중</span>
+</header>
+
+<nav role="tablist">
+  <button role="tab" aria-selected="true"  data-tab="today">오늘</button>
+  <button role="tab" aria-selected="false" data-tab="macro">금리·환율</button>
+  <button role="tab" aria-selected="false" data-tab="book">보유</button>
+  <button role="tab" aria-selected="false" data-tab="log">기록</button>
+</nav>
+
+<main>
+  <section id="today"></section>
+  <section id="macro" hidden></section>
+  <section id="book"  hidden></section>
+  <section id="log"   hidden></section>
+</main>
+
+<script src="holdings.js"></script>
+<script>
+const $ = (s,r=document)=>r.querySelector(s);
+const H = window.HOLDINGS || {positions:[],thesis:{},trades:[]};
+const SECTOR = ["GEV","ETN"];
+const NAMES  = {"QQQ":"QQQ","JEPQ":"JEPQ","GEV":"GE 버노바","ETN":"Eaton"};
+
+const won  = n => n==null?"—":Math.round(n).toLocaleString("ko-KR")+"원";
+const pctS = n => n==null?"—":(n>0?"+":"")+n.toFixed(1)+"%";
+const cls  = n => n==null?"":(n>0?"up":n<0?"down":"");   // 한국식: 상승 빨강 / 하락 파랑
+
+// 탭
+document.querySelectorAll('nav button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('nav button').forEach(x=>x.setAttribute('aria-selected', x===b));
+    ['today','macro','book','log'].forEach(t=>$('#'+t).hidden = (t!==b.dataset.tab));
+    window.scrollTo(0,0);
+  };
+});
+
+function bars(vals,n){
+  n=n||30;
+  const v=vals.slice(-n); if(v.length<2) return "";
+  const lo=Math.min(...v), hi=Math.max(...v), rng=(hi-lo)||Math.abs(hi*0.02)||1;
+  const base=lo-rng*0.25, top=hi+rng*0.15, span=top-base;
+  const W=100/v.length, g=W*0.22;
+  const b=v.map((x,i)=>{
+    const h=Math.max((x-base)/span*46,1.2);
+    const up=i===0?true:x>=v[i-1];
+    return `<rect x="${(i*W+g/2).toFixed(2)}" y="${(48-h).toFixed(2)}"
+      width="${(W-g).toFixed(2)}" height="${h.toFixed(2)}"
+      fill="${up?'var(--up)':'var(--down)'}" opacity="${i===v.length-1?1:.62}"/>`;
+  }).join("");
+  return `<svg class="bars-c" viewBox="0 0 100 48" preserveAspectRatio="none" aria-hidden="true">${b}</svg>
+    <div class="bars-ax"><span>${v.length}거래일</span><span>저 ${lo.toLocaleString("ko-KR")}</span>
+    <span>고 ${hi.toLocaleString("ko-KR")}</span></div>`;
+}
+
+function daysSince(d){ if(!d) return 9999;
+  return Math.floor((Date.now()-new Date(d+"T00:00:00+09:00").getTime())/864e5); }
+
+fetch("data.json?v="+Date.now()).then(r=>r.json()).then(render).catch(e=>{
+  $('#today').innerHTML =
+    `<div class="calm"><b>데이터를 불러오지 못했습니다</b>data.json이 아직 생성되지 않았을 수 있습니다.
+     GitHub Actions에서 수집 작업을 한 번 실행해 보세요.</div>`;
+  $('#stamp').textContent="오류";
+});
+
+function render(D){
+  const now = new Date();
+  const Q = D.quotes || {};
+  const fx = Q["KRW=X"] ? Q["KRW=X"].price : null;
+
+  // 기준시각
+  const age = (Date.now()-new Date(D.generated_at).getTime())/36e5;
+  const st=$('#stamp');
+  const q0 = Q["QQQ"] || {};
+  st.textContent = D.generated_at_label + (age>8 ? "  ·  갱신 지연" : "")
+    + (q0.last_trade_date ? `  ·  ${q0.last_trade_date} 종가 기준` : "");
+  if(age>8) st.classList.add('stale');
+
+  // ---- 평가 ----
+  const missingPrice = [];
+  const rows = H.positions.map(p=>{
+    const q=Q[p.sym]||{};
+    const isUSD = q.ccy==="USD" || (p.avg_usd!=null);
+    const priceKRW = q.price==null?null : (isUSD && fx ? q.price*fx : q.price);
+    const value = priceKRW!=null ? priceKRW*p.shares : 0;
+    if(priceKRW==null && p.shares>0){
+      console.warn('[gate] 시세 없음 — 총액에서 제외됨:', p.sym);
+      missingPrice.push(p.sym);
+    }
+    let rKRW=null,rPx=null,rFX=null;
+    if(p.avg_krw && priceKRW!=null) rKRW=(priceKRW/p.avg_krw-1)*100;
+    if(p.avg_usd && q.price!=null && fx){
+      rPx=(q.price/p.avg_usd-1)*100;
+      rFX=(fx/(p.avg_krw/p.avg_usd)-1)*100;
+    }
+    return {...p, q, isUSD, priceKRW, value, rKRW, rPx, rFX,
+            bucket: SECTOR.includes(p.sym)?"sector":"core"};
+  });
+  const total  = rows.reduce((s,r)=>s+r.value,0) + (H.cash_krw||0);
+  const sectorV= rows.filter(r=>r.bucket==="sector").reduce((s,r)=>s+r.value,0);
+  const coreV  = rows.filter(r=>r.bucket==="core").reduce((s,r)=>s+r.value,0);
+  const sectorW= total? sectorV/total*100 : 0;
+  const ceil   = D.sector_ceiling || 35;
+
+  // ---- Today ----
+  const fxq = Q["KRW=X"];
+
+  const fillW=Math.min(sectorW/60*100,100);
+  let html = `<div class="gate">
+    <div class="gate-state"><span class="dot" style="background:${sectorW>ceil?'var(--warn)':'var(--open)'}"></span>
+      전력기기 ${sectorW.toFixed(1)}%</div>
+    <div class="gate-why">${sectorW>ceil
+      ? `기준선 ${ceil}%를 ${(sectorW-ceil).toFixed(1)}%p 넘었습니다. 막지는 않습니다 — 숫자만 알고 계시라고 표시합니다.`
+      : `기준선 ${ceil}%까지 ${won(total*ceil/100-sectorV)} 여유`}</div>
+    <div class="track">
+      <div class="track-rail"></div>
+      <div class="track-fill" style="width:${fillW}%;background:${sectorW>ceil?'var(--warn)':'var(--open)'}"></div>
+      <div class="track-limit" style="left:${ceil/60*100}%"></div>
+    </div>
+    <div class="track-labels">
+      <span style="left:0;transform:none">0%</span>
+      <span style="left:${ceil/60*100}%;color:var(--warn)">기준 ${ceil}%</span>
+      <span style="left:100%;transform:translateX(-100%)">60%</span>
+    </div>
+  </div>`;
+
+  // 논거 만료 확인
+  const heldSyms = H.positions.filter(p=>p.shares>0).map(p=>p.sym);
+  const stale = SECTOR.filter(s=>heldSyms.includes(s) && daysSince((H.thesis[s]||{}).updated)>90);
+  const acts_out = [];
+
+  if(missingPrice.length){
+    acts_out.push({cls:"trim", head:"시세 수집 실패 — 비중 계산이 흔들립니다",
+      why:[`${missingPrice.join(", ")} 의 가격이 data.json에 없습니다`,
+           `해당 종목이 평가액 0원으로 집계되어 전력기기 비중이 과소계산됩니다`,
+           `collect.py의 SYMBOLS 목록을 확인하세요`],
+      note:"이 경고가 뜨는 동안은 비중 판정을 믿지 마세요."});
+  }
+
+  // ① 급등·급락 판정 (종목별 200일선 이격도, 연 2~3회 빈도로 자동 보정된 문턱)
+  const NO_SELL = ["QQQ"];   // 코어는 무한 적립 — 매도 대상 아님
+  rows.filter(r=>r.shares>0 && r.q && r.q.cal).forEach(r=>{
+    const c=r.q.cal, dev=c.current_dev, sym=r.sym;
+    if(sym==='JEPQ') return;   // 커버드콜 — 이격도 전략 대상 아님, +3%에 별도로 전량 매도
+    const one = r.q.ccy==="USD"&&fx ? r.q.price*fx : r.q.price;
+
+    // 급등 — 보유량 30% 매도
+    if(dev>=c.sell.thr && c.sell.armed && !NO_SELL.includes(sym)){
+      const n=Math.floor(r.shares*0.3);
+      const why=[
+        `200일선 대비 ${pctS(dev)} — 매도 문턱 ${pctS(c.sell.thr)} 통과`,
+        `이 문턱은 이 종목의 지난 ${c.years}년 이력에서 연 ${c.sell.per_year}회 나오는 자리입니다`,
+        n>0 ? `보유 ${r.shares}주의 30% = ${n}주 · ${won(one*n)}`
+            : `보유 ${r.shares}주라 30%가 1주에 못 미칩니다 — 실행 불가`,
+        `평가 ${pctS(r.rKRW)}`
+      ];
+      if(c.align) why.push(`20/60/200일선 ${c.align}`);
+      acts_out.push({cls:"trim", head:`급등 · ${NAMES[sym]} ${n>0?n+"주 매도":"매도 보류"}`, why,
+        note:"중앙값(200일선 대비 "+pctS(c.median_dev)+")으로 돌아오기 전까지 다시 뜨지 않습니다."});
+    }
+
+    // 급락 — 30% 추매
+    else if(dev<=c.buy.thr && c.buy.armed){
+      const n=Math.max(1,Math.round(r.shares*0.3));
+      const deep = dev <= c.buy.thr-10;
+      const why=[
+        `200일선 대비 ${pctS(dev)} — 추매 문턱 ${pctS(c.buy.thr)} 통과`,
+        `이 문턱은 지난 ${c.years}년 이력에서 연 ${c.buy.per_year}회 나오는 자리입니다`,
+        `보유 ${r.shares}주의 30% = ${n}주 · ${won(one*n)}`,
+        `RSI ${r.q.rsi14} · 52주 고점 대비 ${pctS(r.q.drawdown_pct)}`
+      ];
+      if(c.align) why.push(`20/60/200일선 ${c.align}${c.align==="역배열"?" — 추세 자체가 꺾여 있다는 맥락 (신호 아님)":""}`);
+      if(deep) why.push(`문턱보다 10%p 더 내려온 자리입니다 — 추세가 꺾였을 가능성`);
+      acts_out.push({cls: deep?"trim":"buy",
+        head:`급락 · ${NAMES[sym]} ${deep?"논거 확인 후 추매":n+"주 추매"}`, why,
+        note: deep ? "이 깊이에서는 규칙보다 논거가 먼저입니다. 보유 이유를 다시 쓰고 나서 실행하세요."
+                  : null});
+    }
+
+    // 중립 보류 — 매도 문턱까지는 아니지만 평시보다 비싼 구간
+    else if(c.pause && dev >= c.pause.thr){
+      const why=[
+        `200일선 대비 ${pctS(dev)} — 보류 문턱 ${pctS(c.pause.thr)} 초과`,
+        `중앙값 ${pctS(c.median_dev)} 과 매도 문턱 ${pctS(c.sell.thr)} 의 중간 지점입니다`,
+        `이번 차수 적립을 미루고 대기 현금으로 쌓습니다 (건드리는 게 아닙니다)`
+      ];
+      acts_out.push({cls:"info", head:`중립 보류 · ${NAMES[sym]}`, why,
+        note:"10거래일 연속 보류되면 대신 현금으로 간주 진행합니다."});
+    }
+  });
+
+  // ③ 크게 초과 — 축소 검토
+  if(sectorW > ceil+10){
+    acts_out.push({cls:"trim", head:"집중도 알림",
+      why:[`전력기기 ${sectorW.toFixed(1)}% — 기준선보다 10%p 넘게 위`,
+           `이 섹터는 급여·성과급·우리사주와 같은 AI 캐펙스 사이클에 걸려 있습니다`],
+      note:"막지 않습니다. 숫자만 알려드립니다."});
+  }
+
+  // ④ 논거 만료
+  if(stale.length){
+    acts_out.push({cls:"trim", head:"논거 갱신 필요",
+      why:stale.map(x=>`${NAMES[x]} — 마지막 갱신 ${(H.thesis[x]||{}).updated||"없음"}, 90일 경과`)
+        .concat(["갱신 전까지 해당 종목 매수 신호는 잠깁니다"]),
+      note:"holdings.js의 thesis에 '왜 아직 보유하는가'를 한 줄로."});
+  }
+
+  // ⑥ 아무것도 없을 때 — 왜 없는지
+  if(!acts_out.length){
+    const lines = rows.filter(r=>r.shares>0 && r.q && r.q.cal).map(r=>{
+      const c=r.q.cal;
+      return `${NAMES[r.sym]} 200일선 ${pctS(c.current_dev)} · 정상 구간 (${pctS(c.buy.thr)} ~ ${pctS(c.sell.thr)})`;
+    });
+    acts_out.push({cls:"info", head:"오늘 조치 없음 · 적립만",
+      why: lines.length?lines:["판정에 필요한 이력이 아직 부족합니다"],
+      note:"조용한 날이 많은 게 정상입니다. 문턱은 종목마다 연 2~3회 나오도록 맞춰져 있습니다."});
+  }
+
+  html += `<h2>오늘의 판단</h2><div class="act-list">` + acts_out.map(a=>
+    `<div class="act-item ${a.cls}"><div class="act-head">${a.head}</div>
+     <ul class="act-why">${a.why.map(w=>`<li><span>${w}</span></li>`).join("")}</ul>
+     ${a.note?`<div class="act-note">${a.note}</div>`:""}</div>`).join("") + `</div>`;
+
+  const inflow=Object.values(H.inflow_2026||{}).reduce((a,b)=>a+b,0);
+  html += `<h2>올해</h2><div class="card">
+    <div class="row"><span class="k">누적 순유입</span><span class="v">${won(inflow)}</span></div>
+    <div class="row"><span class="k">평가 총액</span><span class="v">${won(total)}</span></div>
+  </div>
+  <p class="note">2029년 9월 — 3년 창구 종료, 구조 재검토.</p>`;
+  $('#today').innerHTML=html;
+
+  // ---- Macro ----
+  const m=(sym,extra="")=>{
+    const q=Q[sym]; if(!q) return "";
+    const u=q.unit||"";
+    return `<div class="pos"><div class="pos-top">
+      <span class="pos-name">${q.name}</span>
+      <span class="pos-ret ${cls(q.day_pct)}">${q.price.toLocaleString("ko-KR")}${u}
+        <small style="display:block;font-size:12px;font-weight:400">${pctS(q.day_pct)}</small></span></div>
+      <div class="pos-sub"><span>20일선 ${pctS((q.price/q.ma20-1)*100)}</span>
+      <span>60일 ${pctS(q.chg60_pct)}</span>
+      <span>52주 ${q.low52.toLocaleString("ko-KR")}~${q.high52.toLocaleString("ko-KR")}</span>${extra}</div>
+      ${bars(q.spark,30)}</div>`;
+  };
+  let mh="";
+  mh+=`<h2>환율</h2>${m("KRW=X")}`;
+
+  // 내 달러 자산의 가중평균 매입 환율
+  const usdRows = rows.filter(r=>r.shares>0 && r.avg_usd && r.avg_krw);
+  if(usdRows.length && fx){
+    const costKRW = usdRows.reduce((s,r)=>s+r.avg_krw*r.shares,0);
+    const costUSD = usdRows.reduce((s,r)=>s+r.avg_usd*r.shares,0);
+    const basis = costKRW/costUSD;
+    const gap = (fx/basis-1)*100;
+    mh+=`<div class="card"><div class="row"><span class="k">내 달러 자산 평균 매입 환율</span>
+      <span class="v">${Math.round(basis).toLocaleString("ko-KR")}원</span></div>
+      <div class="row"><span class="k">현재 환율과의 차이</span>
+      <span class="v ${cls(gap)}">${pctS(gap)}<small>${gap<0?"추가 매수는 이 환율보다 유리":"추가 매수는 이 환율보다 불리"}</small></span></div>
+      <p class="note">평단 환율은 이미 지난 거래의 기록입니다. 지금 달러를 사는 게 좋은지는
+      이 숫자가 아니라 현재 환율의 절대 수준이 답합니다.<br>
+      표시된 환율은 <b>전일 서울 종가</b> 기준입니다. 실제 체결은 밤 22:30 이후 역외 환율이
+      적용되어 차이가 납니다.</p></div>`;
+  }
+
+  if(fxq && fxq.dev_pctile!=null && fxq.dev_years>=2.0){
+    mh+=`<div class="card"><div class="row"><span class="k">환율 이격도 분석</span>
+      <span class="v">${fxq.dev_pctile.toFixed(0)}%<small>${fxq.dev_years}년 이력 · 200일선 대비 ${pctS(fxq.ma200_gap_pct)}</small></span></div>
+      <p class="note">상위 30%면 달러가 역사적으로 비싼 구간, 하위 30%면 싼 구간입니다.</p></div>`;
+  }
+
+  mh+=`
+       <h2>금리</h2>${m("^FVX")}${m("^TNX")}${m("^TYX")}`;
+  if(Q["^TNX"]&&Q["^FVX"]) mh+=`<div class="card"><div class="row">
+     <span class="k">10년 − 5년 스프레드</span>
+     <span class="v">${(Q["^TNX"].price-Q["^FVX"].price).toFixed(2)}%p</span></div></div>`;
+  mh+=`<h2>달러</h2>${m("DX-Y.NYB")}
+     <p class="note">보유 자산의 대부분이 달러 표시입니다. 환율이 20일선 위에 있으면 원화 환산 수익률이
+     주가보다 좋게 보이고, 아래면 반대입니다. 보유 탭의 분해와 함께 보세요.</p>`;
+  $('#macro').innerHTML=mh;
+
+  // ---- Book ----
+  let bh=`<div class="card"><div class="row"><span class="k">코어 (QQQ)</span>
+      <span class="v">${won(coreV)}<small>${total?(coreV/total*100).toFixed(1):0}%</small></span></div>
+    <div class="row"><span class="k">전력기기 3종목</span>
+      <span class="v">${won(sectorV)}<small>${sectorW.toFixed(1)}% · 상한 ${ceil}%</small></span></div>
+    <div class="bars"><i style="width:${total?coreV/total*100:0}%;background:var(--open)"></i>
+      <i style="width:${sectorW}%;background:var(--warn)"></i></div></div>`;
+
+  rows.filter(r=>r.shares>0).forEach(r=>{
+    bh+=`<div class="pos"><div class="pos-top">
+      <div><div class="pos-name">${NAMES[r.sym]||r.sym}</div>
+      <div class="pos-sub"><span>${r.shares}주</span><span>평단 ${won(r.avg_krw)}</span>
+        <span>현재 ${won(r.priceKRW)}</span></div></div>
+      <span class="pos-ret ${cls(r.rKRW)}">${pctS(r.rKRW)}</span></div>`;
+    if(r.rPx!=null){
+      bh+=`<div class="split">
+        <div><div class="lbl">주가 기여 ($)</div><div class="val ${cls(r.rPx)}">${pctS(r.rPx)}</div></div>
+        <div><div class="lbl">환율 기여</div><div class="val ${cls(r.rFX)}">${pctS(r.rFX)}</div></div>
+        <div><div class="lbl">원화 합계</div><div class="val ${cls(r.rKRW)}">${pctS(r.rKRW)}</div></div></div>
+        <p class="note">합계는 두 값의 <b>곱</b>입니다 — (1+주가)×(1+환율)−1. 더해지지 않습니다.</p>`;
+    } else if(r.isUSD){
+      bh+=`<p class="note">토스에서 $로 토글한 평단을 holdings.js의 avg_usd에 넣으면
+        주가와 환율 기여분이 분리됩니다.</p>`;
+    }
+    bh+=`<div class="pos-sub" style="margin-top:10px">
+      <span>52주 고점 대비 ${pctS(r.q.drawdown_pct)}</span><span>RSI ${r.q.rsi14??"—"}</span>
+      <span>200일선 ${pctS(r.q.ma200_gap_pct)}</span></div></div>`;
+  });
+
+  $('#book').innerHTML=bh;
+
+  // ---- Log ----
+  let lh=`<h2>매매</h2>`;
+  if((H.trades||[]).length){
+    H.trades.slice().reverse().forEach(t=>{
+      lh+=`<div class="card"><h3>${t.date} · ${t.name||NAMES[t.sym]||t.sym} ${t.side}</h3>
+        <p>${t.shares}주 @ ${won(t.price_krw)}${t.note?" — "+t.note:""}</p></div>`;
+    });
+  } else lh+=`<div class="calm">아직 기록이 없습니다. holdings.js의 trades에 추가하세요.</div>`;
+
+  lh+=`<h2>종목별 문턱</h2>`;
+  const cals = Object.values(Q).filter(q=>q.cal);
+  if(cals.length){
+    lh+=`<div class="card">`+cals.map(q=>{
+      const c=q.cal;
+      return `<div class="row"><span class="k">${NAMES[q.symbol]||q.name}
+        <small style="display:block;color:var(--dim);font-size:11.5px">현재 ${pctS(c.current_dev)} · ${c.align||"—"} · ${c.years}년 이력</small></span>
+        <span class="v">${pctS(c.buy.thr)} ~ ${pctS(c.sell.thr)}
+        <small>추매 ${c.buy.per_year}회/년 · 매도 ${c.sell.per_year}회/년</small></span></div>`;
+    }).join("")+`</div>
+    <p class="note">200일선 대비 이격도 기준입니다. 문턱은 각 종목의 실제 이력에서
+    연 2~3회 나오는 지점을 역산해 매일 다시 계산됩니다. 추세선이 올라가면 문턱도 같이 올라갑니다.<br>
+    <b>이력이 2년 미만이면 사건 표본이 3~4건뿐이라 빈도 추정의 신뢰도가 낮습니다.</b>
+    각 종목의 이력 길이는 위의 "N년 이력"을 보세요.</p>`;
+  } else lh+=`<div class="calm">문턱 계산에 필요한 이력이 아직 부족합니다.</div>`;
+
+  lh+=`<h2>월별 순유입</h2><div class="card">`+
+    Object.entries(H.inflow_2026||{}).map(([k,v])=>
+      `<div class="row"><span class="k">2026-${k}</span><span class="v">${won(v)}</span></div>`).join("")+`</div>`;
+
+  if(D.sources){
+    lh+=`<h2>데이터 소스</h2><div class="card">`+
+      Object.entries(D.sources).map(([k,v])=>
+        `<div class="row"><span class="k">${NAMES[k]||(Q[k]&&Q[k].name)||k}</span>
+         <span class="v">${v}</span></div>`).join("")+`</div>`;
+  }
+  if((D.errors||[]).length)
+    lh+=`<p class="err">수집 실패: ${D.errors.map(e=>e.symbol+" ("+e.error.slice(0,60)+")").join(" / ")}</p>`;
+  $('#log').innerHTML=lh;
+}
+</script>
+<script src="thesis.js"></script>
+<script src="refresh.js"></script>
+<script src="macro.js"></script>
+<script src="perf.js"></script>
+</body>
+</html>

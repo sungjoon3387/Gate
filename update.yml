@@ -1,0 +1,44 @@
+name: Gate 데이터 갱신
+on:
+  schedule:
+    - cron: '20 20 * * 1-5'
+    - cron: '15 21 * * 1-5'
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - name: Collect prices
+        env:
+          FRED_API: ${{ secrets.FRED_API }}
+          ECOS_API: ${{ secrets.ECOS_API }}
+        run: python3 collect.py
+      - name: Collect macro
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API }}
+          ECOS_API_KEY: ${{ secrets.ECOS_API }}
+        run: python3 macro.py
+      - name: Watch falsifiers
+        continue-on-error: true
+        run: python3 watch.py
+      - name: Commit and push
+        run: |
+          git config user.name gate-bot
+          git config user.email gate-bot@users.noreply.github.com
+          git add -A data.json macro.json macro_history.json watch.json
+          git diff --staged --quiet && echo "변경 없음" && exit 0
+          git commit -m "데이터 갱신"
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; exit 1; }
+            git push && exit 0
+            sleep 5
+          done
+          exit 1
