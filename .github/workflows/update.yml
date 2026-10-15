@@ -9,6 +9,9 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUNBUFFERED: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -16,16 +19,19 @@ jobs:
           python-version: '3.12'
       - run: pip install requests
       - name: Collect prices
+        timeout-minutes: 5
         env:
           FRED_API: ${{ secrets.FRED_API }}
           ECOS_API: ${{ secrets.ECOS_API }}
         run: python3 collect.py
       - name: Collect macro
+        timeout-minutes: 3
         env:
           FRED_API_KEY: ${{ secrets.FRED_API }}
           ECOS_API_KEY: ${{ secrets.ECOS_API }}
         run: python3 macro.py
       - name: Watch falsifiers
+        timeout-minutes: 3
         continue-on-error: true
         run: python3 watch.py
       - name: Commit and push
