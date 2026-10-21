@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-21T08:57:10+09:00",
+ "generated_at": "2026-10-22T08:27:25+09:00",
  "alerts": [],
  "filings": [
   {
@@ -50,26 +50,5 @@
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)"
   }
  ],
- "errors": [
-  {
-   "src": "news:trade-stop",
-   "error": "503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%ED%8A%B8%EB%9F%BC%ED%94%84%20%EB%AC"
-  },
-  {
-   "src": "news:dc-capex",
-   "error": "503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC"
-  },
-  {
-   "src": "news:fed-independence",
-   "error": "503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%EC%97%B0%EC%A4%80%20%EB%8F%85%EB%A6"
-  },
-  {
-   "src": "news:gas-turbine",
-   "error": "503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%EA%B0%80%EC%8A%A4%ED%84%B0%EB%B9%88"
-  },
-  {
-   "src": "news:boj-carry",
-   "error": "503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%EC%97%94%EC%BA%90%EB%A6%AC%20%EC%B2"
-  }
- ]
+ "errors": []
 }
