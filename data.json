@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-30T08:59:22+09:00",
- "generated_at_label": "2026-10-30 08:59 KST",
+ "generated_at": "2026-10-30T10:05:16+09:00",
+ "generated_at_label": "2026-10-30 10:05 KST",
  "sector_ceiling": 35.0,
  "sources": {
   "QQQ": "yahoo",
@@ -23,18 +23,19 @@
    "name": "QQQ",
    "kind": "position",
    "source": "yahoo",
-   "price": 715.34,
-   "prev_close": 725.61,
-   "day_pct": -1.42,
-   "last_trade_date": "2026-10-29",
+   "price": 725.61,
+   "prev_close": 721.25,
+   "day_pct": 0.6,
+   "last_trade_date": "2026-10-28",
    "high52": 759.66,
    "low52": 558.28,
-   "drawdown_pct": -5.83,
-   "ma20": 731.142,
-   "ma200": 679.1646,
-   "ma200_gap_pct": 5.33,
-   "rsi14": 44.4,
+   "drawdown_pct": -4.48,
+   "ma20": 732.4765,
+   "ma200": 678.7191,
+   "ma200_gap_pct": 6.91,
+   "rsi14": 49.6,
    "spark": [
+    717.3,
     714.65,
     723.03,
     720.87,
@@ -93,31 +94,30 @@
     704.4,
     712.2,
     721.25,
-    725.61,
-    715.34
+    725.61
    ],
-   "chg60_pct": -0.27,
+   "chg60_pct": 0.24,
    "bucket": "core",
    "ccy": "USD",
    "cal": {
     "years": 4.2,
-    "median_dev": 9.5,
-    "current_dev": 5.3,
+    "median_dev": 9.6,
+    "current_dev": 6.9,
     "align": "정배열",
-    "ma60_gap": -1.3,
+    "ma60_gap": 0.1,
     "sell": {
      "thr": 12.1,
      "events": 11,
      "per_year": 2.6,
      "armed": true,
-     "days_since": 27
+     "days_since": 26
     },
     "buy": {
      "thr": -6.0,
      "events": 3,
      "per_year": 0.7,
      "armed": true,
-     "days_since": 148
+     "days_since": 147
     },
     "pause": {
      "thr": 10.8
@@ -132,18 +132,19 @@
    "name": "JEPQ",
    "kind": "position",
    "source": "yahoo",
-   "price": 59.38,
-   "prev_close": 60.06,
-   "day_pct": -1.13,
-   "last_trade_date": "2026-10-29",
+   "price": 60.06,
+   "prev_close": 59.7,
+   "day_pct": 0.6,
+   "last_trade_date": "2026-10-28",
    "high52": 61.46,
    "low52": 53.77,
-   "drawdown_pct": -3.38,
-   "ma20": 60.076,
-   "ma200": 59.0818,
-   "ma200_gap_pct": 0.5,
-   "rsi14": 45.3,
+   "drawdown_pct": -2.28,
+   "ma20": 60.1475,
+   "ma200": 59.0808,
+   "ma200_gap_pct": 1.66,
+   "rsi14": 51.0,
    "spark": [
+    59.38,
     59.34,
     59.74,
     59.68,
@@ -202,31 +203,30 @@
     58.43,
     59.02,
     59.7,
-    60.06,
-    59.38
+    60.06
    ],
-   "chg60_pct": 0.0,
+   "chg60_pct": 0.84,
    "bucket": "exit",
    "ccy": "USD",
    "cal": {
     "years": 3.7,
     "median_dev": 3.8,
-    "current_dev": 0.5,
+    "current_dev": 1.7,
     "align": "정배열",
-    "ma60_gap": -1.2,
+    "ma60_gap": -0.0,
     "sell": {
      "thr": 6.0,
      "events": 9,
      "per_year": 2.4,
      "armed": true,
-     "days_since": 232
+     "days_since": 231
     },
     "buy": {
      "thr": -4.0,
      "events": 5,
      "per_year": 1.4,
      "armed": true,
-     "days_since": 65
+     "days_since": 64
     },
     "pause": {
      "thr": 4.9
@@ -241,18 +241,19 @@
    "name": "GE 버노바",
    "kind": "position",
    "source": "yahoo",
-   "price": 887.85,
-   "prev_close": 878.03,
-   "day_pct": 1.12,
-   "last_trade_date": "2026-10-29",
+   "price": 878.03,
+   "prev_close": 895.08,
+   "day_pct": -1.9,
+   "last_trade_date": "2026-10-28",
    "high52": 1174.86,
    "low52": 547.96,
-   "drawdown_pct": -24.43,
-   "ma20": 934.1265,
-   "ma200": 943.5676,
-   "ma200_gap_pct": -5.91,
-   "rsi14": 44.6,
+   "drawdown_pct": -25.27,
+   "ma20": 939.1065,
+   "ma200": 942.3888,
+   "ma200_gap_pct": -6.83,
+   "rsi14": 42.9,
    "spark": [
+    1017.96,
     1000.3,
     990.32,
     990.85,
@@ -311,34 +312,33 @@
     815.0,
     855.12,
     895.08,
-    878.03,
-    887.85
+    878.03
    ],
-   "chg60_pct": -12.78,
+   "chg60_pct": -13.79,
    "bucket": "sector",
    "ccy": "USD",
    "cal": {
     "years": 1.8,
-    "median_dev": 32.6,
-    "current_dev": -5.9,
+    "median_dev": 32.8,
+    "current_dev": -6.8,
     "align": "혼조",
-    "ma60_gap": -6.7,
+    "ma60_gap": -7.9,
     "sell": {
      "thr": 45.6,
      "events": 4,
      "per_year": 2.2,
      "armed": true,
-     "days_since": 85
+     "days_since": 84
     },
     "buy": {
-     "thr": -5.4,
+     "thr": -4.9,
      "events": 1,
      "per_year": 0.6,
      "armed": false,
-     "days_since": 5
+     "days_since": 4
     },
     "pause": {
-     "thr": 39.1
+     "thr": 39.2
     }
    },
    "src_tried": [
@@ -350,18 +350,19 @@
    "name": "Eaton",
    "kind": "position",
    "source": "yahoo",
-   "price": 393.72,
-   "prev_close": 392.88,
-   "day_pct": 0.21,
-   "last_trade_date": "2026-10-29",
+   "price": 392.88,
+   "prev_close": 384.2,
+   "day_pct": 2.26,
+   "last_trade_date": "2026-10-28",
    "high52": 459.96,
    "low52": 315.82,
-   "drawdown_pct": -14.4,
-   "ma20": 405.1055,
-   "ma200": 396.7402,
-   "ma200_gap_pct": -0.76,
-   "rsi14": 45.6,
+   "drawdown_pct": -14.58,
+   "ma20": 407.2835,
+   "ma200": 396.4335,
+   "ma200_gap_pct": -0.9,
+   "rsi14": 45.2,
    "spark": [
+    447.28,
     448.19,
     448.68,
     444.96,
@@ -420,31 +421,30 @@
     366.11,
     371.92,
     384.2,
-    392.88,
-    393.72
+    392.88
    ],
-   "chg60_pct": -11.97,
+   "chg60_pct": -11.67,
    "bucket": "sector",
    "ccy": "USD",
    "cal": {
     "years": 4.2,
     "median_dev": 10.7,
-    "current_dev": -0.8,
+    "current_dev": -0.9,
     "align": "혼조",
-    "ma60_gap": -5.8,
+    "ma60_gap": -6.2,
     "sell": {
      "thr": 15.7,
      "events": 10,
      "per_year": 2.4,
      "armed": true,
-     "days_since": 62
+     "days_since": 61
     },
     "buy": {
      "thr": -6.3,
      "events": 4,
      "per_year": 1.0,
      "armed": false,
-     "days_since": 5
+     "days_since": 4
     },
     "pause": {
      "thr": 13.2
@@ -459,19 +459,18 @@
    "name": "삼성전자",
    "kind": "macro",
    "source": "naver",
-   "price": 230500.0,
-   "prev_close": 245000.0,
-   "day_pct": -5.92,
-   "last_trade_date": "2026-10-29",
+   "price": 220000.0,
+   "prev_close": 230500.0,
+   "day_pct": -4.56,
+   "last_trade_date": "2026-10-30",
    "high52": 362500.0,
    "low52": 94800.0,
-   "drawdown_pct": -36.41,
-   "ma20": 238350.0,
-   "ma200": 236996.0,
-   "ma200_gap_pct": -2.74,
-   "rsi14": 46.5,
+   "drawdown_pct": -39.31,
+   "ma20": 235875.0,
+   "ma200": 237405.5,
+   "ma200_gap_pct": -7.33,
+   "rsi14": 42.8,
    "spark": [
-    262500.0,
     239500.0,
     240000.0,
     246000.0,
@@ -530,9 +529,10 @@
     213500.0,
     225000.0,
     245000.0,
-    230500.0
+    230500.0,
+    220000.0
    ],
-   "chg60_pct": 11.35,
+   "chg60_pct": -16.19,
    "unit": "원"
   },
   "KRW=X": {
@@ -540,19 +540,18 @@
    "name": "달러원",
    "kind": "macro",
    "source": "yahoo",
-   "price": 1338.5699,
-   "prev_close": 1326.8101,
-   "day_pct": 0.89,
-   "last_trade_date": "2026-10-29",
+   "price": 1338.78,
+   "prev_close": 1340.34,
+   "day_pct": -0.12,
+   "last_trade_date": "2026-10-30",
    "high52": 1554.48,
    "low52": 1321.76,
-   "drawdown_pct": -13.89,
-   "ma20": 1335.7575,
-   "ma200": 1447.7027,
-   "ma200_gap_pct": -7.54,
-   "rsi14": 48.0,
+   "drawdown_pct": -13.88,
+   "ma20": 1334.7555,
+   "ma200": 1447.0892,
+   "ma200_gap_pct": -7.48,
+   "rsi14": 48.1,
    "spark": [
-    1422.3,
     1407.0,
     1417.3101,
     1412.1801,
@@ -611,11 +610,12 @@
     1321.76,
     1324.77,
     1326.8101,
-    1338.5699
+    1340.34,
+    1338.78
    ],
-   "chg60_pct": -5.81,
+   "chg60_pct": -5.87,
    "unit": "원",
-   "dev_pctile": 2.6,
+   "dev_pctile": 2.7,
    "dev_years": 4.4,
    "src_tried": [
     "stooq: stooq: 데이터 부족 (0건)"
@@ -869,17 +869,17 @@
    "name": "구리",
    "kind": "macro",
    "source": "yahoo",
-   "price": 6.57,
+   "price": 6.567,
    "prev_close": 6.6415,
-   "day_pct": -1.08,
-   "last_trade_date": "2026-10-29",
+   "day_pct": -1.12,
+   "last_trade_date": "2026-10-30",
    "high52": 6.8035,
    "low52": 4.926,
-   "drawdown_pct": -3.43,
-   "ma20": 6.5644,
+   "drawdown_pct": -3.48,
+   "ma20": 6.5643,
    "ma200": 6.2042,
-   "ma200_gap_pct": 5.9,
-   "rsi14": 50.5,
+   "ma200_gap_pct": 5.85,
+   "rsi14": 50.3,
    "spark": [
     6.687,
     6.5705,
@@ -940,9 +940,9 @@
     6.508,
     6.622,
     6.6415,
-    6.57
+    6.567
    ],
-   "chg60_pct": -1.98,
+   "chg60_pct": -2.03,
    "unit": "$",
    "src_tried": [
     "stooq: stooq: 데이터 부족 (0건)"
@@ -1034,19 +1034,18 @@
    "name": "엔/달러",
    "kind": "macro",
    "source": "yahoo",
-   "price": 157.823,
-   "prev_close": 157.993,
-   "day_pct": -0.11,
-   "last_trade_date": "2026-10-29",
+   "price": 157.295,
+   "prev_close": 157.833,
+   "day_pct": -0.34,
+   "last_trade_date": "2026-10-30",
    "high52": 163.864,
    "low52": 152.453,
-   "drawdown_pct": -3.69,
-   "ma20": 157.9293,
-   "ma200": 158.5396,
-   "ma200_gap_pct": -0.45,
-   "rsi14": 50.8,
+   "drawdown_pct": -4.01,
+   "ma20": 157.8982,
+   "ma200": 158.5336,
+   "ma200_gap_pct": -0.78,
+   "rsi14": 46.7,
    "spark": [
-    158.409,
     157.891,
     159.156,
     159.265,
@@ -1105,9 +1104,10 @@
     156.83,
     157.528,
     157.993,
-    157.823
+    157.833,
+    157.295
    ],
-   "chg60_pct": 0.14,
+   "chg60_pct": -0.7,
    "unit": "엔",
    "src_tried": [
     "stooq: stooq: 데이터 부족 (0건)"
@@ -1118,17 +1118,17 @@
    "name": "달러지수",
    "kind": "macro",
    "source": "yahoo",
-   "price": 101.882,
+   "price": 101.75,
    "prev_close": 102.19,
-   "day_pct": -0.3,
-   "last_trade_date": "2026-10-29",
+   "day_pct": -0.43,
+   "last_trade_date": "2026-10-30",
    "high52": 102.58,
    "low52": 96.22,
-   "drawdown_pct": -0.68,
-   "ma20": 102.0466,
-   "ma200": 99.617,
-   "ma200_gap_pct": 2.27,
-   "rsi14": 53.6,
+   "drawdown_pct": -0.81,
+   "ma20": 102.04,
+   "ma200": 99.6163,
+   "ma200_gap_pct": 2.14,
+   "rsi14": 51.6,
    "spark": [
     99.97,
     99.6,
@@ -1189,9 +1189,9 @@
     101.96,
     102.32,
     102.19,
-    101.882
+    101.75
    ],
-   "chg60_pct": 2.2,
+   "chg60_pct": 2.07,
    "unit": "",
    "src_tried": [
     "stooq: stooq: 데이터 부족 (0건)"
