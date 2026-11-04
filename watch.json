@@ -1,7 +1,19 @@
 {
- "generated_at": "2026-11-03T11:56:55+09:00",
+ "generated_at": "2026-11-04T09:24:50+09:00",
  "alerts": [],
  "filings": [
+  {
+   "sym": "ETN",
+   "form": "10-Q",
+   "date": "2026-11-03",
+   "url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000040/etn-20260930.htm"
+  },
+  {
+   "sym": "ETN",
+   "form": "8-K",
+   "date": "2026-11-03",
+   "url": "https://www.sec.gov/Archives/edgar/data/1551182/000155118226000037/etn-20261103.htm"
+  },
   {
    "sym": "GEV",
    "form": "10-Q",
