@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-07T09:09:21+09:00",
+ "generated_at": "2026-11-07T09:57:46+09:00",
  "indicators": {
   "ust2": {
    "id": "DGS2",
@@ -242,72 +242,16 @@
   }
  ],
  "changes": {
-  "moves": [
-   {
-    "k": "n225",
-    "label": "닛케이225",
-    "from": 61077.9,
-    "to": 57434.77,
-    "delta": -3643.13,
-    "unit": ""
-   },
-   {
-    "k": "dxy",
-    "label": "달러인덱스",
-    "from": 101.58,
-    "to": 102.28,
-    "delta": 0.7,
-    "unit": ""
-   },
-   {
-    "k": "hy",
-    "label": "하이일드 스프레드",
-    "from": 3.32,
-    "to": 3.48,
-    "delta": 0.16,
-    "unit": "%"
-   },
-   {
-    "k": "ust2",
-    "label": "미국채 2년",
-    "from": 4.58,
-    "to": 4.46,
-    "delta": -0.12,
-    "unit": "%"
-   },
-   {
-    "k": "ust5",
-    "label": "미국채 5년",
-    "from": 4.69,
-    "to": 4.59,
-    "delta": -0.1,
-    "unit": "%"
-   },
-   {
-    "k": "ust10",
-    "label": "미국채 10년",
-    "from": 4.9,
-    "to": 4.84,
-    "delta": -0.06,
-    "unit": "%"
-   }
-  ],
-  "flips": [
-   {
-    "id": "capex",
-    "title": "금리 → 조달비용 → AI 캐펙스 → 전력기기",
-    "from": "소폭 확대 — 관찰",
-    "to": "조기 경보 — 하이일드 선행"
-   }
-  ],
+  "moves": [],
+  "flips": [],
   "records": [],
   "streak": {
-   "policy": 13,
-   "curve": 13,
-   "capex": 1,
-   "oil": 13,
-   "japan": 35,
-   "fx": 2
+   "policy": 14,
+   "curve": 14,
+   "capex": 2,
+   "oil": 14,
+   "japan": 36,
+   "fx": 3
   }
  },
  "errors": []
