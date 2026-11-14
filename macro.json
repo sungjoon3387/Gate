@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-14T09:55:18+09:00",
+ "generated_at": "2026-11-14T10:28:54+09:00",
  "indicators": {
   "ust2": {
    "id": "DGS2",
@@ -242,72 +242,8 @@
   }
  ],
  "changes": {
-  "moves": [
-   {
-    "k": "copper",
-    "label": "구리",
-    "from": 6.23,
-    "to": 6.06,
-    "delta": -0.17,
-    "unit": ""
-   },
-   {
-    "k": "ust5",
-    "label": "미국채 5년",
-    "from": 4.81,
-    "to": 4.95,
-    "delta": 0.14,
-    "unit": "%"
-   },
-   {
-    "k": "ust2",
-    "label": "미국채 2년",
-    "from": 4.73,
-    "to": 4.86,
-    "delta": 0.13,
-    "unit": "%"
-   },
-   {
-    "k": "ust10",
-    "label": "미국채 10년",
-    "from": 4.98,
-    "to": 5.1,
-    "delta": 0.12,
-    "unit": "%"
-   },
-   {
-    "k": "hy",
-    "label": "하이일드 스프레드",
-    "from": 3.3,
-    "to": 3.2,
-    "delta": -0.1,
-    "unit": "%"
-   },
-   {
-    "k": "ust30",
-    "label": "미국채 30년",
-    "from": 5.35,
-    "to": 5.43,
-    "delta": 0.08,
-    "unit": "%"
-   },
-   {
-    "k": "real10",
-    "label": "미 10년 실질금리",
-    "from": 2.78,
-    "to": 2.86,
-    "delta": 0.08,
-    "unit": "%"
-   }
-  ],
-  "flips": [
-   {
-    "id": "fx",
-    "title": "연준 → 달러 → 원화 → 내 원화환산 수익률",
-    "from": "원화 강세 — 원화환산 수익률에 역풍",
-    "to": "중립"
-   }
-  ],
+  "moves": [],
+  "flips": [],
   "records": [
    {
     "label": "미 10년 실질금리",
@@ -317,12 +253,12 @@
    }
   ],
   "streak": {
-   "policy": 18,
-   "curve": 18,
-   "capex": 4,
-   "oil": 2,
-   "japan": 40,
-   "fx": 1
+   "policy": 19,
+   "curve": 19,
+   "capex": 5,
+   "oil": 3,
+   "japan": 41,
+   "fx": 2
   }
  },
  "errors": []
