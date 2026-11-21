@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-21T10:36:04+09:00",
+ "generated_at": "2026-11-21T11:22:35+09:00",
  "indicators": {
   "ust2": {
    "id": "DGS2",
@@ -242,24 +242,8 @@
   }
  ],
  "changes": {
-  "moves": [
-   {
-    "k": "n225",
-    "label": "닛케이225",
-    "from": 59444.21,
-    "to": 56436.65,
-    "delta": -3007.56,
-    "unit": ""
-   }
-  ],
-  "flips": [
-   {
-    "id": "fx",
-    "title": "연준 → 달러 → 원화 → 내 원화환산 수익률",
-    "from": "원화 약세 — 원화환산 수익률에 순풍",
-    "to": "중립"
-   }
-  ],
+  "moves": [],
+  "flips": [],
   "records": [
    {
     "label": "미 10년 실질금리",
@@ -269,12 +253,12 @@
    }
   ],
   "streak": {
-   "policy": 5,
-   "curve": 23,
-   "capex": 2,
-   "oil": 7,
-   "japan": 45,
-   "fx": 1
+   "policy": 6,
+   "curve": 24,
+   "capex": 3,
+   "oil": 8,
+   "japan": 46,
+   "fx": 2
   }
  },
  "errors": []
