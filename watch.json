@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-25T12:35:24+09:00",
+ "generated_at": "2026-11-25T13:16:09+09:00",
  "alerts": [],
  "filings": [],
  "rules": [
@@ -43,5 +43,14 @@
    "rule": "엔 캐리 청산 본격화 (엔·닛케이 동시 급변은 Gate가 자동 판정)"
   }
  ],
- "errors": []
+ "errors": [
+  {
+   "src": "news:trade-stop",
+   "error": "429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%ED%8A%B8%EB%9F%BC%ED%94%84%20%EB%AC%B"
+  },
+  {
+   "src": "news:boj-carry",
+   "error": "429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%EC%97%94%EC%BA%90%EB%A6%AC%20%EC%B2%A"
+  }
+ ]
 }
