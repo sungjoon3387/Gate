@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-28T11:47:49+09:00",
+ "generated_at": "2026-11-28T12:20:34+09:00",
  "indicators": {
   "ust2": {
    "id": "DGS2",
@@ -242,49 +242,16 @@
   }
  ],
  "changes": {
-  "moves": [
-   {
-    "k": "n225",
-    "label": "닛케이225",
-    "from": 57499.16,
-    "to": 58711.11,
-    "delta": 1211.95,
-    "unit": ""
-   },
-   {
-    "k": "ust10",
-    "label": "미국채 10년",
-    "from": 4.91,
-    "to": 4.85,
-    "delta": -0.06,
-    "unit": "%"
-   },
-   {
-    "k": "ust30",
-    "label": "미국채 30년",
-    "from": 5.3,
-    "to": 5.24,
-    "delta": -0.06,
-    "unit": "%"
-   },
-   {
-    "k": "real10",
-    "label": "미 10년 실질금리",
-    "from": 2.79,
-    "to": 2.73,
-    "delta": -0.06,
-    "unit": "%"
-   }
-  ],
+  "moves": [],
   "flips": [],
   "records": [],
   "streak": {
-   "policy": 10,
-   "curve": 28,
-   "capex": 7,
-   "oil": 12,
-   "japan": 50,
-   "fx": 3
+   "policy": 11,
+   "curve": 29,
+   "capex": 8,
+   "oil": 13,
+   "japan": 51,
+   "fx": 4
   }
  },
  "errors": []
